@@ -47,3 +47,15 @@ int login() {
     }
 
 }
+
+void authSec() {
+
+}
+
+void stdReg() {
+
+}
+
+void teaReg() {
+
+}
