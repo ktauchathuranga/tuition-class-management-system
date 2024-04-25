@@ -2,5 +2,6 @@
 #define FUNC_H
 
 int login();
+void authSec();
 
 #endif
