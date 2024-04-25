@@ -3,21 +3,21 @@
 #include <string.h>
 #include "func.h"
 
-int main() {
-    int login_attempts = 0;
-    while (login_attempts < 3)
+int main(int argc, char* argv[]) {
+    int loginAtt = 0;
+    while (loginAtt < 3)
     {
         if (login())
         {
-            // authSec();
+            authSec();
             break;
         } else {
             printf("login failed\n");
-            login_attempts++;
+            loginAtt++;
         }
     }
     
-    if (login_attempts == 3) {
+    if (loginAtt == 3) {
         printf("Failed to login after 3 attempts. Please try again later.\n");
     }
     
