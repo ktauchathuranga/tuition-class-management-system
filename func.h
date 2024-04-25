@@ -3,7 +3,10 @@
 
 int login();
 void authSec();
+int createTable();
+int insertData();
 void stdReg();
 void teaReg();
+
 
 #endif
