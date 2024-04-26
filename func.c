@@ -155,7 +155,6 @@ int insertData(const char* tableName, const char* data[], int numData) {
 //     insertData("COMPANY", &data[i], 1);
 // }
 
-
 void authSec() {
     int choice;
 

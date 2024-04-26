@@ -7,6 +7,7 @@ int createTable(const char* tableName, const char* columnDefinitions[], int numC
 int insertData(const char* tableName, const char* data[], int numData);
 void stdReg();
 void teaReg();
+void displayMenu();
 
 
 #endif
