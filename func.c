@@ -157,7 +157,40 @@ int insertData(const char* tableName, const char* data[], int numData) {
 
 
 void authSec() {
-    
+    int choice;
+
+    do {
+        displayMenu();
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                // related function
+                break;
+            case 2:
+                // related function
+                break;
+            case 3:
+                // related function
+                break;
+            case 0:
+                printf("Exiting program.\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (choice != 0);
+
+}
+
+void displayMenu() {
+    // these are just place holders, TO BE CHANGED!
+    printf("\n=== Tuition Class Management System ===\n");
+    printf("1. Add Student\n");
+    printf("2. Display Students\n");
+    printf("3. Manage Classes\n");
+    printf("0. Exit\n");
 }
 
 void stdReg() {
