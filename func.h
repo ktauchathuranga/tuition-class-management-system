@@ -3,8 +3,8 @@
 
 int login();
 void authSec();
-int createTable();
-int insertData();
+int createTable(const char* tableName, const char* columnDefinitions[], int numColumns);
+int insertData(const char* tableName, const char* data[], int numData);
 void stdReg();
 void teaReg();
 
