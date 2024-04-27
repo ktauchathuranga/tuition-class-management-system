@@ -8,6 +8,9 @@ int insertData(const char* tableName, const char* data[], int numData);
 void stdReg();
 void teaReg();
 void displayMenu();
-
+void browseStd();
+void stdSearch();
+void feeMng();
+void status();
 
 #endif

@@ -2,5 +2,6 @@
     "files.associations": {
         "*.md": "markdown",
         "string.h": "c"
-    }
+    },
+    "cmake.configureOnOpen": false
 }

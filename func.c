@@ -199,3 +199,19 @@ void stdReg() {
 void teaReg() {
 
 }
+
+void browseStd() {
+
+}
+
+void stdSearch() {
+    // by ID (look at README.md)
+}
+
+void feeMng() {
+    
+}
+
+void status() {
+    
+}
