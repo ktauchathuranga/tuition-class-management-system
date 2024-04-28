@@ -3,7 +3,7 @@
 
 #### To compile:
 ```
-gcc main.c func.c -o main -lcrypto -lsqlite3
+gcc "replce-this-with-your-compiling-file-name" func.c -o main -lcrypto -lsqlite3
 ```
 
 > [!NOTE]  
