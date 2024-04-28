@@ -1,5 +1,6 @@
 #ifndef FUNC_H
 #define FUNC_H
+
 #include <stdbool.h>
 
 int login();
@@ -14,5 +15,6 @@ void stdSearch();
 void feeMng();
 void status();
 bool fetchData(const char* query, DataType type, Data* data);
+bool updateData(const char* query);
 
 #endif
