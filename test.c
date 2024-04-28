@@ -1,65 +1,8 @@
-#include "func.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <openssl/evp.h>
 #include <sqlite3.h> 
-
-typedef union {
-    int i;
-    double d;
-    char* s;
-} Data;
-
-typedef enum {
-    INTEGER,
-    REAL,
-    TEXT
-} DataType;
-
-void sha256(const char *str, char outputBuffer[65]) {
-    unsigned char hash[EVP_MAX_MD_SIZE];
-    unsigned int len = EVP_MAX_MD_SIZE;
-    
-    EVP_MD_CTX *mdctx = EVP_MD_CTX_new();
-    EVP_DigestInit_ex(mdctx, EVP_sha256(), NULL);
-    EVP_DigestUpdate(mdctx, str, strlen(str));
-    EVP_DigestFinal_ex(mdctx, hash, &len);
-    EVP_MD_CTX_free(mdctx);
-    
-    for(int i = 0; i < len; i++) {
-        sprintf(outputBuffer + (i * 2), "%02x", hash[i]);
-    }
-    outputBuffer[64] = 0;
-}
-
-int login() {
-    char stored_username_hash[] = "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb"; // a
-    char stored_password_hash[] = "3e23e8160039594a33894f6564e1b1348bbd7a0088d42c4acb73eeaed59c009d"; // b
-
-    char username[100];
-    char password[100];
-
-    printf("Enter username: ");
-    scanf("%s", username);
-    printf("Enter password: ");
-    scanf("%s", password);
-
-    char entered_username_hash[65];
-    char entered_password_hash[65];
-    sha256(username, entered_username_hash);
-    sha256(password, entered_password_hash);
-
-    if (strcmp(stored_username_hash, entered_username_hash) == 0 &&
-        strcmp(stored_password_hash, entered_password_hash) == 0) {
-        printf("Login successful!\n");
-        return 1;
-    } else {
-        printf("Login failed. Please check your username and password.\n");
-        return 0;
-    }
-
-}
 
 static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
    int i;
@@ -167,6 +110,20 @@ int insertData(const char* tableName, const char* data[], int numData) {
 //     insertData("COMPANY", &data[i], 1);
 // }
 
+#include <stdbool.h>
+
+typedef union {
+    int i;
+    double d;
+    char* s;
+} Data;
+
+typedef enum {
+    INTEGER,
+    REAL,
+    TEXT
+} DataType;
+
 bool fetchData(const char* query, DataType type, Data* data, bool useCallback) {
     sqlite3 *db;
     sqlite3_stmt *stmt;
@@ -221,6 +178,7 @@ bool fetchData(const char* query, DataType type, Data* data, bool useCallback) {
     return true;
 }
 
+
 bool updateData(const char* query) {
     sqlite3 *db;
     char *zErrMsg = 0;
@@ -249,63 +207,37 @@ bool updateData(const char* query) {
 }
 
 
-void authSec() {
-    int choice;
 
-    do {
-        displayMenu();
-        printf("Enter your choice: ");
-        scanf("%d", &choice);
+int main() {
+    const char* query;
+    Data data;
+    bool useCallback;
 
-        switch (choice) {
-            case 1:
-                // related function
-                break;
-            case 2:
-                // related function
-                break;
-            case 3:
-                // related function
-                break;
-            case 0:
-                printf("Exiting program.\n");
-                break;
-            default:
-                printf("Invalid choice. Please try again.\n");
-        }
-    } while (choice != 0);
+    // Example 1: Fetch a single integer value
+    query = "SELECT age FROM COMPANY WHERE name='Paul';";
+    fetchData(query, INTEGER, &data, false);
+    printf("Paul's age is %d\n", data.i);
 
-}
+    // Example 2: Fetch a single real value
+    query = "SELECT salary FROM COMPANY WHERE name='Allen';";
+    fetchData(query, REAL, &data, false);
+    printf("Allen's salary is %.2f\n", data.d);
 
-void displayMenu() {
-    // these are just place holders, TO BE CHANGED!
-    printf("\n=== Tuition Class Management System ===\n");
-    printf("1. Add Student\n");
-    printf("2. Display Students\n");
-    printf("3. Manage Classes\n");
-    printf("0. Exit\n");
-}
+    // Example 3: Fetch a single text value
+    query = "SELECT address FROM COMPANY WHERE name='Teddy';";
+    fetchData(query, TEXT, &data, false);
+    printf("Teddy's address is %s\n", data.s);
+    free(data.s);  // Don't forget to free the string when you're done with it
 
-void stdReg() {
+    // Example 4: Fetch and print multiple records using the callback function
+    query = "SELECT * FROM COMPANY;";
+    fetchData(query, INTEGER, NULL, true);  // The second and third arguments are ignored when useCallback is true
 
-}
+    //---------------------------------------------------------------------------------
 
-void teaReg() {
 
-}
+    const char* query2 = "UPDATE COMPANY SET AGE = 33 WHERE NAME='Paul';";
+    updateData(query2);
 
-void browseStd() {
-
-}
-
-void stdSearch() {
-    // by ID (look at README.md)
-}
-
-void feeMng() {
-    
-}
-
-void status() {
-
+    return 0;
 }

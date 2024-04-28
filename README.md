@@ -39,5 +39,5 @@ main
 
 #### Usefull links,
 
-- [Sqlite and C](https://www.tutorialspoint.com/sqlite/sqlite_c_cpp.htm)
+- [sqlite and C](https://www.tutorialspoint.com/sqlite/sqlite_c_cpp.htm)
 - [CONTRIBUTION GUIDE](.github/CONTRIBUTING.md)
