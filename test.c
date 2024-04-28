@@ -179,6 +179,35 @@ bool fetchData(const char* query, DataType type, Data* data, bool useCallback) {
 }
 
 
+bool updateData(const char* query) {
+    sqlite3 *db;
+    char *zErrMsg = 0;
+    int rc;
+
+    rc = sqlite3_open("test.db", &db);
+   
+    if( rc ) {
+        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+        return false;
+    } else {
+        fprintf(stdout, "Opened database successfully\n");
+    }
+
+    rc = sqlite3_exec(db, query, callback, 0, &zErrMsg);
+   
+    if( rc != SQLITE_OK ){
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    } else {
+        fprintf(stdout, "Operation done successfully\n");
+    }
+
+    sqlite3_close(db);
+    return true;
+}
+
+
+
 int main() {
     const char* query;
     Data data;
@@ -203,6 +232,12 @@ int main() {
     // Example 4: Fetch and print multiple records using the callback function
     query = "SELECT * FROM COMPANY;";
     fetchData(query, INTEGER, NULL, true);  // The second and third arguments are ignored when useCallback is true
+
+    //---------------------------------------------------------------------------------
+
+
+    const char* query2 = "UPDATE COMPANY SET AGE = 33 WHERE NAME='Paul';";
+    updateData(query2);
 
     return 0;
 }
