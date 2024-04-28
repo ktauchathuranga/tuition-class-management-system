@@ -5,18 +5,6 @@
 #include <openssl/evp.h>
 #include <sqlite3.h> 
 
-typedef union {
-    int i;
-    double d;
-    char* s;
-} Data;
-
-typedef enum {
-    INTEGER,
-    REAL,
-    TEXT
-} DataType;
-
 void sha256(const char *str, char outputBuffer[65]) {
     unsigned char hash[EVP_MAX_MD_SIZE];
     unsigned int len = EVP_MAX_MD_SIZE;
