@@ -11,6 +11,7 @@ gcc "replce-this-with-your-compiling-file-name" func.c -o main -lcrypto -lsqlite
 > - If you still having trouble, you can open a codespace for the repo by ```Code -> Codespaces -> Create codespace on main```
 > - `createdb.c` is for create the db tables.
 > - `addsampledata.c` to add sample data to the tabels.
+> - `test.c` is for understand how the function works, with examples.
 
 #### To run:
 - Windows
