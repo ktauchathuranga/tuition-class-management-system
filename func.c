@@ -5,6 +5,18 @@
 #include <openssl/evp.h>
 #include <sqlite3.h> 
 
+typedef union {
+    int i;
+    double d;
+    char* s;
+} Data;
+
+typedef enum {
+    INTEGER,
+    REAL,
+    TEXT
+} DataType;
+
 void sha256(const char *str, char outputBuffer[65]) {
     unsigned char hash[EVP_MAX_MD_SIZE];
     unsigned int len = EVP_MAX_MD_SIZE;
@@ -155,6 +167,60 @@ int insertData(const char* tableName, const char* data[], int numData) {
 //     insertData("COMPANY", &data[i], 1);
 // }
 
+bool fetchData(const char* query, DataType type, Data* data, bool useCallback) {
+    sqlite3 *db;
+    sqlite3_stmt *stmt;
+    char *zErrMsg = 0;
+    int rc;
+
+    rc = sqlite3_open("test.db", &db);
+   
+    if( rc ) {
+        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+        return false;
+    } else {
+        fprintf(stdout, "Opened database successfully\n");
+    }
+
+    rc = sqlite3_prepare_v2(db, query, -1, &stmt, NULL);
+   
+    if( rc != SQLITE_OK ){
+        fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
+        return false;
+    } 
+
+    if (useCallback) {
+        rc = sqlite3_exec(db, query, callback, 0, &zErrMsg);
+        if( rc != SQLITE_OK ){
+            fprintf(stderr, "SQL error: %s\n", zErrMsg);
+            sqlite3_free(zErrMsg);
+        } else {
+            fprintf(stdout, "Operation done successfully\n");
+        }
+    } else {
+        rc = sqlite3_step(stmt);
+        if (rc == SQLITE_ROW) {
+            switch (type) {
+                case INTEGER:
+                    data->i = sqlite3_column_int(stmt, 0);
+                    break;
+                case REAL:
+                    data->d = sqlite3_column_double(stmt, 0);
+                    break;
+                case TEXT:
+                    data->s = strdup((const char*)sqlite3_column_text(stmt, 0));
+                    break;
+            }
+        } else if (rc != SQLITE_DONE) {
+            fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
+        }
+    }
+
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+    return true;
+}
+
 void authSec() {
     int choice;
 
@@ -215,33 +281,3 @@ void feeMng() {
 void status() {
 
 }
-
-int fetchData(const char* query) {
-    sqlite3 *db;
-    char *zErrMsg = 0;
-    int rc;
-
-    rc = sqlite3_open("test.db", &db);
-   
-    if( rc ) {
-        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-        return 0;
-    } else {
-        fprintf(stdout, "Opened database successfully\n");
-    }
-
-    rc = sqlite3_exec(db, query, callback, 0, &zErrMsg);
-   
-    if( rc != SQLITE_OK ){
-        fprintf(stderr, "SQL error: %s\n", zErrMsg);
-        sqlite3_free(zErrMsg);
-    } else {
-        fprintf(stdout, "Data fetched successfully\n");
-    }
-    sqlite3_close(db);
-    return 1;
-}
-
-// char query[] = "SELECT * FROM COMPANY;";
-// fetchData(query);
-
