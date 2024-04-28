@@ -246,3 +246,9 @@ int main() {
 
     return 0;
 }
+
+
+// char query[100];
+// sprintf(query, "DELETE FROM COMPANY WHERE NAME='%s';", name);
+
+// deleteData(query);
