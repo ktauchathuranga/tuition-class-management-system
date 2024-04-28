@@ -8,7 +8,7 @@ gcc main.c func.c -o main -lcrypto -lsqlite3
 
 > [!NOTE]  
 > - You need, ```openssl``` library and ```sqlite3``` library.
-> - If you still having trouble, you can open a codespace for the repo by ```Code -> Codespaces -> Create codespace on "branch-name"```
+> - If you still having trouble, you can open a codespace for the repo by ```Code -> Codespaces -> Create codespace on main```
 
 #### To run:
 - Windows
