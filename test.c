@@ -207,7 +207,6 @@ bool updateData(const char* query) {
 }
 
 
-
 int main() {
     const char* query;
     Data data;
@@ -235,9 +234,15 @@ int main() {
 
     //---------------------------------------------------------------------------------
 
-
+    // Update data
     const char* query2 = "UPDATE COMPANY SET AGE = 33 WHERE NAME='Paul';";
     updateData(query2);
+
+    //---------------------------------------------------------------------------------
+
+    // Delete data
+    const char* query3 = "DELETE FROM COMPANY WHERE NAME='Mark';";
+    updateData(query3);
 
     return 0;
 }
