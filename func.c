@@ -213,5 +213,35 @@ void feeMng() {
 }
 
 void status() {
-    
+
 }
+
+int fetchData(const char* query) {
+    sqlite3 *db;
+    char *zErrMsg = 0;
+    int rc;
+
+    rc = sqlite3_open("test.db", &db);
+   
+    if( rc ) {
+        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+        return 0;
+    } else {
+        fprintf(stdout, "Opened database successfully\n");
+    }
+
+    rc = sqlite3_exec(db, query, callback, 0, &zErrMsg);
+   
+    if( rc != SQLITE_OK ){
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    } else {
+        fprintf(stdout, "Data fetched successfully\n");
+    }
+    sqlite3_close(db);
+    return 1;
+}
+
+// char query[] = "SELECT * FROM COMPANY;";
+// fetchData(query);
+
