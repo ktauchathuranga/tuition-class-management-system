@@ -12,5 +12,6 @@ void browseStd();
 void stdSearch();
 void feeMng();
 void status();
+int fetchData(const char* query);
 
 #endif
