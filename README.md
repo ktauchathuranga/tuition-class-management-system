@@ -1,7 +1,7 @@
 # TCM System
 ***
 
-#### To compile:
+#### 🤖 To compile:
 ```
 gcc "replce-this-with-your-compiling-file-name" func.c -o main -lcrypto -lsqlite3
 ```
@@ -13,7 +13,7 @@ gcc "replce-this-with-your-compiling-file-name" func.c -o main -lcrypto -lsqlite
 > - `addsampledata.c` to add sample data to the tabels.
 > - `test.c` is for understand how the function sql works, with **examples**.
 
-#### To run:
+#### 🏃‍♂️ To run:
 - Windows
 ```
 main
@@ -23,7 +23,7 @@ main
 ./main
 ```
 
-#### Structure
+#### 🏢 Structure
 
 - LOGIN
     - reg std
@@ -39,8 +39,13 @@ main
       - collect fee (by id)
       - due fee std list
     - status (all basic summary)
+  
+#### 📜 More details:
 
-#### Usefull links,
+`func.c` holds all major functions; if you add a new function, don't forget to add a function prototype to the `func.h` file as well.
+In `main.c` we just use basic logic to call the functions so it doesn't get too crowded. And by doing that `main.c` will be much easier to read and understand the basic logic structure behind it.
+
+#### 🔗 Usefull links,
 
 - [sqlite and C](https://www.tutorialspoint.com/sqlite/sqlite_c_cpp.htm)
 - [CONTRIBUTION GUIDE](.github/CONTRIBUTING.md)
