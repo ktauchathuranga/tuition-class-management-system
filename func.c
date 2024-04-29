@@ -209,6 +209,7 @@ bool fetchData(const char* query, DataType type, Data* data, bool useCallback) {
     return true;
 }
 
+// For delete and update data
 bool updateData(const char* query) {
     sqlite3 *db;
     char *zErrMsg = 0;
@@ -247,6 +248,7 @@ void authSec() {
 
         switch (choice) {
             case 1:
+                stdReg();
                 // related function
                 break;
             case 2:
@@ -275,8 +277,39 @@ void displayMenu() {
 }
 
 void stdReg() {
+    int stid;
+    char firstname[100];
+    char lastname[100];
+    char dob[20];
+    char contnumber[15];
+    char email[50];
 
+    printf("Enter st id: ");
+    scanf("%d", &stid);
+    printf("Enter first name: ");
+    scanf("%s", firstname);
+    printf("Enter last name: ");
+    scanf("%s", lastname);
+    printf("Enter dob: "); // add format year-month-date
+    scanf("%s", dob);
+    printf("Enter contact number: ");
+    scanf("%s", contnumber);
+    printf("Enter your email: ");
+    scanf("%s", email);
+
+    char data[256];
+    sprintf(data, "%d, '%s', '%s', '%s', '%s', '%s'", stid, firstname, lastname, dob, contnumber, email);
+
+    // You should ask to verify the data before inserting
+
+    const char* dataArray[1] = {data};
+
+    insertData("Students", dataArray, 1);
+
+    printf("DONE!");
 }
+
+
 
 void teaReg() {
 
