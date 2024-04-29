@@ -2,37 +2,45 @@
 #include <stdlib.h>
 #include <string.h>
 #include <openssl/evp.h>
-#include <sqlite3.h> 
+#include <sqlite3.h>
 
-static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
-   int i;
-   for(i = 0; i<argc; i++) {
-      printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-   }
-   printf("\n");
-   return 0;
+static int callback(void *NotUsed, int argc, char **argv, char **azColName)
+{
+    int i;
+    for (i = 0; i < argc; i++)
+    {
+        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+    }
+    printf("\n");
+    return 0;
 }
 
-int createTable(const char* tableName, const char* columnDefinitions[], int numColumns) {
+int createTable(const char *tableName, const char *columnDefinitions[], int numColumns)
+{
     sqlite3 *db;
     char *zErrMsg = 0;
     int rc;
 
     rc = sqlite3_open("test.db", &db);
-   
-    if( rc ) {
+
+    if (rc)
+    {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         return 0;
-    } else {
+    }
+    else
+    {
         fprintf(stdout, "Opened database successfully\n");
     }
 
     char sql[1024] = {0};
     sprintf(sql, "CREATE TABLE %s(", tableName);
 
-    for(int i = 0; i < numColumns; i++) {
+    for (int i = 0; i < numColumns; i++)
+    {
         strcat(sql, columnDefinitions[i]);
-        if(i < numColumns - 1) {
+        if (i < numColumns - 1)
+        {
             strcat(sql, ",");
         }
     }
@@ -40,11 +48,14 @@ int createTable(const char* tableName, const char* columnDefinitions[], int numC
     strcat(sql, ");");
 
     rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
-   
-    if( rc != SQLITE_OK ){
+
+    if (rc != SQLITE_OK)
+    {
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
-    } else {
+    }
+    else
+    {
         fprintf(stdout, "Table created successfully\n");
     }
     sqlite3_close(db);
@@ -61,26 +72,32 @@ int createTable(const char* tableName, const char* columnDefinitions[], int numC
 
 // createTable("COMPANY", columnDefinitions, 5);
 
-int insertData(const char* tableName, const char* data[], int numData) {
+int insertData(const char *tableName, const char *data[], int numData)
+{
     sqlite3 *db;
     char *zErrMsg = 0;
     int rc;
 
     rc = sqlite3_open("test.db", &db);
-   
-    if( rc ) {
+
+    if (rc)
+    {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         return 0;
-    } else {
+    }
+    else
+    {
         fprintf(stdout, "Opened database successfully\n");
     }
 
     char sql[1024] = {0};
     sprintf(sql, "INSERT INTO %s VALUES(", tableName);
 
-    for(int i = 0; i < numData; i++) {
+    for (int i = 0; i < numData; i++)
+    {
         strcat(sql, data[i]);
-        if(i < numData - 1) {
+        if (i < numData - 1)
+        {
             strcat(sql, ",");
         }
     }
@@ -88,11 +105,14 @@ int insertData(const char* tableName, const char* data[], int numData) {
     strcat(sql, ");");
 
     rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
-   
-    if( rc != SQLITE_OK ){
+
+    if (rc != SQLITE_OK)
+    {
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
-    } else {
+    }
+    else
+    {
         fprintf(stdout, "Records created successfully\n");
     }
     sqlite3_close(db);
@@ -112,63 +132,80 @@ int insertData(const char* tableName, const char* data[], int numData) {
 
 #include <stdbool.h>
 
-typedef union {
+typedef union
+{
     int i;
     double d;
-    char* s;
+    char *s;
 } Data;
 
-typedef enum {
+typedef enum
+{
     INTEGER,
     REAL,
     TEXT
 } DataType;
 
-bool fetchData(const char* query, DataType type, Data* data, bool useCallback) {
+bool fetchData(const char *query, DataType type, Data *data, bool useCallback)
+{
     sqlite3 *db;
     sqlite3_stmt *stmt;
     char *zErrMsg = 0;
     int rc;
 
     rc = sqlite3_open("test.db", &db);
-   
-    if( rc ) {
+
+    if (rc)
+    {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         return false;
-    } else {
+    }
+    else
+    {
         fprintf(stdout, "Opened database successfully\n");
     }
 
     rc = sqlite3_prepare_v2(db, query, -1, &stmt, NULL);
-   
-    if( rc != SQLITE_OK ){
+
+    if (rc != SQLITE_OK)
+    {
         fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
         return false;
-    } 
+    }
 
-    if (useCallback) {
+    if (useCallback)
+    {
         rc = sqlite3_exec(db, query, callback, 0, &zErrMsg);
-        if( rc != SQLITE_OK ){
+        if (rc != SQLITE_OK)
+        {
             fprintf(stderr, "SQL error: %s\n", zErrMsg);
             sqlite3_free(zErrMsg);
-        } else {
+        }
+        else
+        {
             fprintf(stdout, "Operation done successfully\n");
         }
-    } else {
+    }
+    else
+    {
         rc = sqlite3_step(stmt);
-        if (rc == SQLITE_ROW) {
-            switch (type) {
-                case INTEGER:
-                    data->i = sqlite3_column_int(stmt, 0);
-                    break;
-                case REAL:
-                    data->d = sqlite3_column_double(stmt, 0);
-                    break;
-                case TEXT:
-                    data->s = strdup((const char*)sqlite3_column_text(stmt, 0));
-                    break;
+        if (rc == SQLITE_ROW)
+        {
+            switch (type)
+            {
+            case INTEGER:
+                data->i = sqlite3_column_int(stmt, 0);
+                break;
+            case REAL:
+                data->d = sqlite3_column_double(stmt, 0);
+                break;
+            case TEXT:
+                data->s = strdup((const char *)sqlite3_column_text(stmt, 0));
+                break;
             }
-        } else if (rc != SQLITE_DONE) {
+        }
+        else if (rc != SQLITE_DONE)
+        {
             fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
         }
     }
@@ -178,27 +215,33 @@ bool fetchData(const char* query, DataType type, Data* data, bool useCallback) {
     return true;
 }
 
-
-bool updateData(const char* query) {
+bool updateData(const char *query)
+{
     sqlite3 *db;
     char *zErrMsg = 0;
     int rc;
 
     rc = sqlite3_open("test.db", &db);
-   
-    if( rc ) {
+
+    if (rc)
+    {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         return false;
-    } else {
+    }
+    else
+    {
         fprintf(stdout, "Opened database successfully\n");
     }
 
     rc = sqlite3_exec(db, query, callback, 0, &zErrMsg);
-   
-    if( rc != SQLITE_OK ){
+
+    if (rc != SQLITE_OK)
+    {
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
-    } else {
+    }
+    else
+    {
         fprintf(stdout, "Operation done successfully\n");
     }
 
@@ -206,9 +249,9 @@ bool updateData(const char* query) {
     return true;
 }
 
-
-int main() {
-    const char* query;
+int main()
+{
+    const char *query;
     Data data;
     bool useCallback;
 
@@ -226,29 +269,54 @@ int main() {
     query = "SELECT address FROM COMPANY WHERE name='Teddy';";
     fetchData(query, TEXT, &data, false);
     printf("Teddy's address is %s\n", data.s);
-    free(data.s);  // Don't forget to free the string when you're done with it
+    free(data.s); // Don't forget to free the string when you're done with it
 
     // Example 4: Fetch and print multiple records using the callback function
     query = "SELECT * FROM COMPANY;";
-    fetchData(query, INTEGER, NULL, true);  // The second and third arguments are ignored when useCallback is true
+    fetchData(query, INTEGER, NULL, true); // The second and third arguments are ignored when useCallback is true
 
     //---------------------------------------------------------------------------------
 
     // Update data
-    const char* query2 = "UPDATE COMPANY SET AGE = 33 WHERE NAME='Paul';";
+    const char *query2 = "UPDATE COMPANY SET AGE = 33 WHERE NAME='Paul';";
     updateData(query2);
 
     //---------------------------------------------------------------------------------
 
     // Delete data
-    const char* query3 = "DELETE FROM COMPANY WHERE NAME='Mark';";
+    const char *query3 = "DELETE FROM COMPANY WHERE NAME='Mark';";
     updateData(query3);
+
+    //---------------------------------------------------------------------------------
+
+    // Insert data
+    int stid = 404 ;
+    char firstname[100] = "nimal";
+    char lastname[100] = "perera";
+    char dob[20] = "2000-01-01";
+    char contnumber[15] = "0712345678";
+    char email[50] = "asd@aasd.com";
+
+    char data1[256];
+    sprintf(data1, "%d, '%s', '%s', '%s', '%s', '%s'", stid, firstname, lastname, dob, contnumber, email);
+
+    const char *dataArray[1] = {data1};
+
+    insertData("Students", dataArray, 1);
 
     return 0;
 }
-
 
 // char query[100];
 // sprintf(query, "DELETE FROM COMPANY WHERE NAME='%s';", name);
 
 // deleteData(query);
+
+//--------------------------------------------------------------------------------------
+
+// char data[256];
+// sprintf(data, "%d, '%s', '%s', '%s', '%s', '%s'", stid, firstname, lastname, dob, contnumber, email);
+
+// const char* dataArray[1] = {data};
+
+// insertData("Students", dataArray, 1);
