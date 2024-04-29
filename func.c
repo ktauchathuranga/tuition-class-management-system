@@ -22,8 +22,8 @@ void sha256(const char *str, char outputBuffer[65]) {
 }
 
 int login() {
-    char stored_username_hash[] = "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb"; // a
-    char stored_password_hash[] = "3e23e8160039594a33894f6564e1b1348bbd7a0088d42c4acb73eeaed59c009d"; // b
+    char stored_username_hash[] = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; // admin
+    char stored_password_hash[] = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; // admin
 
     char username[100];
     char password[100];
