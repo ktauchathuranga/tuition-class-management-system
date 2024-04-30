@@ -155,58 +155,56 @@ int insertData(const char* tableName, const char* data[], int numData) {
 //     insertData("COMPANY", &data[i], 1);
 // }
 
-bool fetchData(const char* query, DataType type, Data* data, bool useCallback) {
+char **fetchData(const char *query, DataType type, bool useCallback, bool fetchAll)
+{
     sqlite3 *db;
     sqlite3_stmt *stmt;
     char *zErrMsg = 0;
     int rc;
+    char **results = NULL;
+    int resultCount = 0;
 
     rc = sqlite3_open("test.db", &db);
-   
-    if( rc ) {
+
+    if (rc)
+    {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-        return false;
-    } else {
+        return NULL;
+    }
+    else
+    {
         fprintf(stdout, "Opened database successfully\n");
     }
 
     rc = sqlite3_prepare_v2(db, query, -1, &stmt, NULL);
-   
-    if( rc != SQLITE_OK ){
-        fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
-        return false;
-    } 
 
-    if (useCallback) {
-        rc = sqlite3_exec(db, query, callback, 0, &zErrMsg);
-        if( rc != SQLITE_OK ){
-            fprintf(stderr, "SQL error: %s\n", zErrMsg);
-            sqlite3_free(zErrMsg);
-        } else {
-            fprintf(stdout, "Operation done successfully\n");
-        }
-    } else {
-        rc = sqlite3_step(stmt);
-        if (rc == SQLITE_ROW) {
-            switch (type) {
-                case INTEGER:
-                    data->i = sqlite3_column_int(stmt, 0);
-                    break;
-                case REAL:
-                    data->d = sqlite3_column_double(stmt, 0);
-                    break;
-                case TEXT:
-                    data->s = strdup((const char*)sqlite3_column_text(stmt, 0));
-                    break;
-            }
-        } else if (rc != SQLITE_DONE) {
-            fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
-        }
+    if (rc != SQLITE_OK)
+    {
+        fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
+        return NULL;
     }
+
+    int numRows = 0;
+    while (sqlite3_step(stmt) == SQLITE_ROW)
+    {
+        numRows++;
+    }
+
+    results = malloc(sizeof(char *) * (numRows + 1));
+
+    sqlite3_reset(stmt);
+
+    while (sqlite3_step(stmt) == SQLITE_ROW && fetchAll)
+    {
+        results[resultCount] = strdup((const char *)sqlite3_column_text(stmt, 0));
+        resultCount++;
+    }
+
+    results[resultCount] = NULL;
 
     sqlite3_finalize(stmt);
     sqlite3_close(db);
-    return true;
+    return results;
 }
 
 // For delete and update data
@@ -364,8 +362,8 @@ void tutReg() {
     printf("DONE!");
 }
 
-void browseStd() {
-
+void displayStd() {
+    
 }
 
 void stdSearch() {
