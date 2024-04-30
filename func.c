@@ -286,14 +286,19 @@ void stdReg() {
 
     printf("Enter st id: ");
     scanf("%d", &stid);
+
     printf("Enter first name: ");
     scanf("%s", firstname);
+
     printf("Enter last name: ");
     scanf("%s", lastname);
+
     printf("Enter dob: "); // add format year-month-date
     scanf("%s", dob);
+
     printf("Enter contact number: ");
     scanf("%s", contnumber);
+
     printf("Enter your email: ");
     scanf("%s", email);
 
@@ -311,8 +316,42 @@ void stdReg() {
 
 
 
-void teaReg() {
+void tutReg() {
+    int tutid;
+    char firstname[100];
+    char lastname[100];
+    char subject[20];
+    char contnumber[15];
+    char email[50];
 
+    printf("Enter tut id: ");
+    scanf("%d", &tutid);
+
+    printf("Enter first name: ");
+    scanf("%s", firstname);
+
+    printf("Enter last name: ");
+    scanf("%s", lastname);
+
+    printf("Enter subject: ");
+    scanf("%s", subject);
+
+    printf("Enter contact number: ");
+    scanf("%s", contnumber);
+
+    printf("Enter your email: ");
+    scanf("%s", email);
+
+    char data[256];
+    sprintf(data, "%d, '%s', '%s', '%s', '%s', '%s'", tutid, firstname, lastname, subject, contnumber, email);
+
+    // You should ask to verify the data before inserting
+
+    const char* dataArray[1] = {data};
+
+    insertData("Tutors", dataArray, 1);
+
+    printf("DONE!");
 }
 
 void browseStd() {
