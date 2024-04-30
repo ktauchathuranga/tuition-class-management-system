@@ -3,11 +3,11 @@
 
 #include <stdbool.h>
 
-typedef union {
-    int i;
-    double d;
-    char* s;
-} Data;
+// typedef union {
+//     int i;
+//     double d;
+//     char* s;
+// } Data;
 
 typedef enum {
     INTEGER,
@@ -20,13 +20,13 @@ void authSec();
 int createTable(const char* tableName, const char* columnDefinitions[], int numColumns);
 int insertData(const char* tableName, const char* data[], int numData);
 void stdReg();
-void teaReg();
+void tutReg();
 void displayMenu();
-void browseStd();
+void displayStd();
 void stdSearch();
 void feeMng();
 void status();
-bool fetchData(const char* query, DataType type, Data* data, bool useCallback);
+char **fetchData(const char *query, DataType type, bool useCallback, bool fetchAll);
 bool updateData(const char* query);
 
 #endif

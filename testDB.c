@@ -146,19 +146,21 @@ typedef enum
     TEXT
 } DataType;
 
-bool fetchData(const char *query, DataType type, Data *data, bool useCallback)
+char **fetchData(const char *query, DataType type, bool useCallback, bool fetchAll)
 {
     sqlite3 *db;
     sqlite3_stmt *stmt;
     char *zErrMsg = 0;
     int rc;
+    char **results = NULL;
+    int resultCount = 0;
 
     rc = sqlite3_open("test.db", &db);
 
     if (rc)
     {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-        return false;
+        return NULL;
     }
     else
     {
@@ -170,50 +172,36 @@ bool fetchData(const char *query, DataType type, Data *data, bool useCallback)
     if (rc != SQLITE_OK)
     {
         fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
-        return false;
+        return NULL;
     }
 
-    if (useCallback)
+    // Count the number of rows that the query will return
+    int numRows = 0;
+    while (sqlite3_step(stmt) == SQLITE_ROW)
     {
-        rc = sqlite3_exec(db, query, callback, 0, &zErrMsg);
-        if (rc != SQLITE_OK)
-        {
-            fprintf(stderr, "SQL error: %s\n", zErrMsg);
-            sqlite3_free(zErrMsg);
-        }
-        else
-        {
-            fprintf(stdout, "Operation done successfully\n");
-        }
+        numRows++;
     }
-    else
+
+    // Allocate memory for results
+    results = malloc(sizeof(char *) * (numRows + 1)); // +1 for the NULL terminator
+
+    // Reset the prepared statement
+    sqlite3_reset(stmt);
+
+    // Fetch the data
+    while (sqlite3_step(stmt) == SQLITE_ROW && fetchAll)
     {
-        rc = sqlite3_step(stmt);
-        if (rc == SQLITE_ROW)
-        {
-            switch (type)
-            {
-            case INTEGER:
-                data->i = sqlite3_column_int(stmt, 0);
-                break;
-            case REAL:
-                data->d = sqlite3_column_double(stmt, 0);
-                break;
-            case TEXT:
-                data->s = strdup((const char *)sqlite3_column_text(stmt, 0));
-                break;
-            }
-        }
-        else if (rc != SQLITE_DONE)
-        {
-            fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
-        }
+        results[resultCount] = strdup((const char *)sqlite3_column_text(stmt, 0));
+        resultCount++;
     }
+
+    results[resultCount] = NULL; // Ensure the array is NULL-terminated
 
     sqlite3_finalize(stmt);
     sqlite3_close(db);
-    return true;
+    return results;
 }
+
 
 bool updateData(const char *query)
 {
@@ -251,29 +239,47 @@ bool updateData(const char *query)
 
 int main()
 {
-    const char *query;
-    Data data;
-    bool useCallback;
+    // Fetching a single string value
+    const char *query = "SELECT FirstName FROM Students WHERE StudentID = 1;";
+    char **result = fetchData(query, TEXT, false, false);
+    if (result != NULL) {
+        printf("Name: %s\n", result[0]);
+        free(result[0]);
+        free(result);
+    }
 
-    // Example 1: Fetch a single integer value
-    query = "SELECT age FROM COMPANY WHERE name='Paul';";
-    fetchData(query, INTEGER, &data, false);
-    printf("Paul's age is %d\n", data.i);
+    // Fetching multiple string values
+    query = "SELECT ClassName FROM Classes;";
+    result = fetchData(query, TEXT, false, true);
+    if (result != NULL) {
+        for (int i = 0; result[i] != NULL; i++) {
+            printf("Name: %s\n", result[i]);
+            free(result[i]);
+        }
+        free(result);
+    }
 
-    // Example 2: Fetch a single real value
-    query = "SELECT salary FROM COMPANY WHERE name='Allen';";
-    fetchData(query, REAL, &data, false);
-    printf("Allen's salary is %.2f\n", data.d);
+    // Fetching a single integer value
+    query = "SELECT ContactNumber FROM Students WHERE StudentID = 5;";
+    result = fetchData(query, TEXT, false, false);
+    if (result != NULL) {
+        int age = atoi(result[0]);
+        printf("Age: %d\n", age);
+        free(result[0]);
+        free(result);
+    }
 
-    // Example 3: Fetch a single text value
-    query = "SELECT address FROM COMPANY WHERE name='Teddy';";
-    fetchData(query, TEXT, &data, false);
-    printf("Teddy's address is %s\n", data.s);
-    free(data.s); // Don't forget to free the string when you're done with it
-
-    // Example 4: Fetch and print multiple records using the callback function
-    query = "SELECT * FROM COMPANY;";
-    fetchData(query, INTEGER, NULL, true); // The second and third arguments are ignored when useCallback is true
+    // Fetching multiple integer values
+    query = "SELECT ContactNUmber FROM Students;";
+    result = fetchData(query, TEXT, false, true);
+    if (result != NULL) {
+        for (int i = 0; result[i] != NULL; i++) {
+            int age = atoi(result[i]);
+            printf("Age: %d\n", age);
+            free(result[i]);
+        }
+        free(result);
+    }
 
     //---------------------------------------------------------------------------------
 

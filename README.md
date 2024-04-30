@@ -12,7 +12,7 @@ gcc "replce-this-with-your-compiling-file-name" func.c -o main -lcrypto -lsqlite
 > - `createdb.c` is for create the db tables.
 > - `addsampledata.c` to add sample data to the tabels.
 > - `testDB.c` is for understand how the function sql works, with **examples**.
-> - `testMen` is for understand how the menu navigation works, with **examples**
+> - `testMen.c` is for understand how the menu navigation works, with **examples**
 > - default username and the password is `admin`
 
 #### 🏃‍♂️ To run:

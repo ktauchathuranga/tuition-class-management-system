@@ -155,58 +155,56 @@ int insertData(const char* tableName, const char* data[], int numData) {
 //     insertData("COMPANY", &data[i], 1);
 // }
 
-bool fetchData(const char* query, DataType type, Data* data, bool useCallback) {
+char **fetchData(const char *query, DataType type, bool useCallback, bool fetchAll)
+{
     sqlite3 *db;
     sqlite3_stmt *stmt;
     char *zErrMsg = 0;
     int rc;
+    char **results = NULL;
+    int resultCount = 0;
 
     rc = sqlite3_open("test.db", &db);
-   
-    if( rc ) {
+
+    if (rc)
+    {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-        return false;
-    } else {
+        return NULL;
+    }
+    else
+    {
         fprintf(stdout, "Opened database successfully\n");
     }
 
     rc = sqlite3_prepare_v2(db, query, -1, &stmt, NULL);
-   
-    if( rc != SQLITE_OK ){
-        fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
-        return false;
-    } 
 
-    if (useCallback) {
-        rc = sqlite3_exec(db, query, callback, 0, &zErrMsg);
-        if( rc != SQLITE_OK ){
-            fprintf(stderr, "SQL error: %s\n", zErrMsg);
-            sqlite3_free(zErrMsg);
-        } else {
-            fprintf(stdout, "Operation done successfully\n");
-        }
-    } else {
-        rc = sqlite3_step(stmt);
-        if (rc == SQLITE_ROW) {
-            switch (type) {
-                case INTEGER:
-                    data->i = sqlite3_column_int(stmt, 0);
-                    break;
-                case REAL:
-                    data->d = sqlite3_column_double(stmt, 0);
-                    break;
-                case TEXT:
-                    data->s = strdup((const char*)sqlite3_column_text(stmt, 0));
-                    break;
-            }
-        } else if (rc != SQLITE_DONE) {
-            fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
-        }
+    if (rc != SQLITE_OK)
+    {
+        fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
+        return NULL;
     }
+
+    int numRows = 0;
+    while (sqlite3_step(stmt) == SQLITE_ROW)
+    {
+        numRows++;
+    }
+
+    results = malloc(sizeof(char *) * (numRows + 1));
+
+    sqlite3_reset(stmt);
+
+    while (sqlite3_step(stmt) == SQLITE_ROW && fetchAll)
+    {
+        results[resultCount] = strdup((const char *)sqlite3_column_text(stmt, 0));
+        resultCount++;
+    }
+
+    results[resultCount] = NULL;
 
     sqlite3_finalize(stmt);
     sqlite3_close(db);
-    return true;
+    return results;
 }
 
 // For delete and update data
@@ -257,6 +255,10 @@ void authSec() {
             case 3:
                 // related function
                 break;
+            case 4:
+                tutReg();
+                // related function
+                break;
             case 0:
                 printf("Exiting program.\n");
                 break;
@@ -273,6 +275,7 @@ void displayMenu() {
     printf("1. Add Student\n");
     printf("2. Display Students\n");
     printf("3. Manage Classes\n");
+    printf("4. Add Tutor\n");
     printf("0. Exit\n");
 }
 
@@ -286,14 +289,19 @@ void stdReg() {
 
     printf("Enter st id: ");
     scanf("%d", &stid);
+
     printf("Enter first name: ");
     scanf("%s", firstname);
+
     printf("Enter last name: ");
     scanf("%s", lastname);
+
     printf("Enter dob: "); // add format year-month-date
     scanf("%s", dob);
+
     printf("Enter contact number: ");
     scanf("%s", contnumber);
+
     printf("Enter your email: ");
     scanf("%s", email);
 
@@ -310,13 +318,52 @@ void stdReg() {
 }
 
 
+void tutReg() {
+    int tutid;
+    char firstname[100];
+    char lastname[100];
+    char subject[100]; 
+    char contnumber[15];
+    char email[50];
 
-void teaReg() {
+    printf("Enter tut id: ");
+    scanf("%d", &tutid);
+    getchar();
 
+    printf("Enter first name: ");
+    fgets(firstname, sizeof(firstname), stdin);
+    firstname[strcspn(firstname, "\n")] = '\0';
+
+    printf("Enter last name: ");
+    fgets(lastname, sizeof(lastname), stdin);
+    lastname[strcspn(lastname, "\n")] = '\0';
+
+    printf("Enter subject: ");
+    fgets(subject, sizeof(subject), stdin);
+    subject[strcspn(subject, "\n")] = '\0';
+
+    printf("Enter contact number: ");
+    fgets(contnumber, sizeof(contnumber), stdin);
+    contnumber[strcspn(contnumber, "\n")] = '\0';
+
+    printf("Enter your email: ");
+    fgets(email, sizeof(email), stdin);
+    email[strcspn(email, "\n")] = '\0';
+
+    char data[256];
+    sprintf(data, "%d, '%s', '%s', '%s', '%s', '%s'", tutid, firstname, lastname, subject, contnumber, email);
+
+    // You should ask to verify the data before inserting
+
+    const char* dataArray[1] = {data};
+
+    insertData("Tutors", dataArray, 1);
+
+    printf("DONE!");
 }
 
-void browseStd() {
-
+void displayStd() {
+    
 }
 
 void stdSearch() {
