@@ -320,32 +320,37 @@ void stdReg() {
 }
 
 
-
 void tutReg() {
     int tutid;
     char firstname[100];
     char lastname[100];
-    char subject[20];
+    char subject[100]; 
     char contnumber[15];
     char email[50];
 
     printf("Enter tut id: ");
     scanf("%d", &tutid);
+    getchar();
 
     printf("Enter first name: ");
-    scanf("%s", firstname);
+    fgets(firstname, sizeof(firstname), stdin);
+    firstname[strcspn(firstname, "\n")] = '\0';
 
     printf("Enter last name: ");
-    scanf("%s", lastname);
+    fgets(lastname, sizeof(lastname), stdin);
+    lastname[strcspn(lastname, "\n")] = '\0';
 
     printf("Enter subject: ");
-    scanf("%s", subject);
+    fgets(subject, sizeof(subject), stdin);
+    subject[strcspn(subject, "\n")] = '\0';
 
     printf("Enter contact number: ");
-    scanf("%s", contnumber);
+    fgets(contnumber, sizeof(contnumber), stdin);
+    contnumber[strcspn(contnumber, "\n")] = '\0';
 
     printf("Enter your email: ");
-    scanf("%s", email);
+    fgets(email, sizeof(email), stdin);
+    email[strcspn(email, "\n")] = '\0';
 
     char data[256];
     sprintf(data, "%d, '%s', '%s', '%s', '%s', '%s'", tutid, firstname, lastname, subject, contnumber, email);
