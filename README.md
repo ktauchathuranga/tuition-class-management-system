@@ -14,6 +14,7 @@ gcc "replce-this-with-your-compiling-file-name" func.c -o main -lcrypto -lsqlite
 > - `testDB.c` is for understand how the function sql works, with **examples**.
 > - `testMen.c` is for understand how the menu navigation works, with **examples**
 > - default username and the password is `admin`
+> - if you want to add test file but do not want to uplaod to the GitHub, just add your file name to `.gitifnore` file.
 
 #### 🏃‍♂️ To run:
 - Windows
