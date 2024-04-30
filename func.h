@@ -22,7 +22,7 @@ int insertData(const char* tableName, const char* data[], int numData);
 void stdReg();
 void tutReg();
 void displayMenu();
-void browseStd();
+void displayStd();
 void stdSearch();
 void feeMng();
 void status();
