@@ -257,6 +257,10 @@ void authSec() {
             case 3:
                 // related function
                 break;
+            case 4:
+                tutReg();
+                // related function
+                break;
             case 0:
                 printf("Exiting program.\n");
                 break;
@@ -273,6 +277,7 @@ void displayMenu() {
     printf("1. Add Student\n");
     printf("2. Display Students\n");
     printf("3. Manage Classes\n");
+    printf("4. Add Tutor\n");
     printf("0. Exit\n");
 }
 
