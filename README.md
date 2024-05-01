@@ -29,19 +29,27 @@ main
 #### 🏢 Structure
 
 - LOGIN
-    - reg std
-    - reg tea
-    - browse std
-      - class
-        - display all std
-    - search std by id
-      - display details
-      - update
-      - delete
-    - fee manage
-      - collect fee (by id)
-      - due fee std list
-    - status (all basic summary)
+    - Manage Students
+      - Add Student
+      - Update Student
+      - Delete Student
+    - Manage Tutotrs
+      - Add Tutor
+      - Update Tutor
+      - Delete Tutor
+    - Manage Classes
+      - Add Class
+      - Update Class
+      - Delete Class
+    - Browse Students
+      - Class List
+        - Display All Students
+    - Search Student (by ID)
+      - Display Details
+    - Fee Manage
+      - Collect Fee (by ID)
+      - Due Fee (optional)
+    - Status (basic summary)
   
 #### 📜 More details:
 

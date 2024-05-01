@@ -250,6 +250,7 @@ void authSec() {
                 // related function
                 break;
             case 2:
+                displayStd();
                 // related function
                 break;
             case 3:
@@ -362,8 +363,63 @@ void tutReg() {
     printf("DONE!");
 }
 
+void dynamicMenu(char **items) {
+    int choice;
+    do {
+        // printf("\n=== Dynamic Menu ===\n");
+        for (int i = 0; items[i] != NULL; i++) {
+            printf("%d. %s\n", i+1, items[i]);
+        }
+        printf("0. Back to Main Menu\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        if (choice > 0 && items[choice-1] != NULL) {
+            printf("You selected: %s\n", items[choice-1]);
+            // call the function for the selected item
+
+            char buffer[256];
+            const char *classname = items[choice-1];
+
+            sprintf(buffer, "SELECT Students.FirstName, Students.LastName FROM Students JOIN Enrollments ON Students.StudentID = Enrollments.StudentID JOIN Classes ON Enrollments.ClassID = Classes.ClassID WHERE Classes.ClassName = '%s';", classname);
+
+            const char *query = buffer;
+
+
+            char **result = fetchData(query, TEXT, false, true);
+            if (result != NULL) {
+                for (int i = 0; result[i] != NULL; i++) {
+                    printf("Name: %s\n", result[i]);
+                    free(result[i]);
+                }
+            free(result);
+            }
+
+        } else if (choice == 0) {
+            printf("Returning to main menu.\n");
+        } else {
+            printf("Invalid choice. Please try again.\n");
+        }
+    } while (choice != 0);
+}
+
+
 void displayStd() {
-    
+
+    printf("Select the class: \n");
+
+
+    const char *query = "SELECT ClassName FROM Classes;";
+    char **result = fetchData(query, TEXT, false, true);
+    if (result != NULL) {
+    dynamicMenu(result);
+
+    for (int i = 0; result[i] != NULL; i++) {
+        free(result[i]);
+    }
+    free(result);
+}
+
 }
 
 void stdSearch() {
