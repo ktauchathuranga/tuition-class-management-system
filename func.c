@@ -433,3 +433,58 @@ void feeMng() {
 void status() {
 
 }
+
+void updateStd(){
+    int stid;
+    char firstname[100];
+    char lastname[100];
+    char dob[20];
+    char contnumber[15];
+    char email[50];
+
+    printf("Enter student ID to update: ");
+    scanf("%d", &stid);
+
+    printf("Enter first name: ");
+    scanf("%s", firstname);
+
+    printf("Enter last name: ");
+    scanf("%s", lastname);
+
+    printf("Enter dob: ");
+    scanf("%s", dob);
+
+    printf("Enter contact number: ");
+    scanf("%s", contnumber);
+
+    printf("Enter your email: ");
+    scanf("%s", email);
+
+    char data[256];
+    sprintf(data, "FirstName='%s', LastName='%s', DOB='%s', ContactNumber='%s', Email='%s'", firstname, lastname, dob, contnumber, email);
+
+    char query[512];
+    sprintf(query, "UPDATE Students SET %s WHERE StudentID=%d", data, stid);
+
+    if (updateData(query)) {
+        printf("Student details updated successfully!\n");
+    } else {
+        printf("Failed to update student details.\n");
+    }
+
+}
+void deleteStd(){
+    int stid;
+
+    printf("Enter student ID to delete: ");
+    scanf("%d", &stid);
+
+    char query[512];
+    sprintf(query, "DELETE FROM Students WHERE StudentID=%d", stid);
+
+    if (updateData(query)) {
+        printf("Student deleted successfully!\n");
+    } else {
+        printf("Failed to delete student.\n");
+    }
+}

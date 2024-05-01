@@ -26,6 +26,8 @@ void displayStd();
 void stdSearch();
 void feeMng();
 void status();
+void updateStd();
+void deleteStd();
 char **fetchData(const char *query, DataType type, bool useCallback, bool fetchAll);
 bool updateData(const char* query);
 
