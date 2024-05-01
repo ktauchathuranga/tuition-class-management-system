@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 #include "func.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -341,14 +342,18 @@ void stdReg()
     printf("Enter your email: ");
     scanf("%s", email);
 
-    char data[256];
-    snprintf(data, sizeof(data), "%d, '%s', '%s', '%s', '%s', '%s'", stid, firstname, lastname, dob, contnumber, email);
+    char *data;
+    asprintf(&data, "%d, '%s', '%s', '%s', '%s', '%s'", stid, firstname, lastname, dob, contnumber, email);
+
 
     // You should ask to verify the data before inserting
 
     const char *dataArray[1] = {data};
 
     insertData("Students", dataArray, 1);
+
+    free(data);
+
 
     printf("DONE!");
 }
@@ -386,8 +391,8 @@ void tutReg()
     fgets(email, sizeof(email), stdin);
     email[strcspn(email, "\n")] = '\0';
 
-    char data[256];
-    snprintf(data, sizeof(data), "%d, '%s', '%s', '%s', '%s', '%s'", tutid, firstname, lastname, subject, contnumber, email);
+    char *data;
+    asprintf(&data, "%d, '%s', '%s', '%s', '%s', '%s'", tutid, firstname, lastname, subject, contnumber, email);
 
 
     // You should ask to verify the data before inserting
@@ -395,6 +400,8 @@ void tutReg()
     const char *dataArray[1] = {data};
 
     insertData("Tutors", dataArray, 1);
+
+    free(data);
 
     printf("DONE!");
 }
