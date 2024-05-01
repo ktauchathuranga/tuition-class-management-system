@@ -155,7 +155,7 @@ int insertData(const char* tableName, const char* data[], int numData) {
 //     insertData("COMPANY", &data[i], 1);
 // }
 
-char **fetchData(const char *query, DataType type, bool useCallback, bool fetchAll)
+char **fetchData(const char *query, DataType type, bool useCallback)
 {
     sqlite3 *db;
     sqlite3_stmt *stmt;
@@ -194,7 +194,7 @@ char **fetchData(const char *query, DataType type, bool useCallback, bool fetchA
 
     sqlite3_reset(stmt);
 
-    while (sqlite3_step(stmt) == SQLITE_ROW && fetchAll)
+    while (sqlite3_step(stmt) == SQLITE_ROW)
     {
         results[resultCount] = strdup((const char *)sqlite3_column_text(stmt, 0));
         resultCount++;
