@@ -428,15 +428,17 @@ void stdSearch() {
     scanf("%d", &stid);
 
     char buffer[256];
-    sprintf(buffer, "SELECT * FROM Students WHERE StudentID = %d;", stid);
+    char *fields[] = {"StudentID", "FirstName", "LastName", "DateOfBirth", "ContactNumber", "Email"};
+    int numFields = sizeof(fields) / sizeof(fields[0]);
 
-    const char *query = buffer;
+    for (int i = 0; i < numFields; i++) {
+        sprintf(buffer, "SELECT %s FROM Students WHERE StudentID = %d;", fields[i], stid);
+        const char *query = buffer;
 
-    char **result = fetchData(query, TEXT);
-    if (result != NULL) {
-        for (int i = 0; result[i] != NULL; i++) {
-            printf("Name: %s\n", result[i]);
-            free(result[i]);
+        char **result = fetchData(query, TEXT);
+        if (result != NULL && result[0] != NULL) {
+            printf("%s: %s\n", fields[i], result[0]);
+            free(result[0]);
         }
         free(result);
     }
