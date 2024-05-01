@@ -1,7 +1,8 @@
 {
-    "files.associations": {
-        "*.md": "markdown",
-        "string.h": "c"
-    },
-    "cmake.configureOnOpen": false
+  "files.associations": {
+    "*.md": "markdown",
+    "string.h": "c"
+  },
+  "cmake.configureOnOpen": false,
+  "C_Cpp_Runner.msvcBatchPath": ""
 }
