@@ -412,10 +412,10 @@ void displayStd() {
     const char *query = "SELECT ClassName FROM Classes;";
     char **result = fetchData(query, TEXT);
     if (result != NULL) {
-    dynamicMenu(result);
+        dynamicMenu(result);
 
-    for (int i = 0; result[i] != NULL; i++) {
-        free(result[i]);
+        for (int i = 0; result[i] != NULL; i++) {
+            free(result[i]);
     }
     free(result);
 }
