@@ -3,25 +3,28 @@
 #include <stdlib.h>
 #include <string.h>
 #include <openssl/evp.h>
-#include <sqlite3.h> 
+#include <sqlite3.h>
 
-void sha256(const char *str, char outputBuffer[65]) {
+void sha256(const char *str, char outputBuffer[65])
+{
     unsigned char hash[EVP_MAX_MD_SIZE];
     unsigned int len = EVP_MAX_MD_SIZE;
-    
+
     EVP_MD_CTX *mdctx = EVP_MD_CTX_new();
     EVP_DigestInit_ex(mdctx, EVP_sha256(), NULL);
     EVP_DigestUpdate(mdctx, str, strlen(str));
     EVP_DigestFinal_ex(mdctx, hash, &len);
     EVP_MD_CTX_free(mdctx);
-    
-    for(int i = 0; i < len; i++) {
+
+    for (int i = 0; i < len; i++)
+    {
         sprintf(outputBuffer + (i * 2), "%02x", hash[i]);
     }
     outputBuffer[64] = 0;
 }
 
-int login() {
+int login()
+{
     char stored_username_hash[] = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; // admin
     char stored_password_hash[] = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; // admin
 
@@ -39,45 +42,55 @@ int login() {
     sha256(password, entered_password_hash);
 
     if (strcmp(stored_username_hash, entered_username_hash) == 0 &&
-        strcmp(stored_password_hash, entered_password_hash) == 0) {
+        strcmp(stored_password_hash, entered_password_hash) == 0)
+    {
         printf("Login successful!\n");
         return 1;
-    } else {
+    }
+    else
+    {
         printf("Login failed. Please check your username and password.\n");
         return 0;
     }
-
 }
 
-static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
-   int i;
-   for(i = 0; i<argc; i++) {
-      printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-   }
-   printf("\n");
-   return 0;
+static int callback(void *NotUsed, int argc, char **argv, char **azColName)
+{
+    int i;
+    for (i = 0; i < argc; i++)
+    {
+        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+    }
+    printf("\n");
+    return 0;
 }
 
-int createTable(const char* tableName, const char* columnDefinitions[], int numColumns) {
+int createTable(const char *tableName, const char *columnDefinitions[], int numColumns)
+{
     sqlite3 *db;
     char *zErrMsg = 0;
     int rc;
 
     rc = sqlite3_open("test.db", &db);
-   
-    if( rc ) {
+
+    if (rc)
+    {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         return 0;
-    } else {
+    }
+    else
+    {
         fprintf(stdout, "Opened database successfully\n");
     }
 
     char sql[1024] = {0};
     sprintf(sql, "CREATE TABLE %s(", tableName);
 
-    for(int i = 0; i < numColumns; i++) {
+    for (int i = 0; i < numColumns; i++)
+    {
         strcat(sql, columnDefinitions[i]);
-        if(i < numColumns - 1) {
+        if (i < numColumns - 1)
+        {
             strcat(sql, ",");
         }
     }
@@ -85,11 +98,14 @@ int createTable(const char* tableName, const char* columnDefinitions[], int numC
     strcat(sql, ");");
 
     rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
-   
-    if( rc != SQLITE_OK ){
+
+    if (rc != SQLITE_OK)
+    {
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
-    } else {
+    }
+    else
+    {
         fprintf(stdout, "Table created successfully\n");
     }
     sqlite3_close(db);
@@ -106,26 +122,32 @@ int createTable(const char* tableName, const char* columnDefinitions[], int numC
 
 // createTable("COMPANY", columnDefinitions, 5);
 
-int insertData(const char* tableName, const char* data[], int numData) {
+int insertData(const char *tableName, const char *data[], int numData)
+{
     sqlite3 *db;
     char *zErrMsg = 0;
     int rc;
 
     rc = sqlite3_open("test.db", &db);
-   
-    if( rc ) {
+
+    if (rc)
+    {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         return 0;
-    } else {
+    }
+    else
+    {
         fprintf(stdout, "Opened database successfully\n");
     }
 
     char sql[1024] = {0};
     sprintf(sql, "INSERT INTO %s VALUES(", tableName);
 
-    for(int i = 0; i < numData; i++) {
+    for (int i = 0; i < numData; i++)
+    {
         strcat(sql, data[i]);
-        if(i < numData - 1) {
+        if (i < numData - 1)
+        {
             strcat(sql, ",");
         }
     }
@@ -133,11 +155,14 @@ int insertData(const char* tableName, const char* data[], int numData) {
     strcat(sql, ");");
 
     rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
-   
-    if( rc != SQLITE_OK ){
+
+    if (rc != SQLITE_OK)
+    {
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
-    } else {
+    }
+    else
+    {
         fprintf(stdout, "Records created successfully\n");
     }
     sqlite3_close(db);
@@ -208,26 +233,33 @@ char **fetchData(const char *query, DataType type)
 }
 
 // For delete and update data
-bool updateData(const char* query) {
+bool updateData(const char *query)
+{
     sqlite3 *db;
     char *zErrMsg = 0;
     int rc;
 
     rc = sqlite3_open("test.db", &db);
-   
-    if( rc ) {
+
+    if (rc)
+    {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         return false;
-    } else {
+    }
+    else
+    {
         fprintf(stdout, "Opened database successfully\n");
     }
 
     rc = sqlite3_exec(db, query, callback, 0, &zErrMsg);
-   
-    if( rc != SQLITE_OK ){
+
+    if (rc != SQLITE_OK)
+    {
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
-    } else {
+    }
+    else
+    {
         fprintf(stdout, "Operation done successfully\n");
     }
 
@@ -235,42 +267,44 @@ bool updateData(const char* query) {
     return true;
 }
 
-
-void authSec() {
+void authSec()
+{
     int choice;
 
-    do {
+    do
+    {
         displayMenu();
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
-        switch (choice) {
-            case 1:
-                stdReg();
-                // related function
-                break;
-            case 2:
-                displayStd();
-                // related function
-                break;
-            case 3:
-                // related function
-                break;
-            case 4:
-                tutReg();
-                // related function
-                break;
-            case 0:
-                printf("Exiting program.\n");
-                break;
-            default:
-                printf("Invalid choice. Please try again.\n");
+        switch (choice)
+        {
+        case 1:
+            stdReg();
+            // related function
+            break;
+        case 2:
+            displayStd();
+            // related function
+            break;
+        case 3:
+            // related function
+            break;
+        case 4:
+            tutReg();
+            // related function
+            break;
+        case 0:
+            printf("Exiting program.\n");
+            break;
+        default:
+            printf("Invalid choice. Please try again.\n");
         }
     } while (choice != 0);
-
 }
 
-void displayMenu() {
+void displayMenu()
+{
     // these are just place holders, TO BE CHANGED!
     printf("\n=== Tuition Class Management System ===\n");
     printf("1. Add Student\n");
@@ -280,7 +314,8 @@ void displayMenu() {
     printf("0. Exit\n");
 }
 
-void stdReg() {
+void stdReg()
+{
     int stid;
     char firstname[100];
     char lastname[100];
@@ -311,19 +346,19 @@ void stdReg() {
 
     // You should ask to verify the data before inserting
 
-    const char* dataArray[1] = {data};
+    const char *dataArray[1] = {data};
 
     insertData("Students", dataArray, 1);
 
     printf("DONE!");
 }
 
-
-void tutReg() {
+void tutReg()
+{
     int tutid;
     char firstname[100];
     char lastname[100];
-    char subject[100]; 
+    char subject[100];
     char contnumber[15];
     char email[50];
 
@@ -356,73 +391,82 @@ void tutReg() {
 
     // You should ask to verify the data before inserting
 
-    const char* dataArray[1] = {data};
+    const char *dataArray[1] = {data};
 
     insertData("Tutors", dataArray, 1);
 
     printf("DONE!");
 }
 
-void dynamicMenu(char **items) {
+void dynamicMenu(char **items)
+{
     int choice;
-    do {
+    do
+    {
         // printf("\n=== Dynamic Menu ===\n");
-        for (int i = 0; items[i] != NULL; i++) {
-            printf("%d. %s\n", i+1, items[i]);
+        for (int i = 0; items[i] != NULL; i++)
+        {
+            printf("%d. %s\n", i + 1, items[i]);
         }
         printf("0. Back to Main Menu\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
-        if (choice > 0 && items[choice-1] != NULL) {
-            printf("You selected: %s\n", items[choice-1]);
+        if (choice > 0 && items[choice - 1] != NULL)
+        {
+            printf("You selected: %s\n", items[choice - 1]);
             // call the function for the selected item
 
             char buffer[256];
-            const char *classname = items[choice-1];
+            const char *classname = items[choice - 1];
 
             sprintf(buffer, "SELECT Students.FirstName, Students.LastName FROM Students JOIN Enrollments ON Students.StudentID = Enrollments.StudentID JOIN Classes ON Enrollments.ClassID = Classes.ClassID WHERE Classes.ClassName = '%s';", classname);
 
             const char *query = buffer;
 
-
             char **result = fetchData(query, TEXT);
-            if (result != NULL) {
-                for (int i = 0; result[i] != NULL; i++) {
+            if (result != NULL)
+            {
+                for (int i = 0; result[i] != NULL; i++)
+                {
                     printf("Name: %s\n", result[i]);
                     free(result[i]);
                 }
-            free(result);
+                free(result);
             }
-
-        } else if (choice == 0) {
+        }
+        else if (choice == 0)
+        {
             printf("Returning to main menu.\n");
-        } else {
+        }
+        else
+        {
             printf("Invalid choice. Please try again.\n");
         }
     } while (choice != 0);
 }
 
-
-void displayStd() {
+void displayStd()
+{
 
     printf("Select the class: \n");
 
-
     const char *query = "SELECT ClassName FROM Classes;";
     char **result = fetchData(query, TEXT);
-    if (result != NULL) {
+    if (result != NULL)
+    {
         dynamicMenu(result);
 
-        for (int i = 0; result[i] != NULL; i++) {
+        for (int i = 0; result[i] != NULL; i++)
+        {
             free(result[i]);
+        }
+        free(result);
     }
-    free(result);
 }
 
-}
-
-void stdSearch() {
+void stdSearch()
+{
     int stid;
     printf("Enter student id: ");
     scanf("%d", &stid);
@@ -431,12 +475,14 @@ void stdSearch() {
     char *fields[] = {"StudentID", "FirstName", "LastName", "DateOfBirth", "ContactNumber", "Email"};
     int numFields = sizeof(fields) / sizeof(fields[0]);
 
-    for (int i = 0; i < numFields; i++) {
+    for (int i = 0; i < numFields; i++)
+    {
         sprintf(buffer, "SELECT %s FROM Students WHERE StudentID = %d;", fields[i], stid);
         const char *query = buffer;
 
         char **result = fetchData(query, TEXT);
-        if (result != NULL && result[0] != NULL) {
+        if (result != NULL && result[0] != NULL)
+        {
             printf("%s: %s\n", fields[i], result[0]);
             free(result[0]);
         }
@@ -444,10 +490,10 @@ void stdSearch() {
     }
 }
 
-void feeMng() {
-    
+void feeMng()
+{
 }
 
-void status() {
-
+void status()
+{
 }
