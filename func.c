@@ -155,7 +155,7 @@ int insertData(const char* tableName, const char* data[], int numData) {
 //     insertData("COMPANY", &data[i], 1);
 // }
 
-char **fetchData(const char *query, DataType type, bool useCallback)
+char **fetchData(const char *query, DataType type)
 {
     sqlite3 *db;
     sqlite3_stmt *stmt;
@@ -386,7 +386,7 @@ void dynamicMenu(char **items) {
             const char *query = buffer;
 
 
-            char **result = fetchData(query, TEXT, false);
+            char **result = fetchData(query, TEXT);
             if (result != NULL) {
                 for (int i = 0; result[i] != NULL; i++) {
                     printf("Name: %s\n", result[i]);
@@ -410,7 +410,7 @@ void displayStd() {
 
 
     const char *query = "SELECT ClassName FROM Classes;";
-    char **result = fetchData(query, TEXT, false);
+    char **result = fetchData(query, TEXT);
     if (result != NULL) {
     dynamicMenu(result);
 
@@ -423,7 +423,23 @@ void displayStd() {
 }
 
 void stdSearch() {
-    // by ID (look at README.md)
+    int stid;
+    printf("Enter student id: ");
+    scanf("%d", &stid);
+
+    char buffer[256];
+    sprintf(buffer, "SELECT * FROM Students WHERE StudentID = %d;", stid);
+
+    const char *query = buffer;
+
+    char **result = fetchData(query, TEXT);
+    if (result != NULL) {
+        for (int i = 0; result[i] != NULL; i++) {
+            printf("Name: %s\n", result[i]);
+            free(result[i]);
+        }
+        free(result);
+    }
 }
 
 void feeMng() {
