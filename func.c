@@ -386,7 +386,7 @@ void dynamicMenu(char **items) {
             const char *query = buffer;
 
 
-            char **result = fetchData(query, TEXT, false, true);
+            char **result = fetchData(query, TEXT, false);
             if (result != NULL) {
                 for (int i = 0; result[i] != NULL; i++) {
                     printf("Name: %s\n", result[i]);
@@ -410,7 +410,7 @@ void displayStd() {
 
 
     const char *query = "SELECT ClassName FROM Classes;";
-    char **result = fetchData(query, TEXT, false, true);
+    char **result = fetchData(query, TEXT, false);
     if (result != NULL) {
     dynamicMenu(result);
 
