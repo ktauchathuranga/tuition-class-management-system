@@ -342,7 +342,7 @@ void stdReg()
     scanf("%s", email);
 
     char data[256];
-    sprintf(data, "%d, '%s', '%s', '%s', '%s', '%s'", stid, firstname, lastname, dob, contnumber, email);
+    snprintf(data, sizeof(data), "%d, '%s', '%s', '%s', '%s', '%s'", stid, firstname, lastname, dob, contnumber, email);
 
     // You should ask to verify the data before inserting
 
@@ -387,7 +387,8 @@ void tutReg()
     email[strcspn(email, "\n")] = '\0';
 
     char data[256];
-    sprintf(data, "%d, '%s', '%s', '%s', '%s', '%s'", tutid, firstname, lastname, subject, contnumber, email);
+    snprintf(data, sizeof(data), "%d, '%s', '%s', '%s', '%s', '%s'", tutid, firstname, lastname, subject, contnumber, email);
+
 
     // You should ask to verify the data before inserting
 
