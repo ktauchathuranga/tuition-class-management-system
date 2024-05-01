@@ -16,6 +16,9 @@ gcc "replce-this-with-your-compiling-file-name" func.c -o main -lcrypto -lsqlite
 > - Default username and the password is `admin`
 > - If you want to add test file but do not want to uplaod to the GitHub, just add your file name to `.gitignore` file.
 
+> [!IMPORTANT]  
+> - Hence, the repo does not have db included; create db first by running `createdb.c`, and then add data to the tables by running `addsampledata.c`
+
 #### 🏃‍♂️ To run:
 - Windows
 ```
