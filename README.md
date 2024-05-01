@@ -9,15 +9,15 @@ gcc "replace-this-with-your-compiling-file-name" func.c -o main -lcrypto -lsqlit
 > [!NOTE]  
 > - You need, `openssl` library and `sqlite3` library.
 > - If you still having trouble, you can open a codespace for the repo by ```Code -> Codespaces -> Create codespace on main```
-> - `createdb.c` is for create the db tables.
-> - `addsampledata.c` to add sample data to the tabels.
 > - `testDB.c` is for understand how the function sql works, with **examples**.
 > - `testMen.c` is for understand how the menu navigation works, with **examples**
 > - Default username and the password is `admin`
 > - If you want to add test file but do not want to uplaod to the GitHub, just add your file name to `.gitignore` file.
 
 > [!IMPORTANT]  
-> - Hence, the repo does not have db included; create db first by running `createdb.c`, and then add data to the tables by running `addsampledata.c`
+> - Hence, the repo does not have db included; create db and add sample data by running,
+> - If you are in linux os `./RUNTHIS`
+> - If you are in windows os `RUNTHIS.exe`
 
 ### 🏃‍♂️ To run:
 - Windows
