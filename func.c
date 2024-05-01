@@ -460,10 +460,10 @@ void updateStd(){
     printf("Enter your email: ");
     scanf("%s", email);
 
-    char data[256];
+    char data[512];
     sprintf(data, "FirstName='%s', LastName='%s', DOB='%s', ContactNumber='%s', Email='%s'", firstname, lastname, dob, contnumber, email);
 
-    char query[512];
+    char query[1024];
     sprintf(query, "UPDATE Students SET %s WHERE StudentID=%d", data, stid);
 
     if (updateData(query)) {
