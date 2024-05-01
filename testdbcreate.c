@@ -50,6 +50,14 @@ int main(int argc, char *argv[])
         "FOREIGN KEY(StudentID) REFERENCES Students(StudentID)"};
     createTable("Payments", paymentsColumnDefinitions, 5);
 
+    const char *attendanceColumnDefinitions[] = {
+        "AttendanceID INT PRIMARY KEY",
+        "EnrollmentID INT",
+        "AttendanceDate TEXT",
+        "IsPresent INT",
+        "FOREIGN KEY(EnrollmentID) REFERENCES Enrollments(EnrollmentID)"};
+    createTable("Attendance", attendanceColumnDefinitions, 5);
+
     // Add sample data----------------------------------------------------------
 
     const char *studentsData[] = {
@@ -126,6 +134,24 @@ int main(int argc, char *argv[])
     {
         insertData("Payments", &paymentsData[i], 1);
     }
+
+    const char *attendanceData[] = {
+        "1, 1, '2024-01-01', 1",
+        "2, 2, '2024-01-02', 1",
+        "3, 3, '2024-02-01', 1",
+        "4, 4, '2024-02-02', 0",
+        "5, 5, '2024-03-01', 1",
+        "6, 6, '2024-03-02', 1",
+        "7, 7, '2024-04-01', 1",
+        "8, 8, '2024-04-02', 1",
+        "9, 9, '2024-05-01', 0",
+        "10, 10, '2024-05-02', 1"};
+
+    for (int i = 0; i < 10; i++)
+    {
+        insertData("Attendance", &attendanceData[i], 1);
+    }
+
 
     return 0;
 }
