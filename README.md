@@ -7,14 +7,14 @@ gcc "replce-this-with-your-compiling-file-name" func.c -o main -lcrypto -lsqlite
 ```
 
 > [!NOTE]  
-> - You need, ```openssl``` library and ```sqlite3``` library.
+> - You need, `openssl` library and `sqlite3` library.
 > - If you still having trouble, you can open a codespace for the repo by ```Code -> Codespaces -> Create codespace on main```
 > - `createdb.c` is for create the db tables.
 > - `addsampledata.c` to add sample data to the tabels.
 > - `testDB.c` is for understand how the function sql works, with **examples**.
 > - `testMen.c` is for understand how the menu navigation works, with **examples**
-> - default username and the password is `admin`
-> - if you want to add test file but do not want to uplaod to the GitHub, just add your file name to `.gitignore` file.
+> - Default username and the password is `admin`
+> - If you want to add test file but do not want to uplaod to the GitHub, just add your file name to `.gitignore` file.
 
 #### 🏃‍♂️ To run:
 - Windows
@@ -47,6 +47,9 @@ main
 
 `func.c` holds all major functions; if you add a new function, don't forget to add a function prototype to the `func.h` file as well.
 In `main.c` we just use basic logic to call the functions so it doesn't get too crowded. And by doing that `main.c` will be much easier to read and understand the basic logic structure behind it.
+
+> [!NOTE]  
+> If you see any bugs or things that might be improved, please open an issue.
 
 #### 🔗 Usefull links,
 
