@@ -3,7 +3,7 @@
 
 #### 🤖 To compile:
 ```
-gcc "replce-this-with-your-compiling-file-name" func.c -o main -lcrypto -lsqlite3
+gcc "replace-this-with-your-compiling-file-name" func.c -o main -lcrypto -lsqlite3
 ```
 
 > [!NOTE]  
