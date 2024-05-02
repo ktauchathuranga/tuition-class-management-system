@@ -925,6 +925,7 @@ void manageFee() {
                 break;
             case 2:
                 // Add related function
+                dueFee();
                 break;
             case 0:
                 printf("Returning to main menu.\n");
@@ -963,46 +964,28 @@ void manageAttendance() {
 
 void collectFee() {
     int stid;
-    int payid;
-    int maxid;
-    float fee;
     char date[20];
+    char dueDate[20];
 
-    // get last payment id
-    char *query = "SELECT MAX(PaymentID) FROM Payments;";
-    char **result = fetchData(query, INTEGER);
-    if (result != NULL && result[0] != NULL)
-    {
-        maxid = atoi(result[0]);
-        free(result[0]);
-        free(result);
-    }
-    else
-    {
-        maxid = 0;
-    }
-
-    printf("Last Payment ID: %d\n", maxid);
-
-    printf("Payment ID:");
-    scanf("%d", &payid);
+    printf("Enter due date: ");
+    scanf("%s", dueDate);
 
     printf("Enter student ID: ");
     scanf("%d", &stid);
 
-    printf("Enter fee amount: ");
-    scanf("%f", &fee);
-
     printf("Enter date: ");
     scanf("%s", date);
 
-    char data[256];
-    sprintf(data, "%d, %d, %f, '%s'", payid, stid, fee, date);
+    char query[100];
+    sprintf(query, "UPDATE Payments SET PaymentDate='%s', Paid='1' WHERE StudentID=%d AND DueDate='%s';", date, stid, dueDate);
 
-    const char *dataArray[1] = {data};
-    insertData("Payments", dataArray, 1);
+    const char *query2 = query;
 
-    printf("\nFee collected successfully!\n");
+    if (updateData(query)) {
+        printf("\nFee collected successfully!\n");
+    } else {
+        printf("\nFailed to collect fee. Please try again.\n");
+    }
 }
 
 int executeSQL(sqlite3 *db, const char *sql)
