@@ -307,12 +307,20 @@ void stdReg() {
     scanf("%s", email);
 
     char data[256];
-    sprintf(data, "%d, '%s', '%s', '%s', '%s', '%s'", stid, firstname, lastname, dob, contnumber, email);
+    sprintf(data, "%d, '%s', '%s', '%s', '%s', '%s'\n", stid, firstname, lastname, dob, contnumber, email);
 
-    // You should ask to verify the data before inserting
+    // Write user details to a text file
+    FILE *file = fopen("user_log.txt", "a"); // Open file in append mode
+    if (file != NULL) {
+        fputs(data, file); // Write data to the file
+        fclose(file); // Close the file
+    } else {
+        printf("Error: Unable to open file.\n");
+        return;
+    }
 
+    // Insert user details into the database
     const char* dataArray[1] = {data};
-
     insertData("Students", dataArray, 1);
 
     printf("DONE!");
