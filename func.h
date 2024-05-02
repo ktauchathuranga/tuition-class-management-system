@@ -38,5 +38,6 @@ void manageStudents();
 void manageFee();
 void manageAttendance();
 void collectFee();
+void dueFee();
 
 #endif
