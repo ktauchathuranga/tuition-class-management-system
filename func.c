@@ -281,19 +281,35 @@ void authSec()
         switch (choice)
         {
         case 1:
-            stdReg();
+            manageStudents();
             // related function
             break;
         case 2:
-            displayStd();
+            manageTutors();
             // related function
             break;
         case 3:
-            manageClasses();
+            manageClass();
             // related function
             break;
         case 4:
-            tutReg();
+            displayStd();
+            // related function
+            break;
+        case 5:
+            stdSearch();
+            // related function
+            break;
+        case 6:
+            manageFee();
+            // related function
+            break;
+        case 7:
+            manageAttendance();
+            // related function
+            break;
+        case 8:
+            status();
             // related function
             break;
         case 0:
@@ -715,7 +731,7 @@ void editClass(){
                 deleteClass(classID);
                 break;
             case 3:
-                 manageClasses();
+                 manageClass();
                  break;
             case 0:
                 authSec();
@@ -832,9 +848,9 @@ void manageTutors() {
         printf("3. Delete Tutor\n");
         printf("0. Back to Main Menu\n");
         printf("Enter your choice: ");
-        scanf("%d", &tutorChoice;);
+        scanf("%d", &tutorChoice);
 
-        switch (tutorChoice;) {
+        switch (tutorChoice) {
             case 1:
                 // Add related function
                 break;
@@ -850,7 +866,7 @@ void manageTutors() {
             default:
                 printf("Invalid choice. Please try again.\n");
         }
-    } while (tutorChoice; != 0);
+    } while (tutorChoice != 0);
 }
 
 void manageClass() {
@@ -862,9 +878,9 @@ void manageClass() {
         printf("3. Delete Class\n");
         printf("0. Back to Main Menu\n");
         printf("Enter your choice: ");
-        scanf("%d", &classChoice;);
+        scanf("%d", &classChoice);
 
-        switch (classChoice;) {
+        switch (classChoice) {
             case 1:
                 // Add related function
                 break;
@@ -880,7 +896,7 @@ void manageClass() {
             default:
                 printf("Invalid choice. Please try again.\n");
         }
-    } while (classChoice; != 0);
+    } while (classChoice != 0);
 }
 
 void manageFee() {
@@ -891,9 +907,9 @@ void manageFee() {
         printf("2. Due Fee\n");
         printf("0. Back to Main Menu\n");
         printf("Enter your choice: ");
-        scanf("%d", &feeChoice;);
+        scanf("%d", &feeChoice);
 
-        switch (feeChoice;) {
+        switch (feeChoice) {
             case 1:
                 // Add related function
                 break;
@@ -906,7 +922,7 @@ void manageFee() {
             default:
                 printf("Invalid choice. Please try again.\n");
         }
-    } while (feeChoice; != 0);
+    } while (feeChoice != 0);
 }
 
 void manageAttendance() {
@@ -917,9 +933,9 @@ void manageAttendance() {
         printf("2. Check Attendance\n");
         printf("0. Back to Main Menu\n");
         printf("Enter your choice: ");
-        scanf("%d", &attendanceChoice;);
+        scanf("%d", &attendanceChoice);
 
-        switch (attendanceChoice;) {
+        switch (attendanceChoice) {
             case 1:
                 // Add related function
                 break;
@@ -932,5 +948,5 @@ void manageAttendance() {
             default:
                 printf("Invalid choice. Please try again.\n");
         }
-    } while (attendanceChoice; != 0);
+    } while (attendanceChoice != 0);
 }
