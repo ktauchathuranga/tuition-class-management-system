@@ -146,7 +146,7 @@ typedef enum
     TEXT
 } DataType;
 
-char **fetchData(const char *query, DataType type, bool useCallback, bool fetchAll)
+char **fetchData(const char *query, DataType type)
 {
     sqlite3 *db;
     sqlite3_stmt *stmt;
@@ -189,7 +189,7 @@ char **fetchData(const char *query, DataType type, bool useCallback, bool fetchA
     sqlite3_reset(stmt);
 
     // Fetch the data
-    while (sqlite3_step(stmt) == SQLITE_ROW && fetchAll)
+    while (sqlite3_step(stmt) == SQLITE_ROW)
     {
         results[resultCount] = strdup((const char *)sqlite3_column_text(stmt, 0));
         resultCount++;
@@ -241,7 +241,7 @@ int main()
 {
     // Fetching a single string value
     const char *query = "SELECT FirstName FROM Students WHERE StudentID = 1;";
-    char **result = fetchData(query, TEXT, false, false);
+    char **result = fetchData(query, TEXT);
     if (result != NULL) {
         printf("Name: %s\n", result[0]);
         free(result[0]);
@@ -250,7 +250,7 @@ int main()
 
     // Fetching multiple string values
     query = "SELECT ClassName FROM Classes;";
-    result = fetchData(query, TEXT, false, true);
+    result = fetchData(query, TEXT);
     if (result != NULL) {
         for (int i = 0; result[i] != NULL; i++) {
             printf("Name: %s\n", result[i]);
@@ -260,8 +260,8 @@ int main()
     }
 
     // Fetching a single integer value
-    query = "SELECT ContactNumber FROM Students WHERE StudentID = 5;";
-    result = fetchData(query, TEXT, false, false);
+    query = "SELECT ContactNumber FROM Students WHERE StudentID = 2;";
+    result = fetchData(query, TEXT);
     if (result != NULL) {
         int age = atoi(result[0]);
         printf("Age: %d\n", age);
@@ -271,7 +271,7 @@ int main()
 
     // Fetching multiple integer values
     query = "SELECT ContactNUmber FROM Students;";
-    result = fetchData(query, TEXT, false, true);
+    result = fetchData(query, TEXT);
     if (result != NULL) {
         for (int i = 0; result[i] != NULL; i++) {
             int age = atoi(result[i]);
@@ -284,7 +284,7 @@ int main()
     //---------------------------------------------------------------------------------
 
     // Update data
-    const char *query2 = "UPDATE COMPANY SET AGE = 33 WHERE NAME='Paul';";
+    const char *query2 = "UPDATE Students SET StudentID = 6 WHERE FirstName='amal';";
     updateData(query2);
 
     //---------------------------------------------------------------------------------

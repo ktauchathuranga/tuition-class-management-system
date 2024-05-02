@@ -30,7 +30,8 @@ void updateStd();
 void deleteStd();
 void updateTut();
 void deleteTut();
-char **fetchData(const char *query, DataType type, bool useCallback, bool fetchAll);
+char **fetchData(const char *query, DataType type);
 bool updateData(const char* query);
+void manageClasses();
 
 #endif
