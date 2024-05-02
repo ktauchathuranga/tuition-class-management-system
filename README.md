@@ -18,7 +18,8 @@ gcc <your-compiling-file-name> func.c -o main -lcrypto -lsqlite3
 > - Hence, the repo does **NOT** have db included; create db and add sample data by running,
 > - If you are in linux `./RUNTHIS`
 > - If you are in windows `RUNTHIS.exe`
-
+> - `MONTHUPDATE` is for update the the `Payment` table for every month.
+> - `DAYUPDATE` is for update the `Attendance` table for every day.
 ### 🏃‍♂️ To run:
 - Windows
 ```
