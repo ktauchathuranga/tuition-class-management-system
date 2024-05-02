@@ -546,7 +546,7 @@ void deleteTut(){
     scanf("%d", &tutid);
 
     char query[512];
-    sprintf(query, "DELETE FROM Teachers WHERE TeacherID=%d", tutid);
+    sprintf(query, "DELETE FROM Tutors WHERE TutorID=%d", tutid);
 
     if (updateData(query)) {
         printf("Teacher deleted successfully!\n");
