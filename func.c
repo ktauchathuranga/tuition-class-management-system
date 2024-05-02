@@ -596,7 +596,7 @@ void editClass(){
                  break;
             case 0:
                 authSec();
-                printf("Returning to main menu.\n");
+                // printf("Returning to main menu.\n");
                 break;
             default:
                 printf("Invalid choice.\n");
