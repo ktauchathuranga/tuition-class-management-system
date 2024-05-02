@@ -275,8 +275,10 @@ void displayMenu() {
     printf("\n=== Tuition Class Management System ===\n");
     printf("1. Add Student\n");
     printf("2. Display Students\n");
-    printf("3. Manage Classes\n");
-    printf("4. Add Tutor\n");
+    printf("3. Update Students\n");
+    printf("4. Delete Students\n");
+    printf("5. Manage Classes\n");
+    printf("6. Add Tutor\n");
     printf("0. Exit\n");
 }
 
