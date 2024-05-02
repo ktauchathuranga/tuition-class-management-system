@@ -921,6 +921,7 @@ void manageFee() {
         switch (feeChoice) {
             case 1:
                 // Add related function
+                collectFee();
                 break;
             case 2:
                 // Add related function
@@ -1002,4 +1003,67 @@ void collectFee() {
     insertData("Payments", dataArray, 1);
 
     printf("\nFee collected successfully!\n");
+}
+
+int executeSQL(sqlite3 *db, const char *sql)
+{
+    char *errMsg = NULL;
+    int rc = sqlite3_exec(db, sql, 0, 0, &errMsg);
+    if (rc != SQLITE_OK)
+    {
+        fprintf(stderr, "SQL error: %s\n", errMsg);
+        sqlite3_free(errMsg);
+    }
+    return rc;
+}
+
+void dueFee()
+{
+    sqlite3 *db;
+    int rc = sqlite3_open("test.db", &db);
+    if (rc)
+    {
+        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+        return;
+    }
+    else
+    {
+        printf("Opened database successfully.\n");
+    }
+
+    char dueDate[20];
+    printf("Enter due date (YYYY-MM-DD): ");
+    scanf("%s", dueDate);
+
+    const char *sql = "SELECT Students.StudentID, Students.FirstName FROM Students LEFT JOIN Payments ON Students.StudentID = Payments.StudentID WHERE (Payments.Paid IS NULL OR Payments.Paid = 0) AND Payments.DueDate = ?;";
+    
+    sqlite3_stmt *stmt;
+    rc = sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
+    if (rc != SQLITE_OK)
+    {
+        fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return;
+    }
+
+    sqlite3_bind_text(stmt, 1, dueDate, -1, SQLITE_STATIC);
+
+    printf("Students who have not paid by %s:\n", dueDate);
+    int resultCount = 0;
+    while (sqlite3_step(stmt) == SQLITE_ROW)
+    {
+        resultCount++;
+        int studentID = sqlite3_column_int(stmt, 0);
+        const unsigned char *firstName = sqlite3_column_text(stmt, 1);
+        printf("ID: %d, First Name: %s\n", studentID, firstName);
+    }
+
+    if (resultCount == 0)
+    {
+        printf("No students found who have not paid by %s.\n", dueDate);
+    }
+
+    sqlite3_finalize(stmt);
+
+    sqlite3_close(db);
 }
