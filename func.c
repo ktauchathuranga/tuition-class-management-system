@@ -309,12 +309,14 @@ void displayMenu()
 {
     // these are just place holders, TO BE CHANGED!
     printf("\n=== Tuition Class Management System ===\n");
-    printf("1. Add Student\n");
-    printf("2. Display Students\n");
-    printf("3. Update Students\n");
-    printf("4. Delete Students\n");
-    printf("5. Manage Classes\n");
-    printf("6. Add Tutor\n");
+    printf("1. Manage Students\n");
+    printf("2. Manage Tutors\n");
+    printf("3. Manage Classes\n");
+    printf("4. Browse Students (by class)\n");
+    printf("5. Search Studnet (by ID)\n");
+    printf("6. Fee Manage\n");
+    printf("7. Attendance\n");
+    printf("8. Status\n");
     printf("0. Exit\n");
 }
 
@@ -791,33 +793,144 @@ void displayclasslist(){
     sqlite3_close(db);
 }
 
-void manageClasses() {
-    int classChoice;
+void manageStudents() {
+    int studentChoice;
     do {
-        printf("\n=== Manage Classes ===\n\n");
-        printf("\t1. Add Class\n");
-        printf("\t2. Display Classes\n");
-        printf("\t3. Edit Class\n");
-        printf("\t0. Back to Main Menu\n\n");
+        // printf("\n=== Manage Classes ===\n");
+        printf("1. Add Student\n");
+        printf("2. Update Student\n");
+        printf("3. Delete Student\n");
+        printf("0. Back to Main Menu\n");
         printf("Enter your choice: ");
-        scanf("%d", &classChoice);
+        scanf("%d", &studentChoice);
 
-        switch (classChoice) {
+        switch (studentChoice) {
             case 1:
-                addClass();// Add class function
+                // Add related function
                 break;
             case 2:
-                displayclasslist();// Display classes function
+                // Add related function
                 break;
             case 3:
-                editClass();// Edit class function
+                // Add related function
                 break;
             case 0:
-                printf("Back to Main Menu");
+                printf("Returning to main menu.\n");
                 break;
             default:
                 printf("Invalid choice. Please try again.\n");
         }
-    } while (classChoice != 0);
+    } while (studentChoice != 0);
 }
 
+void manageTutors() {
+    int tutorChoice;
+    do {
+        // printf("\n=== Manage Classes ===\n");
+        printf("1. Add Tutor\n");
+        printf("2. Update Tutor\n");
+        printf("3. Delete Tutor\n");
+        printf("0. Back to Main Menu\n");
+        printf("Enter your choice: ");
+        scanf("%d", &tutorChoice;);
+
+        switch (tutorChoice;) {
+            case 1:
+                // Add related function
+                break;
+            case 2:
+                // Add related function
+                break;
+            case 3:
+                // Add related function
+                break;
+            case 0:
+                printf("Returning to main menu.\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (tutorChoice; != 0);
+}
+
+void manageClass() {
+    int classChoice;
+    do {
+        // printf("\n=== Manage Classes ===\n");
+        printf("1. Add Class\n");
+        printf("2. Update Class\n");
+        printf("3. Delete Class\n");
+        printf("0. Back to Main Menu\n");
+        printf("Enter your choice: ");
+        scanf("%d", &classChoice;);
+
+        switch (classChoice;) {
+            case 1:
+                // Add related function
+                break;
+            case 2:
+                // Add related function
+                break;
+            case 3:
+                // Add related function
+                break;
+            case 0:
+                printf("Returning to main menu.\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (classChoice; != 0);
+}
+
+void manageFee() {
+    int feeChoice;
+    do {
+        // printf("\n=== Manage Classes ===\n");
+        printf("1. Collect Fee\n");
+        printf("2. Due Fee\n");
+        printf("0. Back to Main Menu\n");
+        printf("Enter your choice: ");
+        scanf("%d", &feeChoice;);
+
+        switch (feeChoice;) {
+            case 1:
+                // Add related function
+                break;
+            case 2:
+                // Add related function
+                break;
+            case 0:
+                printf("Returning to main menu.\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (feeChoice; != 0);
+}
+
+void manageAttendance() {
+    int attendanceChoice;
+    do {
+        // printf("\n=== Manage Classes ===\n");
+        printf("1. Mark Attendance\n");
+        printf("2. Check Attendance\n");
+        printf("0. Back to Main Menu\n");
+        printf("Enter your choice: ");
+        scanf("%d", &attendanceChoice;);
+
+        switch (attendanceChoice;) {
+            case 1:
+                // Add related function
+                break;
+            case 2:
+                // Add related function
+                break;
+            case 0:
+                printf("Returning to main menu.\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (attendanceChoice; != 0);
+}
