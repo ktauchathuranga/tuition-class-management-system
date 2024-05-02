@@ -311,8 +311,10 @@ void displayMenu()
     printf("\n=== Tuition Class Management System ===\n");
     printf("1. Add Student\n");
     printf("2. Display Students\n");
-    printf("3. Manage Classes\n");
-    printf("4. Add Tutor\n");
+    printf("3. Update Students\n");
+    printf("4. Delete Students\n");
+    printf("5. Manage Classes\n");
+    printf("6. Add Tutor\n");
     printf("0. Exit\n");
 }
 
@@ -346,8 +348,15 @@ void stdReg()
     char *data;
     asprintf(&data, "%d, '%s', '%s', '%s', '%s', '%s'", stid, firstname, lastname, dob, contnumber, email);
 
-
-    // You should ask to verify the data before inserting
+    // Write user details to a text file
+    FILE *file = fopen("user_log.txt", "a"); // Open file in append mode
+    if (file != NULL) {
+        fputs(data, file); // Write data to the file
+        fclose(file); // Close the file
+    } else {
+        printf("Error: Unable to open file.\n");
+        return;
+    }
 
     const char *dataArray[1] = {data};
 
@@ -568,6 +577,118 @@ void deleteClass(int classID) {
     sqlite3_close(db);
 }
 
+void updateStd(){
+    int stid;
+    char firstname[100];
+    char lastname[100];
+    char dob[20];
+    char contnumber[15];
+    char email[50];
+
+    printf("Enter student ID to update: ");
+    scanf("%d", &stid);
+
+    printf("Enter first name: ");
+    scanf("%s", firstname);
+
+    printf("Enter last name: ");
+    scanf("%s", lastname);
+
+    printf("Enter dob: ");
+    scanf("%s", dob);
+
+    printf("Enter contact number: ");
+    scanf("%s", contnumber);
+
+    printf("Enter your email: ");
+    scanf("%s", email);
+
+    char data[512];
+    sprintf(data, "FirstName='%s', LastName='%s', DateOfBirth='%s', ContactNumber='%s', Email='%s'", firstname, lastname, dob, contnumber, email);
+
+    char query[1024];
+    sprintf(query, "UPDATE Students SET %s WHERE StudentID=%d", data, stid);
+
+    if (updateData(query)) {
+        printf("Student details updated successfully!\n");
+    } else {
+        printf("Failed to update student details.\n");
+    }
+
+}
+
+void deleteStd(){
+    int stid;
+
+    printf("Enter student ID to delete: ");
+    scanf("%d", &stid);
+
+    char query[512];
+    sprintf(query, "DELETE FROM Students WHERE StudentID=%d", stid);
+
+    if (updateData(query)) {
+        printf("Student deleted successfully!\n");
+    } else {
+        printf("Failed to delete student.\n");
+    }
+}
+
+void updateTut(){
+    int tutid;
+    char firstname[100];
+    char lastname[100];
+    char subject[100];
+    char contact[15];
+    char email[50];
+
+    printf("Enter tut id to Update: ");
+    scanf("%d", &tutid);
+
+    printf("Enter first name: ");
+    scanf("%s", firstname);
+
+    printf("Enter last name:");
+    scanf("%s", lastname);
+
+    printf("Enter subject: ");
+    scanf("%s",subject);
+
+    printf("Enter contact number: ");
+    scanf("%s",contact);
+
+    printf("Enter your email: ");
+    scanf("%s",email);
+
+    char data[512];
+    sprintf(data, "FirstName='%s', LastName='%s', SubjectSpecialization='%s', ContactNumber='%s', Email='%s'", firstname, lastname, subject, contact, email);
+ 
+    char query[1024];
+    sprintf(query, "UPDATE Tutors SET %s WHERE TutorID=%d", data, tutid);
+
+    if (updateData(query)) {
+        printf("Teacher details updated successfully!\n");
+    } else {
+        printf("Failed to update teacher details.\n");
+    }
+
+}
+
+void deleteTut(){
+    int tutid;
+
+    printf("Enter teacher ID to delete: ");
+    scanf("%d", &tutid);
+
+    char query[512];
+    sprintf(query, "DELETE FROM Tutors WHERE TutorID=%d", tutid);
+
+    if (updateData(query)) {
+        printf("Teacher deleted successfully!\n");
+    } else {
+        printf("Failed to delete teacher.\n");
+    }
+}
+
 void editClass(){
         int choice,classID;
 
@@ -603,6 +724,7 @@ void editClass(){
                 break;
          }
       }
+
 void addClass(){
         int classID,tutorID;
         char className[100],classTime[50],classDays[50];
@@ -627,6 +749,7 @@ void addClass(){
         printf("\nClass added successfully!\n");
         
     }
+
 void displayclasslist(){
     sqlite3 *db;
     char *zErrMsg = 0;
