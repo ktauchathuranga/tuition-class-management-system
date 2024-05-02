@@ -39,5 +39,6 @@ void manageFee();
 void manageAttendance();
 void collectFee();
 void dueFee();
+void markAttendance();
 
 #endif
