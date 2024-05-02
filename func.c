@@ -289,6 +289,7 @@ void authSec()
             // related function
             break;
         case 3:
+            manageClasses();
             // related function
             break;
         case 4:
@@ -505,3 +506,195 @@ void feeMng()
 void status()
 {
 }
+void editClassDetails(int classID){
+    sqlite3 *db;
+    char *errMsg=0;
+    int rc;
+
+    rc=sqlite3_open("test.db", &db);
+    
+    if(rc){
+        fprintf(stderr,"Can't open database: %s\n",sqlite3_errmsg(db) );
+        sqlite3_close(db);
+        return;
+    }
+
+    char className[100], classTime[50], classDays[50];
+
+    printf("Enter new class name: ");
+    scanf("%s", className);
+    printf("Enter new Class Time: ");
+    scanf("%s", classTime);
+    printf("Enter new Class Days: ");
+    scanf("%s", classDays);
+
+    char query[300];
+    sprintf(query, "UPDATE Classes SET ClassName = '%s', ClassTime = '%s', ClassDays = '%s' WHERE ClassID = %d;",
+            className, classTime, classDays, classID);
+    
+        rc = sqlite3_exec(db, query, 0, 0, &errMsg);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "SQL error: %s\n", errMsg);
+        sqlite3_free(errMsg);
+    } else {
+        printf("/nClass details updated successfully!\n");
+    }
+
+    sqlite3_close(db);
+}
+void deleteClass(int classID) {
+    sqlite3 *db;
+    char *errMsg = 0;
+    int rc;
+
+    rc = sqlite3_open("test.db", &db);
+    if (rc) {
+        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return;
+    }
+
+    char query[256];
+    sprintf(query, "DELETE FROM Classes WHERE ClassID = %d;", classID);
+
+    rc = sqlite3_exec(db, query, 0, 0, &errMsg);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "SQL error: %s\n", errMsg);
+        sqlite3_free(errMsg);
+    } else {
+        printf("\nClass deleted successfully!\n");
+    }
+
+    sqlite3_close(db);
+}
+
+void editClass(){
+        int choice,classID;
+
+         printf("\n===Edit Class===\n\n");
+         printf("\t1.Edit Class Details\n");
+         printf("\t2.Delete Class\n");
+         printf("\t3.Back to Manage Class Menu\n");
+         printf("\t0. Back to Main Menu\n");
+         printf("\nEnter your choice: ");
+         scanf("%d",&choice);
+
+         switch (choice){
+            case 1:
+                printf("Enter Class ID to edit: ");
+            scanf("%d", &classID);
+            editClassDetails(classID); 
+            break;
+
+            case 2:
+                printf("Enter Class ID to delete: ");
+                scanf("%d",&classID);
+                deleteClass(classID);
+                break;
+            case 3:
+                 manageClasses();
+                 break;
+            case 0:
+                authSec();
+                // printf("Returning to main menu.\n");
+                break;
+            default:
+                printf("Invalid choice.\n");
+                break;
+         }
+      }
+void addClass(){
+        int classID,tutorID;
+        char className[100],classTime[50],classDays[50];
+
+        printf("Enter Class ID: ");
+        scanf("%d", &classID);
+        printf("Enter Class Name: ");
+        scanf("%s", className);
+        printf("Enter Tutor ID: ");
+        scanf("%d", &tutorID);
+        printf("Enter Class Time: ");
+        scanf("%s", classTime);
+        printf("Enter Class Days: ");
+        scanf("%s", classDays);
+
+        char data[256];
+        sprintf(data,"%d, '%s', %d, '%s', '%s'", classID,className,tutorID,classTime,classDays);
+
+        const char* dataArray[1]={data};
+        insertData("Classes", dataArray, 1);
+
+        printf("\nClass added successfully!\n");
+        
+    }
+void displayclasslist(){
+    sqlite3 *db;
+    char *zErrMsg = 0;
+    int rc;
+
+    rc = sqlite3_open("test.db", &db);
+
+    if (rc) {
+        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return;
+    }
+
+    const char *sql = "SELECT * FROM Classes;";
+    sqlite3_stmt *stmt;
+
+    rc = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return;
+    }
+
+    printf("\n=== Class Details ===\n\n");
+    printf("ID\tClass Name\tTutor ID\tClass Time\tClass Days\n");
+
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        int classID = sqlite3_column_int(stmt, 0);
+        const unsigned char *className = sqlite3_column_text(stmt, 1);
+        int tutorID = sqlite3_column_int(stmt, 2);
+        const unsigned char *classTime = sqlite3_column_text(stmt, 3);
+        const unsigned char *classDays = sqlite3_column_text(stmt, 4);
+
+        printf("%d\t%s\t%d\t%s\t%s\n", classID, className, tutorID, classTime, classDays);
+    }
+
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+}
+
+void manageClasses() {
+    int classChoice;
+    do {
+        printf("\n=== Manage Classes ===\n\n");
+        printf("\t1. Add Class\n");
+        printf("\t2. Display Classes\n");
+        printf("\t3. Edit Class\n");
+        printf("\t0. Back to Main Menu\n\n");
+        printf("Enter your choice: ");
+        scanf("%d", &classChoice);
+
+        switch (classChoice) {
+            case 1:
+                addClass();// Add class function
+                break;
+            case 2:
+                displayclasslist();// Display classes function
+                break;
+            case 3:
+                editClass();// Edit class function
+                break;
+            case 0:
+                printf("Back to Main Menu");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (classChoice != 0);
+}
+
