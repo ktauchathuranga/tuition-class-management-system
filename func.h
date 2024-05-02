@@ -32,6 +32,10 @@ void updateTut();
 void deleteTut();
 char **fetchData(const char *query, DataType type);
 bool updateData(const char* query);
-void manageClasses();
+void manageClass();
+void manageTutors();
+void manageStudents();
+void manageFee();
+void manageAttendance();
 
 #endif
