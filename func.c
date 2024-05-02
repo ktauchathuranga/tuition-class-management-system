@@ -526,13 +526,45 @@ void stdSearch()
     }
 }
 
-void feeMng()
-{
-}
-
 void status()
 {
+    const char *studentQuery = "SELECT COUNT(*) FROM Students;";
+    char **studentResult = fetchData(studentQuery, TEXT);
+    int numStudents = 0;
+    if (studentResult != NULL && studentResult[0] != NULL)
+    {
+        numStudents = atoi(studentResult[0]);
+        free(studentResult[0]);
+        free(studentResult);
+    }
+
+    const char *tutorQuery = "SELECT COUNT(*) FROM Tutors;";
+    char **tutorResult = fetchData(tutorQuery, TEXT);
+    int numTutors = 0;
+    if (tutorResult != NULL && tutorResult[0] != NULL)
+    {
+        numTutors = atoi(tutorResult[0]);
+        free(tutorResult[0]);
+        free(tutorResult);
+    }
+
+    const char *classQuery = "SELECT COUNT(*) FROM Classes;";
+    char **classResult = fetchData(classQuery, TEXT);
+    int numClasses = 0;
+    if (classResult != NULL && classResult[0] != NULL)
+    {
+        numClasses = atoi(classResult[0]);
+        free(classResult[0]);
+        free(classResult);
+    }
+
+    printf("Summary:\n");
+    printf("Number of students: %d\n", numStudents);
+    printf("Number of tutors: %d\n", numTutors);
+    printf("Number of classes: %d\n", numClasses);
+
 }
+
 void editClassDetails(int classID){
     sqlite3 *db;
     char *errMsg=0;
@@ -949,9 +981,11 @@ void manageAttendance() {
         switch (attendanceChoice) {
             case 1:
                 // Add related function
+                markAttendance();
                 break;
             case 2:
                 // Add related function
+                checkAttendance();
                 break;
             case 0:
                 printf("Returning to main menu.\n");
