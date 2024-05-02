@@ -3,7 +3,7 @@
 
 ### 🤖 To compile:
 ```
-gcc "replace-this-with-your-compiling-file-name" func.c -o main -lcrypto -lsqlite3
+gcc <your-compiling-file-name> func.c -o main -lcrypto -lsqlite3
 ```
 
 > [!NOTE]  
@@ -15,9 +15,9 @@ gcc "replace-this-with-your-compiling-file-name" func.c -o main -lcrypto -lsqlit
 > - If you want to add test file but do not want to uplaod to the GitHub, just add your file name to `.gitignore` file.
 
 > [!IMPORTANT]  
-> - Hence, the repo does not have db included; create db and add sample data by running,
-> - If you are in linux os `./RUNTHIS`
-> - If you are in windows os `RUNTHIS.exe`
+> - Hence, the repo does **NOT** have db included; create db and add sample data by running,
+> - If you are in linux `./RUNTHIS`
+> - If you are in windows `RUNTHIS.exe`
 
 ### 🏃‍♂️ To run:
 - Windows
