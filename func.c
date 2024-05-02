@@ -1010,8 +1010,8 @@ void collectFee() {
     printf("Enter date: ");
     scanf("%s", date);
 
-    char query[100];
-    sprintf(query, "UPDATE Payments SET PaymentDate='%s', Paid='1' WHERE StudentID=%d AND DueDate='%s';", date, stid, dueDate);
+    char *query;
+    asprintf(&query, "UPDATE Payments SET PaymentDate='%s', Paid='1' WHERE StudentID=%d AND DueDate='%s';", date, stid, dueDate);
 
     const char *query2 = query;
 
