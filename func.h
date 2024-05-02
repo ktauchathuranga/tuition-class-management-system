@@ -41,5 +41,6 @@ void collectFee();
 void dueFee();
 void markAttendance();
 void checkAttendance();
+void status();
 
 #endif
