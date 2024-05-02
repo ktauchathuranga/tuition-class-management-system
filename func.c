@@ -1050,3 +1050,40 @@ void dueFee()
 
     sqlite3_close(db);
 }
+
+void markAttendance() {
+    int enrollmentID;
+    char date[20];
+
+    printf("Enter enrollment ID: ");
+    scanf("%d", &enrollmentID);
+
+    printf("Enter date: ");
+    scanf("%s", date);
+
+    sqlite3 *db;
+    int rc = sqlite3_open("test.db", &db);
+    if (rc)
+    {
+        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+        return;
+    }
+    else
+    {
+        printf("Opened database successfully.\n");
+    }
+
+    char query[100];
+    sprintf(query, "UPDATE Attendance SET IsPresent=1 WHERE EnrollmentID=%d AND AttendanceDate='%s';", enrollmentID, date);
+
+    if (executeSQL(db, query) == SQLITE_OK)
+    {
+        printf("\nAttendance marked successfully!\n");
+    }
+    else
+    {
+        printf("\nFailed to mark attendance. Please try again.\n");
+    }
+
+    sqlite3_close(db);
+}
