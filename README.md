@@ -52,6 +52,9 @@ main
     - Fee Manage
       - Collect Fee (by ID)
       - Due Fee (optional)
+    - Attendance
+      - Mark Attendance
+      - Check Attendance
     - Status (basic summary)
   
 ### 📜 More details:
