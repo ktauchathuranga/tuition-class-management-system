@@ -823,12 +823,15 @@ void manageStudents() {
         switch (studentChoice) {
             case 1:
                 // Add related function
+                stdReg();
                 break;
             case 2:
                 // Add related function
+                updateStd();
                 break;
             case 3:
                 // Add related function
+                deleteStd();
                 break;
             case 0:
                 printf("Returning to main menu.\n");
@@ -853,12 +856,15 @@ void manageTutors() {
         switch (tutorChoice) {
             case 1:
                 // Add related function
+                tutReg();
                 break;
             case 2:
                 // Add related function
+                updateTut();
                 break;
             case 3:
                 // Add related function
+                deleteTut();
                 break;
             case 0:
                 printf("Returning to main menu.\n");
@@ -883,12 +889,15 @@ void manageClass() {
         switch (classChoice) {
             case 1:
                 // Add related function
+                addClass();
                 break;
             case 2:
                 // Add related function
+                editClass();
                 break;
             case 3:
                 // Add related function
+                displayclasslist();
                 break;
             case 0:
                 printf("Returning to main menu.\n");
