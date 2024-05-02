@@ -29,6 +29,7 @@ void status();
 void updateStd();
 void deleteStd();
 void updateTut();
+void deleteTut();
 char **fetchData(const char *query, DataType type, bool useCallback, bool fetchAll);
 bool updateData(const char* query);
 
