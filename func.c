@@ -488,3 +488,59 @@ void deleteStd(){
         printf("Failed to delete student.\n");
     }
 }
+
+void updateTut(){
+    int tutid;
+    char firstname[100];
+    char lastname[100];
+    char subject[100];
+    char contact[15];
+    char email[50];
+
+    printf("Enter tut id to Update: ");
+    scanf("%d", &tutid);
+
+    printf("Enter first name: ");
+    scanf("%s", firstname);
+
+    printf("Enter last name:");
+    scanf("%s", lastname);
+
+    printf("Enter subject: ");
+    scanf("%s",subject);
+
+    printf("Enter contact number: ");
+    scanf("%s",contnumber);
+
+    printf("Enter your email: ");
+    scanf("%s",email);
+
+    char data[512];
+    sprintf(data, "FirstName='%s', LastName='%s', Subject='%s', ContactNumber='%s', Email='%s'", firstname, lastname, subject, contnumber, email);
+ 
+    char query[1024];
+    sprintf(query, "UPDATE Teacher SET %s WHERE TeacherID=%d", data, tutid);
+
+    if (updateData(query)) {
+        printf("Teacher details updated successfully!\n");
+    } else {
+        printf("Failed to update teacher details.\n");
+    }
+
+}
+
+void deleteTut(){
+    int tutid;
+
+    printf("Enter teacher ID to delete: ");
+    scanf("%d", &tutid);
+
+    char query[512];
+    sprintf(query, "DELETE FROM Teachers WHERE TeacherID=%d", tutid);
+
+    if (updateData(query)) {
+        printf("Teacher deleted successfully!\n");
+    } else {
+        printf("Failed to delete teacher.\n");
+    }
+}
