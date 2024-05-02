@@ -12,13 +12,13 @@ int main(int argc, char* argv[]) {
             authSec();
             break;
         } else {
-            printf("login failed\n");
+            printf("Login Failed\n");
             loginAtt++;
         }
     }
     
     if (loginAtt == 3) {
-        printf("Failed to login after 3 attempts. Please try again later.\n");
+        printf("Failed To Login After 3 Attempts. Please Try Again Later.\n");
     }
     
     return 0;
