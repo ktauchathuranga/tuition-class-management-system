@@ -24,7 +24,6 @@ void tutReg();
 void displayMenu();
 void displayStd();
 void stdSearch();
-void feeMng();
 void status();
 void updateStd();
 void deleteStd();
