@@ -471,7 +471,7 @@ void updateStd(){
     scanf("%s", email);
 
     char data[512];
-    sprintf(data, "FirstName='%s', LastName='%s', DOB='%s', ContactNumber='%s', Email='%s'", firstname, lastname, dob, contnumber, email);
+    sprintf(data, "FirstName='%s', LastName='%s', DateOfBirth='%s', ContactNumber='%s', Email='%s'", firstname, lastname, dob, contnumber, email);
 
     char query[1024];
     sprintf(query, "UPDATE Students SET %s WHERE StudentID=%d", data, stid);
@@ -520,13 +520,13 @@ void updateTut(){
     scanf("%s",subject);
 
     printf("Enter contact number: ");
-    scanf("%s",contnumber);
+    scanf("%s",contact);
 
     printf("Enter your email: ");
     scanf("%s",email);
 
     char data[512];
-    sprintf(data, "FirstName='%s', LastName='%s', Subject='%s', ContactNumber='%s', Email='%s'", firstname, lastname, subject, contnumber, email);
+    sprintf(data, "FirstName='%s', LastName='%s', Subject='%s', ContactNumber='%s', Email='%s'", firstname, lastname, subject, contact, email);
  
     char query[1024];
     sprintf(query, "UPDATE Teacher SET %s WHERE TeacherID=%d", data, tutid);
