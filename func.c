@@ -526,10 +526,10 @@ void updateTut(){
     scanf("%s",email);
 
     char data[512];
-    sprintf(data, "FirstName='%s', LastName='%s', Subject='%s', ContactNumber='%s', Email='%s'", firstname, lastname, subject, contact, email);
+    sprintf(data, "FirstName='%s', LastName='%s', SubjectSpecialization='%s', ContactNumber='%s', Email='%s'", firstname, lastname, subject, contact, email);
  
     char query[1024];
-    sprintf(query, "UPDATE Teacher SET %s WHERE TeacherID=%d", data, tutid);
+    sprintf(query, "UPDATE Tutors SET %s WHERE TutorID=%d", data, tutid);
 
     if (updateData(query)) {
         printf("Teacher details updated successfully!\n");
