@@ -287,6 +287,18 @@ int main()
     const char *query2 = "UPDATE Students SET StudentID = 6 WHERE FirstName='amal';";
     updateData(query2);
 
+    // 2nd way to update data
+
+    // Construct the query string
+    char query[100];
+    sprintf(query, "UPDATE Students SET StudentID = %d WHERE FirstName='%s';", newStudentID, firstName);
+
+    // Convert the query string to a const char *
+    const char *query2 = query;
+
+    // Call the function to update data
+    updateData(query2);
+
     //---------------------------------------------------------------------------------
 
     // Delete data
