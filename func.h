@@ -29,4 +29,5 @@ void status();
 char **fetchData(const char *query, DataType type);
 bool updateData(const char* query);
 void manageClasses();
+
 #endif
