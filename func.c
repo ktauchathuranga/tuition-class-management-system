@@ -32,9 +32,13 @@ int login()
     char username[100];
     char password[100];
 
-    printf("Enter username: ");
+    printf("\n");
+    printf("=======================================\n");
+    printf("=             Login Screen            =\n");
+    printf("=======================================\n");
+    printf("Enter Username: ");
     scanf("%s", username);
-    printf("Enter password: ");
+    printf("Enter Password: ");
     scanf("%s", password);
 
     char entered_username_hash[65];
@@ -50,7 +54,7 @@ int login()
     }
     else
     {
-        printf("Login failed. Please check your username and password.\n");
+        printf("Login failed. Please check your username and password... :(\n");
         return 0;
     }
 }
@@ -81,7 +85,7 @@ int createTable(const char *tableName, const char *columnDefinitions[], int numC
     }
     else
     {
-        fprintf(stdout, "Opened database successfully\n");
+        // fprintf(stdout, "Opened database successfully\n");
     }
 
     char sql[1024] = {0};
@@ -138,7 +142,7 @@ int insertData(const char *tableName, const char *data[], int numData)
     }
     else
     {
-        fprintf(stdout, "Opened database successfully\n");
+        // fprintf(stdout, "Opened database successfully\n");
     }
 
     char sql[1024] = {0};
@@ -164,7 +168,7 @@ int insertData(const char *tableName, const char *data[], int numData)
     }
     else
     {
-        fprintf(stdout, "Records created successfully\n");
+        // fprintf(stdout, "Records created successfully\n");
     }
     sqlite3_close(db);
     return 1;
@@ -199,7 +203,7 @@ char **fetchData(const char *query, DataType type)
     }
     else
     {
-        fprintf(stdout, "Opened database successfully\n");
+        // fprintf(stdout, "Opened database successfully\n");
     }
 
     rc = sqlite3_prepare_v2(db, query, -1, &stmt, NULL);
@@ -249,7 +253,7 @@ bool updateData(const char *query)
     }
     else
     {
-        fprintf(stdout, "Opened database successfully\n");
+        // fprintf(stdout, "Opened database successfully\n");
     }
 
     rc = sqlite3_exec(db, query, callback, 0, &zErrMsg);
@@ -324,7 +328,10 @@ void authSec()
 void displayMenu()
 {
     // these are just place holders, TO BE CHANGED!
-    printf("\n=== Tuition Class Management System ===\n");
+    printf("\n");
+    printf("======================================\n");
+    printf("=       Tuition Class Management     =\n");
+    printf("======================================\n");
     printf("1. Manage Students\n");
     printf("2. Manage Tutors\n");
     printf("3. Manage Classes\n");
@@ -334,6 +341,7 @@ void displayMenu()
     printf("7. Attendance\n");
     printf("8. Status\n");
     printf("0. Exit\n");
+    printf("======================================\n");
 }
 
 void stdReg()
@@ -345,22 +353,22 @@ void stdReg()
     char contnumber[15];
     char email[50];
 
-    printf("Enter st id: ");
+    printf("Enter Student ID: ");
     scanf("%d", &stid);
 
-    printf("Enter first name: ");
+    printf("Enter First Name: ");
     scanf("%s", firstname);
 
-    printf("Enter last name: ");
+    printf("Enter Last Name: ");
     scanf("%s", lastname);
 
-    printf("Enter dob: "); // add format year-month-date
+    printf("Enter Date of Birth (YYYY-MM-DD): "); // add format year-month-date
     scanf("%s", dob);
 
-    printf("Enter contact number: ");
+    printf("Enter Contact Number: ");
     scanf("%s", contnumber);
 
-    printf("Enter your email: ");
+    printf("Enter Your Email: ");
     scanf("%s", email);
 
     char *data;
@@ -395,27 +403,27 @@ void tutReg()
     char contnumber[15];
     char email[50];
 
-    printf("Enter tut id: ");
+    printf("Enter Tutor ID: ");
     scanf("%d", &tutid);
     getchar();
 
-    printf("Enter first name: ");
+    printf("Enter First Name: ");
     fgets(firstname, sizeof(firstname), stdin);
     firstname[strcspn(firstname, "\n")] = '\0';
 
-    printf("Enter last name: ");
+    printf("Enter Last Name: ");
     fgets(lastname, sizeof(lastname), stdin);
     lastname[strcspn(lastname, "\n")] = '\0';
 
-    printf("Enter subject: ");
+    printf("Enter Subject Specialization: ");
     fgets(subject, sizeof(subject), stdin);
     subject[strcspn(subject, "\n")] = '\0';
 
-    printf("Enter contact number: ");
+    printf("Enter Contact Number: ");
     fgets(contnumber, sizeof(contnumber), stdin);
     contnumber[strcspn(contnumber, "\n")] = '\0';
 
-    printf("Enter your email: ");
+    printf("Enter Your Email: ");
     fgets(email, sizeof(email), stdin);
     email[strcspn(email, "\n")] = '\0';
 
@@ -431,7 +439,7 @@ void tutReg()
 
     free(data);
 
-    printf("DONE!");
+    // printf("DONE!");
 }
 
 void dynamicMenu(char **items)
@@ -439,18 +447,20 @@ void dynamicMenu(char **items)
     int choice;
     do
     {
-        // printf("\n=== Dynamic Menu ===\n");
+        printf("\n=== Class List ===\n");
         for (int i = 0; items[i] != NULL; i++)
         {
             printf("%d. %s\n", i + 1, items[i]);
         }
         printf("0. Back to Main Menu\n");
+        printf("======================================\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
+        printf("\n");
 
         if (choice > 0 && items[choice - 1] != NULL)
         {
-            printf("You selected: %s\n", items[choice - 1]);
+            // printf("You selected: %s\n", items[choice - 1]);
             // call the function for the selected item
 
             char buffer[256];
@@ -465,7 +475,7 @@ void dynamicMenu(char **items)
             {
                 for (int i = 0; result[i] != NULL; i++)
                 {
-                    printf("Name: %s\n", result[i]);
+                    printf("%d: %s\n", (i + 1), result[i]);
                     free(result[i]);
                 }
                 free(result);
@@ -504,7 +514,7 @@ void displayStd()
 void stdSearch()
 {
     int stid;
-    printf("Enter student id: ");
+    printf("Enter Student ID: ");
     scanf("%d", &stid);
 
     char buffer[256];
@@ -519,7 +529,7 @@ void stdSearch()
         char **result = fetchData(query, TEXT);
         if (result != NULL && result[0] != NULL)
         {
-            printf("%s: %s\n", fields[i], result[0]);
+            printf("%d. %s: %s\n", (i + 1), fields[i], result[0]);
             free(result[0]);
         }
         free(result);
@@ -580,11 +590,11 @@ void editClassDetails(int classID){
 
     char className[100], classTime[50], classDays[50];
 
-    printf("Enter new class name: ");
+    printf("Enter New Class Name: ");
     scanf("%s", className);
-    printf("Enter new Class Time: ");
+    printf("Enter New Class Time (00:00): ");
     scanf("%s", classTime);
-    printf("Enter new Class Days: ");
+    printf("Enter New Class Days (day,day,day): ");
     scanf("%s", classDays);
 
     char query[300];
@@ -635,22 +645,22 @@ void updateStd(){
     char contnumber[15];
     char email[50];
 
-    printf("Enter student ID to update: ");
+    printf("Enter Student ID to Update: ");
     scanf("%d", &stid);
 
-    printf("Enter first name: ");
+    printf("Enter First Name: ");
     scanf("%s", firstname);
 
-    printf("Enter last name: ");
+    printf("Enter Last Name: ");
     scanf("%s", lastname);
 
-    printf("Enter dob: ");
+    printf("Enter Date of Birth (YYYY-MM-DD): ");
     scanf("%s", dob);
 
-    printf("Enter contact number: ");
+    printf("Enter Contact Number: ");
     scanf("%s", contnumber);
 
-    printf("Enter your email: ");
+    printf("Enter Your Email: ");
     scanf("%s", email);
 
     char data[512];
@@ -660,9 +670,9 @@ void updateStd(){
     sprintf(query, "UPDATE Students SET %s WHERE StudentID=%d", data, stid);
 
     if (updateData(query)) {
-        printf("Student details updated successfully!\n");
+        printf("Student Details Updated Successfully!\n");
     } else {
-        printf("Failed to update student details.\n");
+        printf("Failed to Update Student Details.\n");
     }
 
 }
@@ -670,16 +680,16 @@ void updateStd(){
 void deleteStd(){
     int stid;
 
-    printf("Enter student ID to delete: ");
+    printf("Enter Student ID to Delete: ");
     scanf("%d", &stid);
 
     char query[512];
     sprintf(query, "DELETE FROM Students WHERE StudentID=%d", stid);
 
     if (updateData(query)) {
-        printf("Student deleted successfully!\n");
+        printf("Student Deleted Successfully!\n");
     } else {
-        printf("Failed to delete student.\n");
+        printf("Failed to Delete Student.\n");
     }
 }
 
@@ -691,22 +701,22 @@ void updateTut(){
     char contact[15];
     char email[50];
 
-    printf("Enter tut id to Update: ");
+    printf("Enter Tutor ID to Update: ");
     scanf("%d", &tutid);
 
-    printf("Enter first name: ");
+    printf("Enter First Name: ");
     scanf("%s", firstname);
 
-    printf("Enter last name:");
+    printf("Enter Last Name:");
     scanf("%s", lastname);
 
-    printf("Enter subject: ");
+    printf("Enter Subject Specialization: ");
     scanf("%s",subject);
 
-    printf("Enter contact number: ");
+    printf("Enter Contact Number: ");
     scanf("%s",contact);
 
-    printf("Enter your email: ");
+    printf("Enter Your Email: ");
     scanf("%s",email);
 
     char data[512];
@@ -716,9 +726,9 @@ void updateTut(){
     sprintf(query, "UPDATE Tutors SET %s WHERE TutorID=%d", data, tutid);
 
     if (updateData(query)) {
-        printf("Teacher details updated successfully!\n");
+        printf("Tutor Details Updated Successfully!\n");
     } else {
-        printf("Failed to update teacher details.\n");
+        printf("Failed to Update Tutor Details.\n");
     }
 
 }
@@ -726,39 +736,40 @@ void updateTut(){
 void deleteTut(){
     int tutid;
 
-    printf("Enter teacher ID to delete: ");
+    printf("Enter Tutor ID to Delete: ");
     scanf("%d", &tutid);
 
     char query[512];
     sprintf(query, "DELETE FROM Tutors WHERE TutorID=%d", tutid);
 
     if (updateData(query)) {
-        printf("Teacher deleted successfully!\n");
+        printf("Teacher Deleted Successfully!\n");
     } else {
-        printf("Failed to delete teacher.\n");
+        printf("Failed to Delete Teacher.\n");
     }
 }
 
 void editClass(){
         int choice,classID;
 
-         printf("\n===Edit Class===\n\n");
-         printf("\t1.Edit Class Details\n");
-         printf("\t2.Delete Class\n");
-         printf("\t3.Back to Manage Class Menu\n");
+        //  printf("\n===Edit Class===\n\n");
+         printf("\t1. Edit Class Details\n");
+         printf("\t2. Delete Class\n");
+         printf("\t3. Back to Manage Class Menu\n");
          printf("\t0. Back to Main Menu\n");
+         printf("======================================\n");
          printf("\nEnter your choice: ");
          scanf("%d",&choice);
 
          switch (choice){
             case 1:
-                printf("Enter Class ID to edit: ");
+                printf("Enter Class ID to Edit: ");
             scanf("%d", &classID);
             editClassDetails(classID); 
             break;
 
             case 2:
-                printf("Enter Class ID to delete: ");
+                printf("Enter Class ID to Delete: ");
                 scanf("%d",&classID);
                 deleteClass(classID);
                 break;
@@ -785,9 +796,9 @@ void addClass(){
         scanf("%s", className);
         printf("Enter Tutor ID: ");
         scanf("%d", &tutorID);
-        printf("Enter Class Time: ");
+        printf("Enter Class Time (00:00): ");
         scanf("%s", classTime);
-        printf("Enter Class Days: ");
+        printf("Enter Class Days (day,day,day): ");
         scanf("%s", classDays);
 
         char data[256];
@@ -796,7 +807,7 @@ void addClass(){
         const char* dataArray[1]={data};
         insertData("Classes", dataArray, 1);
 
-        printf("\nClass added successfully!\n");
+        printf("\nClass Added Successfully!\n");
         
     }
 
@@ -844,7 +855,7 @@ void displayclasslist(){
 void manageStudents() {
     int studentChoice;
     do {
-        // printf("\n=== Manage Classes ===\n");
+        printf("=========== Manage Student ===========\n");
         printf("1. Add Student\n");
         printf("2. Update Student\n");
         printf("3. Delete Student\n");
@@ -877,7 +888,7 @@ void manageStudents() {
 void manageTutors() {
     int tutorChoice;
     do {
-        // printf("\n=== Manage Classes ===\n");
+        printf("=========== Manage  Tutors ===========\n");
         printf("1. Add Tutor\n");
         printf("2. Update Tutor\n");
         printf("3. Delete Tutor\n");
@@ -910,7 +921,7 @@ void manageTutors() {
 void manageClass() {
     int classChoice;
     do {
-        // printf("\n=== Manage Classes ===\n");
+        printf("============ Manage Class ============\n");
         printf("1. Add Class\n");
         printf("2. Update Class\n");
         printf("3. Delete Class\n");
@@ -943,7 +954,7 @@ void manageClass() {
 void manageFee() {
     int feeChoice;
     do {
-        // printf("\n=== Manage Classes ===\n");
+        printf("============= Manage Fee =============\n");
         printf("1. Collect Fee\n");
         printf("2. Due Fee\n");
         printf("0. Back to Main Menu\n");
@@ -971,7 +982,8 @@ void manageFee() {
 void manageAttendance() {
     int attendanceChoice;
     do {
-        // printf("\n=== Manage Classes ===\n");
+        printf("========== Manage Attendance =========\n"); // not centerd
+        printf("======================================\n");
         printf("1. Mark Attendance\n");
         printf("2. Check Attendance\n");
         printf("0. Back to Main Menu\n");
@@ -1001,13 +1013,13 @@ void collectFee() {
     char date[20];
     char dueDate[20];
 
-    printf("Enter due date: ");
+    printf("Enter Due Date (YYYY-MM-DD): ");
     scanf("%s", dueDate);
 
-    printf("Enter student ID: ");
+    printf("Enter Student ID: ");
     scanf("%d", &stid);
 
-    printf("Enter date: ");
+    printf("Enter Payment Date (YYYY-MM-DD): ");
     scanf("%s", date);
 
     char *query;
@@ -1045,11 +1057,11 @@ void dueFee()
     }
     else
     {
-        printf("Opened database successfully.\n");
+        // printf("Opened database successfully.\n");
     }
 
     char dueDate[20];
-    printf("Enter due date (YYYY-MM-DD): ");
+    printf("Enter Due Date (YYYY-MM-DD): ");
     scanf("%s", dueDate);
 
     const char *sql = "SELECT Students.StudentID, Students.FirstName FROM Students LEFT JOIN Payments ON Students.StudentID = Payments.StudentID WHERE (Payments.Paid IS NULL OR Payments.Paid = 0) AND Payments.DueDate = ?;";
@@ -1065,19 +1077,19 @@ void dueFee()
 
     sqlite3_bind_text(stmt, 1, dueDate, -1, SQLITE_STATIC);
 
-    printf("Students who have not paid by %s:\n", dueDate);
+    printf("Students Who Have Not Paid by %s:\n", dueDate);
     int resultCount = 0;
     while (sqlite3_step(stmt) == SQLITE_ROW)
     {
         resultCount++;
         int studentID = sqlite3_column_int(stmt, 0);
         const unsigned char *firstName = sqlite3_column_text(stmt, 1);
-        printf("ID: %d, First Name: %s\n", studentID, firstName);
+        printf("ID: %d -> First Name: %s\n", studentID, firstName);
     }
 
     if (resultCount == 0)
     {
-        printf("No students found who have not paid by %s.\n", dueDate);
+        printf("No Students Found Who Have Not Paid by %s.\n", dueDate);
     }
 
     sqlite3_finalize(stmt);
@@ -1089,10 +1101,10 @@ void markAttendance() {
     int enrollmentID;
     char date[20];
 
-    printf("Enter enrollment ID: ");
+    printf("Enter Enrollment ID: ");
     scanf("%d", &enrollmentID);
 
-    printf("Enter date: ");
+    printf("Enter date (YYYY-MM-DD): ");
     scanf("%s", date);
 
     sqlite3 *db;
@@ -1104,7 +1116,7 @@ void markAttendance() {
     }
     else
     {
-        printf("Opened database successfully.\n");
+        // printf("Opened database successfully.\n");
     }
 
     char query[100];
@@ -1112,11 +1124,11 @@ void markAttendance() {
 
     if (executeSQL(db, query) == SQLITE_OK)
     {
-        printf("\nAttendance marked successfully!\n");
+        printf("\nAttendance Marked Successfully!\n");
     }
     else
     {
-        printf("\nFailed to mark attendance. Please try again.\n");
+        printf("\nFailed to Mark Attendance. Please Try Again.\n");
     }
 
     sqlite3_close(db);
@@ -1126,10 +1138,10 @@ void checkAttendance() {
     int enrollmentID;
     char date[20];
 
-    printf("Enter enrollment ID: ");
+    printf("Enter Enrollment ID: ");
     scanf("%d", &enrollmentID);
 
-    printf("Enter date (YYYY-MM-DD): ");
+    printf("Enter Date (YYYY-MM-DD): ");
     scanf("%s", date);
 
     int isPresent = -1;
@@ -1148,14 +1160,14 @@ void checkAttendance() {
 
     if (isPresent == 1)
     {
-        printf("Student with enrollment ID %d was present on %s.\n", enrollmentID, date);
+        printf("Student With Enrollment ID %d was Present on %s.\n", enrollmentID, date);
     }
     else if (isPresent == 0)
     {
-        printf("Student with enrollment ID %d was absent on %s.\n", enrollmentID, date);
+        printf("Student With Enrollment ID %d was Absent on %s.\n", enrollmentID, date);
     }
     else
     {
-        printf("No attendance data found for student with enrollment ID %d on %s.\n", enrollmentID, date);
+        printf("No Attendance Data Found for Student With Enrollment ID %d on %s.\n", enrollmentID, date);
     }
 }
