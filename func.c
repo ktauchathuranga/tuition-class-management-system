@@ -1087,3 +1087,41 @@ void markAttendance() {
 
     sqlite3_close(db);
 }
+
+void checkAttendance() {
+    int enrollmentID;
+    char date[20];
+
+    printf("Enter enrollment ID: ");
+    scanf("%d", &enrollmentID);
+
+    printf("Enter date (YYYY-MM-DD): ");
+    scanf("%s", date);
+
+    int isPresent = -1;
+
+    char query1[200];
+    sprintf(query1, "SELECT IsPresent FROM Attendance WHERE EnrollmentID=%d AND AttendanceDate='%s';", enrollmentID, date);
+
+    const char *query = query1;
+
+    char **result = fetchData(query, TEXT);
+    if (result != NULL) {
+        isPresent = atoi(result[0]);
+        free(result[0]);
+        free(result);
+    }
+
+    if (isPresent == 1)
+    {
+        printf("Student with enrollment ID %d was present on %s.\n", enrollmentID, date);
+    }
+    else if (isPresent == 0)
+    {
+        printf("Student with enrollment ID %d was absent on %s.\n", enrollmentID, date);
+    }
+    else
+    {
+        printf("No attendance data found for student with enrollment ID %d on %s.\n", enrollmentID, date);
+    }
+}
