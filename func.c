@@ -959,3 +959,47 @@ void manageAttendance() {
         }
     } while (attendanceChoice != 0);
 }
+
+void collectFee() {
+    int stid;
+    int payid;
+    int maxid;
+    float fee;
+    char date[20];
+
+    // get last payment id
+    char *query = "SELECT MAX(PaymentID) FROM Payments;";
+    char **result = fetchData(query, INTEGER);
+    if (result != NULL && result[0] != NULL)
+    {
+        maxid = atoi(result[0]);
+        free(result[0]);
+        free(result);
+    }
+    else
+    {
+        maxid = 0;
+    }
+
+    printf("Last Payment ID: %d\n", maxid);
+
+    printf("Payment ID:");
+    scanf("%d", &payid);
+
+    printf("Enter student ID: ");
+    scanf("%d", &stid);
+
+    printf("Enter fee amount: ");
+    scanf("%f", &fee);
+
+    printf("Enter date: ");
+    scanf("%s", date);
+
+    char data[256];
+    sprintf(data, "%d, %d, %f, '%s'", payid, stid, fee, date);
+
+    const char *dataArray[1] = {data};
+    insertData("Payments", dataArray, 1);
+
+    printf("\nFee collected successfully!\n");
+}
