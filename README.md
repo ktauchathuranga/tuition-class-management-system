@@ -15,8 +15,8 @@ gcc <your-compiling-file-name> -o main -lcrypto -lsqlite3
 > [!NOTE]  
 > - You need, `openssl` library and `sqlite3` library.
 > - If you still having trouble, you can open a codespace for the repo by ```Code -> Codespaces -> Create codespace on main```
-> - `testDB.c` is for understand how the function sql works, with **examples**.
-> - `testMen.c` is for understand how the menu navigation works, with **examples**
+> - `resources/testDB.c` is for understand how the function sql works, with **examples**.
+> - `resources/testMen.c` is for understand how the menu navigation works, with **examples**
 > - Default username and the password is `admin`
 > - If you want to add test file but do not want to uplaod to the GitHub, just add your file name to `.gitignore` file.
 
