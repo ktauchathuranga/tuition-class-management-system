@@ -41,5 +41,7 @@ void dueFee();
 void markAttendance();
 void checkAttendance();
 void status();
+void insertEnrollmentData(int stid);
+void insertClassData(int tutorid);
 
 #endif
