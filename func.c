@@ -1224,6 +1224,7 @@ void insertEnrollmentData(int stid)
     sprintf(insertSQL, "INSERT INTO Enrollments (EnrollmentID, StudentID, ClassID, EnrollmentDate) VALUES (%d, %d, %d, '%s');", lastEnrollmentID + 1, stid, classID, enrollmentDay);
     if (executeSQL(db, insertSQL) == SQLITE_OK)
     {
+        printf("=======================================\n");
         printf("[+] Enrollment Data Inserted Successfully.\n");
     }
     else
@@ -1279,6 +1280,7 @@ void insertClassData(int tutorid)
     sprintf(insertSQL, "INSERT INTO Classes (ClassID, ClassName, TutorID, ClassTime, ClassDays) VALUES (%d, '%s', %d, '%s', '%s');", lastClassID + 1, className, tutorid, classTime, classDays);
     if (executeSQL(db, insertSQL) == SQLITE_OK)
     {
+        printf("=======================================\n");
         printf("[+] Class Data Inserted Successfully.\n");
     }
     else
