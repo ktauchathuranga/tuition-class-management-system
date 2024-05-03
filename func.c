@@ -441,6 +441,8 @@ void tutReg()
 
     free(data);
 
+    insertClassData(tutid); // To update class table
+
     // printf("DONE!");
 }
 
@@ -1188,7 +1190,7 @@ void insertEnrollmentData(int stid)
     int rc = sqlite3_open("test.db", &db);
     if (rc)
     {
-        fprintf(stderr, "[!] Can't open database: %s\n", sqlite3_errmsg(db));
+        fprintf(stderr, "[!] Can't Open Database: %s\n", sqlite3_errmsg(db));
         return;
     }
 
@@ -1227,6 +1229,61 @@ void insertEnrollmentData(int stid)
     else
     {
         fprintf(stderr, "[!] Failed to Insert Enrollment Data.\n");
+    }
+
+    sqlite3_close(db);
+}
+
+void insertClassData(int tutorid)
+{
+    sqlite3 *db;
+    int rc = sqlite3_open("test.db", &db);
+    if (rc)
+    {
+        fprintf(stderr, "[!] Can't Open Database: %s\n", sqlite3_errmsg(db));
+        return;
+    }
+
+    int lastClassID = 0;
+    char className[100];
+    char classTime[20];
+    char classDays[40];
+
+    const char *getLastClassIDQuery = "SELECT MAX(ClassID) FROM Classes;";
+    sqlite3_stmt *stmt;
+    rc = sqlite3_prepare_v2(db, getLastClassIDQuery, -1, &stmt, 0);
+    if (rc != SQLITE_OK)
+    {
+        fprintf(stderr, "[!] Failed to Prepare Statement: %s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return;
+    }
+
+    if (sqlite3_step(stmt) == SQLITE_ROW)
+    {
+        lastClassID = sqlite3_column_int(stmt, 0);
+    }
+
+    sqlite3_finalize(stmt);
+
+    printf("[-] Enter Class Name: ");
+    scanf("%s", className);
+
+    printf("[-] Enter Class Time (00:00): ");
+    scanf("%s", classTime);
+
+    printf("[-] Enter Class Days (day,day,day): ");
+    scanf("%s", classDays);
+
+    char insertSQL[300];
+    sprintf(insertSQL, "INSERT INTO Classes (ClassID, ClassName, TutorID, ClassTime, ClassDays) VALUES (%d, '%s', %d, '%s', '%s');", lastClassID + 1, className, tutorID, classTime, classDays);
+    if (executeSQL(db, insertSQL) == SQLITE_OK)
+    {
+        printf("[+] Class Data Inserted Successfully.\n");
+    }
+    else
+    {
+        fprintf(stderr, "[!] Failed to Insert Class Data.\n");
     }
 
     sqlite3_close(db);
