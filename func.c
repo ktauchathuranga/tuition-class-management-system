@@ -390,6 +390,8 @@ void stdReg()
 
     free(data);
 
+    insertEnrollmentData(stid); // To update enrollment table
+
 
     // printf("DONE!");
 }
@@ -1178,4 +1180,54 @@ void checkAttendance() {
     {
         printf("[!] No Attendance Data Found for Student With Enrollment ID %d on %s.\n", enrollmentID, date);
     }
+}
+
+void insertEnrollmentData(int stid)
+{
+    sqlite3 *db;
+    int rc = sqlite3_open("test.db", &db);
+    if (rc)
+    {
+        fprintf(stderr, "[!] Can't open database: %s\n", sqlite3_errmsg(db));
+        return;
+    }
+
+    int lastEnrollmentID = 0;
+    int classID;
+    char enrollmentDay[20];
+
+    const char *getLastEnrollmentIDQuery = "SELECT MAX(EnrollmentID) FROM Enrollments;";
+    sqlite3_stmt *stmt;
+    rc = sqlite3_prepare_v2(db, getLastEnrollmentIDQuery, -1, &stmt, 0);
+    if (rc != SQLITE_OK)
+    {
+        fprintf(stderr, "[!] Failed to prepare statement: %s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return;
+    }
+
+    if (sqlite3_step(stmt) == SQLITE_ROW)
+    {
+        lastEnrollmentID = sqlite3_column_int(stmt, 0);
+    }
+
+    sqlite3_finalize(stmt);
+
+    printf("[-] Enter Class ID: ");
+    scanf("%d", &classID);
+    printf("[-] Enter Enrollment Day (YYYY-MM-DD): ");
+    scanf("%s", enrollmentDay);
+
+    char insertSQL[200];
+    sprintf(insertSQL, "INSERT INTO Enrollments (EnrollmentID, StudentID, ClassID, EnrollmentDate) VALUES (%d, %d, %d, '%s');", lastEnrollmentID + 1, stid, classID, enrollmentDay);
+    if (executeSQL(db, insertSQL) == SQLITE_OK)
+    {
+        printf("[+] Enrollment Data Inserted Successfully.\n");
+    }
+    else
+    {
+        fprintf(stderr, "[!] Failed to Insert Enrollment Data.\n");
+    }
+
+    sqlite3_close(db);
 }
