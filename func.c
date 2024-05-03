@@ -1276,7 +1276,7 @@ void insertClassData(int tutorid)
     scanf("%s", classDays);
 
     char insertSQL[300];
-    sprintf(insertSQL, "INSERT INTO Classes (ClassID, ClassName, TutorID, ClassTime, ClassDays) VALUES (%d, '%s', %d, '%s', '%s');", lastClassID + 1, className, tutorID, classTime, classDays);
+    sprintf(insertSQL, "INSERT INTO Classes (ClassID, ClassName, TutorID, ClassTime, ClassDays) VALUES (%d, '%s', %d, '%s', '%s');", lastClassID + 1, className, tutorid, classTime, classDays);
     if (executeSQL(db, insertSQL) == SQLITE_OK)
     {
         printf("[+] Class Data Inserted Successfully.\n");
