@@ -2,8 +2,14 @@
 ***
 
 ### 🤖 To compile:
+
+- If your code uses `func.c`:
 ```
 gcc <your-compiling-file-name> func.c -o main -lcrypto -lsqlite3
+```
+- If your code **DONT** uses `func.c`:
+```
+gcc <your-compiling-file-name> -o main -lcrypto -lsqlite3
 ```
 
 > [!NOTE]  
