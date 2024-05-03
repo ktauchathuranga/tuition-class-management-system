@@ -763,7 +763,7 @@ void editClass(){
 
         //  printf("\n===Edit Class===\n\n");
          printf("\t1. Edit Class Details\n");
-         printf("\t2. Delete Class\n");
+         printf("\t2. Display Class\n");
          printf("\t3. Back to Manage Class Menu\n");
          printf("\t0. Back to Main Menu\n");
          printf("======================================\n");
@@ -778,9 +778,7 @@ void editClass(){
             break;
 
             case 2:
-                printf("[-] Enter Class ID to Delete: ");
-                scanf("%d",&classID);
-                deleteClass(classID);
+                displayclasslist();
                 break;
             case 3:
                  manageClass();
