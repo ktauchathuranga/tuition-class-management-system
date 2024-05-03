@@ -5,12 +5,13 @@
 
 - If your code uses `func.c`:
 ```
-gcc main.c func.c -o main -lcrypto -lsqlite3
+gcc your-code-name.c func.c -o main -lcrypto -lsqlite3
 ```
 - If your code **DONT** uses `func.c`:
 ```
-gcc main.c -o main -lcrypto -lsqlite3
+gcc your-code-name.c -o main -lcrypto -lsqlite3
 ```
+Replace `your-code-name.c` with code that you want to compile.
 
 > [!NOTE]  
 > - You need, `openssl` library and `sqlite3` library.
