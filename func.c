@@ -932,6 +932,7 @@ void manageTutors() {
 
 void manageClass() {
     int classChoice;
+    int classID;
     do {
         printf("============ Manage  Class ============\n");
         printf("1. Add Class\n");
@@ -952,7 +953,9 @@ void manageClass() {
                 break;
             case 3:
                 // Add related function
-                displayclasslist();
+                printf("[-] Enter Class ID to Delete: ");
+                scanf("%d",&classID);
+                deleteClass(classID);
                 break;
             case 0:
                 printf("[|] Returning to main menu.\n");
