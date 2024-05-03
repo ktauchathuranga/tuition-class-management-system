@@ -5,11 +5,11 @@
 
 - If your code uses `func.c`:
 ```
-gcc <your-compiling-file-name> func.c -o main -lcrypto -lsqlite3
+gcc main.c func.c -o main -lcrypto -lsqlite3
 ```
 - If your code **DONT** uses `func.c`:
 ```
-gcc <your-compiling-file-name> -o main -lcrypto -lsqlite3
+gcc main.c -o main -lcrypto -lsqlite3
 ```
 
 > [!NOTE]  
@@ -21,6 +21,7 @@ gcc <your-compiling-file-name> -o main -lcrypto -lsqlite3
 > - If you want to add test file but do not want to uplaod to the GitHub, just add your file name to `.gitignore` file.
 
 > [!IMPORTANT]  
+> **FOLLOWING BINARIES AND SOURCE CODES AVAILABLE INSIDE `resources` FOLDER**
 > - Hence, the repo does **NOT** have db included; create db and add sample data by running,
 > - If you are in linux `./RUNTHIS`
 > - If you are in windows `RUNTHIS.exe`
