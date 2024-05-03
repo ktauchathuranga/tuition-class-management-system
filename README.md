@@ -2,19 +2,26 @@
 ***
 
 ### 🤖 To compile:
+
+- If your code uses `func.c`:
 ```
-gcc <your-compiling-file-name> func.c -o main -lcrypto -lsqlite3
+gcc main.c func.c -o main -lcrypto -lsqlite3
+```
+- If your code **DONT** uses `func.c`:
+```
+gcc main.c -o main -lcrypto -lsqlite3
 ```
 
 > [!NOTE]  
 > - You need, `openssl` library and `sqlite3` library.
 > - If you still having trouble, you can open a codespace for the repo by ```Code -> Codespaces -> Create codespace on main```
-> - `testDB.c` is for understand how the function sql works, with **examples**.
-> - `testMen.c` is for understand how the menu navigation works, with **examples**
+> - `resources/testDB.c` is for understand how the function sql works, with **examples**.
+> - `resources/testMen.c` is for understand how the menu navigation works, with **examples**
 > - Default username and the password is `admin`
 > - If you want to add test file but do not want to uplaod to the GitHub, just add your file name to `.gitignore` file.
 
 > [!IMPORTANT]  
+> **THE FOLLOWING BINARIES AND SOURCE CODES ARE AVAILABLE IN THE `resources` FOLDER**
 > - Hence, the repo does **NOT** have db included; create db and add sample data by running,
 > - If you are in linux `./RUNTHIS`
 > - If you are in windows `RUNTHIS.exe`

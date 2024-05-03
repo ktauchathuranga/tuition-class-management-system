@@ -21,7 +21,7 @@ int createTable(const char *tableName, const char *columnDefinitions[], int numC
     char *zErrMsg = 0;
     int rc;
 
-    rc = sqlite3_open("test.db", &db);
+    rc = sqlite3_open("../test.db", &db);
 
     if (rc)
     {
@@ -78,7 +78,7 @@ int insertData(const char *tableName, const char *data[], int numData)
     char *zErrMsg = 0;
     int rc;
 
-    rc = sqlite3_open("test.db", &db);
+    rc = sqlite3_open("../test.db", &db);
 
     if (rc)
     {
@@ -155,7 +155,7 @@ char **fetchData(const char *query, DataType type)
     char **results = NULL;
     int resultCount = 0;
 
-    rc = sqlite3_open("test.db", &db);
+    rc = sqlite3_open("../test.db", &db);
 
     if (rc)
     {
@@ -209,7 +209,7 @@ bool updateData(const char *query)
     char *zErrMsg = 0;
     int rc;
 
-    rc = sqlite3_open("test.db", &db);
+    rc = sqlite3_open("../test.db", &db);
 
     if (rc)
     {

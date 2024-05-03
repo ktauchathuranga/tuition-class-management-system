@@ -341,7 +341,7 @@ void displayMenu()
     printf("7. Attendance\n");
     printf("8. Status\n");
     printf("0. Exit\n");
-    printf("======================================\n");
+    printf("=======================================\n");
 }
 
 void stdReg()
