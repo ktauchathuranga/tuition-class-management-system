@@ -34,7 +34,7 @@ int login()
 
     printf("\n");
     printf("========================================\n");
-    printf("=             Login Screen            =\n");
+    printf("=             Login Screen             =\n");
     printf("========================================\n");
     printf("[*] Enter Username: ");
     scanf("%s", username);
@@ -54,7 +54,7 @@ int login()
     }
     else
     {
-        printf("[!] Login failed. Please check your username and password correctly... :(\n");
+        printf("[!] Login failed. Please Check Your Username and Password Correctly... :(\n");
         return 0;
     }
 }
@@ -330,7 +330,7 @@ void displayMenu()
     // these are just place holders, TO BE CHANGED!
     printf("\n");
     printf("======================================\n");
-    printf("=|       Tuition Class Management     |=\n");
+    printf("=       Tuition Class Management     =\n");
     printf("======================================\n");
     printf("1. Manage Students\n");
     printf("2. Manage Tutors\n");
@@ -575,7 +575,7 @@ void status()
 
     printf("\n");
     printf("=======================================\n");
-    printf("=               SUMMARY              =\n");
+    printf("=               Summary               =\n");
     printf("=======================================\n");
     printf("[~] Number of students: %d\n", numStudents);
     printf("[~] Number of tutors:   %d\n", numTutors);
