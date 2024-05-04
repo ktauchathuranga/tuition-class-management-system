@@ -33,9 +33,9 @@ int login()
     char password[100];
 
     printf("\n");
-    printf("=======================================\n");
+    printf("========================================\n");
     printf("=             Login Screen            =\n");
-    printf("=======================================\n");
+    printf("========================================\n");
     printf("[*] Enter Username: ");
     scanf("%s", username);
     printf("[*] Enter Password: ");
@@ -49,12 +49,12 @@ int login()
     if (strcmp(stored_username_hash, entered_username_hash) == 0 &&
         strcmp(stored_password_hash, entered_password_hash) == 0)
     {
-        printf("[+] Login successful!\n");
+        printf("[+] Login Successful!\n");
         return 1;
     }
     else
     {
-        printf("[!] Login failed. Please check your username and password... :(\n");
+        printf("[!] Login failed. Please check your username and password correctly... :(\n");
         return 0;
     }
 }
@@ -80,7 +80,7 @@ int createTable(const char *tableName, const char *columnDefinitions[], int numC
 
     if (rc)
     {
-        fprintf(stderr, "[!] Can't open database: %s\n", sqlite3_errmsg(db));
+        fprintf(stderr, "[!] Can't open Database: %s\n", sqlite3_errmsg(db));
         return 0;
     }
     else
@@ -265,7 +265,7 @@ bool updateData(const char *query)
     }
     else
     {
-        fprintf(stdout, "[+] Operation done successfully\n");
+        fprintf(stdout, "[+] Operation done Successfully\n");
     }
 
     sqlite3_close(db);
@@ -330,7 +330,7 @@ void displayMenu()
     // these are just place holders, TO BE CHANGED!
     printf("\n");
     printf("======================================\n");
-    printf("=       Tuition Class Management     =\n");
+    printf("=|       Tuition Class Management     |=\n");
     printf("======================================\n");
     printf("1. Manage Students\n");
     printf("2. Manage Tutors\n");
@@ -575,7 +575,7 @@ void status()
 
     printf("\n");
     printf("=======================================\n");
-    printf("=               Summary               =\n");
+    printf("=               SUMMARY              =\n");
     printf("=======================================\n");
     printf("[~] Number of students: %d\n", numStudents);
     printf("[~] Number of tutors:   %d\n", numTutors);
