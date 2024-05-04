@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "func.h"
+#include "../func.h"
 
 int main(int argc, char *argv[])
 {
@@ -45,10 +45,19 @@ int main(int argc, char *argv[])
     const char *paymentsColumnDefinitions[] = {
         "PaymentID INT PRIMARY KEY",
         "StudentID INT",
-        "Amount REAL",
+        "Paid INT",
         "PaymentDate TEXT",
+        "DueDate TEXT",
         "FOREIGN KEY(StudentID) REFERENCES Students(StudentID)"};
     createTable("Payments", paymentsColumnDefinitions, 5);
+
+    const char *attendanceColumnDefinitions[] = {
+        "AttendanceID INT PRIMARY KEY",
+        "EnrollmentID INT",
+        "AttendanceDate TEXT",
+        "IsPresent INT",
+        "FOREIGN KEY(EnrollmentID) REFERENCES Enrollments(EnrollmentID)"};
+    createTable("Attendance", attendanceColumnDefinitions, 5);
 
     // Add sample data----------------------------------------------------------
 
@@ -111,20 +120,37 @@ int main(int argc, char *argv[])
     }
 
     const char *paymentsData[] = {
-        "1, 1, 100.00, '2024-01-01'",
-        "2, 2, 200.00, '2024-01-02'",
-        "3, 3, 150.00, '2024-02-01'",
-        "4, 4, 250.00, '2024-02-02'",
-        "5, 5, 300.00, '2024-03-01'",
-        "6, 6, 350.00, '2024-03-02'",
-        "7, 7, 400.00, '2024-04-01'",
-        "8, 8, 450.00, '2024-04-02'",
-        "9, 9, 500.00, '2024-05-01'",
-        "10, 10, 550.00, '2024-05-02'"};
+        "1, 1, 1, '2024-01-01', '2024-01-10'",
+        "2, 2, 0, '', '2024-01-10'",
+        "3, 3, 1, '2024-02-01', '2024-01-10'",
+        "4, 4, 1, '2024-02-02', '2024-01-10'",
+        "5, 5, 1, '2024-03-01', '2024-01-10'",
+        "6, 6, 0, '', '2024-01-10'",
+        "7, 7, 1, '2024-04-01', '2024-01-10'",
+        "8, 8, 0, '', '2024-01-10'",
+        "9, 9, 1, '2024-05-01', '2024-01-10'",
+        "10, 10, 1, '2024-05-02', '2024-01-10'"};
 
     for (int i = 0; i < 10; i++)
     {
         insertData("Payments", &paymentsData[i], 1);
+    }
+
+    const char *attendanceData[] = {
+        "1, 1, '2024-01-01', 1",
+        "2, 2, '2024-01-02', 1",
+        "3, 3, '2024-02-01', 1",
+        "4, 4, '2024-02-02', 0",
+        "5, 5, '2024-03-01', 1",
+        "6, 6, '2024-03-02', 1",
+        "7, 7, '2024-04-01', 1",
+        "8, 8, '2024-04-02', 1",
+        "9, 9, '2024-05-01', 0",
+        "10, 10, '2024-05-02', 1"};
+
+    for (int i = 0; i < 10; i++)
+    {
+        insertData("Attendance", &attendanceData[i], 1);
     }
 
     return 0;
