@@ -353,8 +353,15 @@ void stdReg()
     char contnumber[15];
     char email[50];
 
-    printf("[-] Enter Student ID: ");
-    scanf("%d", &stid);
+    const char *query = "SELECT MAX(StudentID) FROM Students;";;
+    char **result = fetchData(query, TEXT);
+    if (result != NULL) {
+        stid = atoi(result[0]);
+        free(result[0]);
+        free(result);
+    }
+
+    printf("[|] Enter Data for Student ID: %d\n", stid + 1);
 
     printf("[-] Enter First Name: ");
     scanf("%s", firstname);
@@ -372,7 +379,7 @@ void stdReg()
     scanf("%s", email);
 
     char *data;
-    asprintf(&data, "%d, '%s', '%s', '%s', '%s', '%s'", stid, firstname, lastname, dob, contnumber, email);
+    asprintf(&data, "%d, '%s', '%s', '%s', '%s', '%s'", stid + 1, firstname, lastname, dob, contnumber, email);
 
     // Write user details to a text file
     FILE *file = fopen("user_log.txt", "a"); // Open file in append mode
@@ -405,9 +412,15 @@ void tutReg()
     char contnumber[15];
     char email[50];
 
-    printf("[-] Enter Tutor ID: ");
-    scanf("%d", &tutid);
-    getchar();
+    const char *query = "SELECT MAX(TutorID) FROM Tutors;";;
+    char **result = fetchData(query, TEXT);
+    if (result != NULL) {
+        tutid = atoi(result[0]);
+        free(result[0]);
+        free(result);
+    }
+
+    printf("[|] Enter Data for Tutor ID: %d\n", tutid + 1);
 
     printf("[-] Enter First Name: ");
     fgets(firstname, sizeof(firstname), stdin);
@@ -430,7 +443,7 @@ void tutReg()
     email[strcspn(email, "\n")] = '\0';
 
     char *data;
-    asprintf(&data, "%d, '%s', '%s', '%s', '%s', '%s'", tutid, firstname, lastname, subject, contnumber, email);
+    asprintf(&data, "%d, '%s', '%s', '%s', '%s', '%s'", tutid + 1, firstname, lastname, subject, contnumber, email);
 
 
     // You should ask to verify the data before inserting
