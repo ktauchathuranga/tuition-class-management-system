@@ -277,7 +277,9 @@ void authSec()
     int choice;
 
     do
-    {
+    {   
+        clearScreen();
+
         displayMenu();
         printf("\n[-] Enter Your Choice: ");
         scanf("%d", &choice);
@@ -877,6 +879,8 @@ void displayclasslist(){
 void manageStudents() {
     int studentChoice;
     do {
+        clearScreen();
+
         printf("=========== Manage Student ============\n");
         printf("1. Add Student\n");
         printf("2. Update Student\n");
@@ -911,6 +915,8 @@ void manageStudents() {
 void manageTutors() {
     int tutorChoice;
     do {
+        clearScreen();
+
         printf("=========== Manage   Tutors ===========\n");
         printf("1. Add Tutor\n");
         printf("2. Update Tutor\n");
@@ -946,6 +952,8 @@ void manageClass() {
     int classChoice;
     int classID;
     do {
+        clearScreen();
+
         printf("============ Manage  Class ============\n");
         printf("1. Add Class\n");
         printf("2. Update Class\n");
@@ -982,6 +990,8 @@ void manageClass() {
 void manageFee() {
     int feeChoice;
     do {
+        clearScreen();
+
         printf("============= Manage  Fee =============\n");
         printf("1. Collect Fee\n");
         printf("2. Due Fee\n");
@@ -1011,12 +1021,13 @@ void manageFee() {
 void manageAttendance() {
     int attendanceChoice;
     do {
+        clearScreen();
+
         printf("========== Manage  Attendance =========\n"); // not centerd
-        printf("==================== ==================\n");
         printf("1. Mark Attendance\n");
         printf("2. Check Attendance\n");
         printf("0. Back to Main Menu\n");
-        printf("======================================\n");
+        printf("=======================================\n");
         printf("\n[-] Enter your choice: ");
         scanf("%d", &attendanceChoice);
 
