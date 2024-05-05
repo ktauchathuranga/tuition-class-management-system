@@ -1308,3 +1308,11 @@ void insertClassData(int tutorid)
 
     sqlite3_close(db);
 }
+
+void clearScreen() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        printf("\033[H\033[J");
+    #endif
+}
