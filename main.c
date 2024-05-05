@@ -5,7 +5,7 @@
 
 int main(int argc, char* argv[]) {
     int loginAtt = 0;
-    const char* version = "v2.0.0";
+    const char* version = "v2.1.0";
 
     printf("\n");
     printf("========================================\n");
