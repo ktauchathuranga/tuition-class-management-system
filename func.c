@@ -352,12 +352,12 @@ void displayMenu()
     printf("2. Manage Tutors\n");
     printf("3. Manage Classes\n");
     printf("4. Browse Students (by class)\n");
-    printf("5. Search Studnet (by ID)\n");
+    printf("5. Search Student (by ID)\n");
     printf("6. Fee Manage\n");
     printf("7. Attendance\n");
     printf("8. Status\n");
     printf("0. Exit\n");
-    printf("============================ ===========\n");
+    printf("========================================\n");
 }
 
 void stdReg()
@@ -391,7 +391,7 @@ void stdReg()
     printf("[-] Enter Contact Number: ");
     scanf("%s", contnumber);
 
-    printf("[-] Enter Your Email: ");
+    printf("[-] Enter Student Email: ");
     scanf("%s", email);
 
     char *data;
@@ -455,7 +455,7 @@ void tutReg()
     fgets(contnumber, sizeof(contnumber), stdin);
     contnumber[strcspn(contnumber, "\n")] = '\0';
 
-    printf("[-] Enter Your Email: ");
+    printf("[-] Enter Tutor Email: ");
     fgets(email, sizeof(email), stdin);
     email[strcspn(email, "\n")] = '\0';
 
@@ -488,9 +488,11 @@ void dynamicMenu(char **items)
         }
         printf("0. Back to Main Menu\n");
         printf("========================================\n");
-        printf("\n[-] Enter your choice: ");
+        printf("\n[-] Enter Your Choice: ");
         scanf("%d", &choice);
         printf("\n");
+
+        clearScreen();
 
         if (choice > 0 && items[choice - 1] != NULL)
         {
@@ -499,6 +501,8 @@ void dynamicMenu(char **items)
 
             char buffer[256];
             const char *classname = items[choice - 1];
+
+            printf("[-] Students in %s:\n", classname);
 
             sprintf(buffer, "SELECT Students.FirstName, Students.LastName FROM Students JOIN Enrollments ON Students.StudentID = Enrollments.StudentID JOIN Classes ON Enrollments.ClassID = Classes.ClassID WHERE Classes.ClassName = '%s';", classname);
 
@@ -530,6 +534,7 @@ void dynamicMenu(char **items)
 
 void displayStd()
 {
+    clearScreen();
 
     printf("[-] Select The Class: \n");
 
@@ -570,6 +575,7 @@ void stdSearch()
         }
         free(result);
     }
+    delay(5);
 }
 
 void status()
@@ -613,6 +619,7 @@ void status()
     printf("[~] Number of Classes : %d\n", numClasses);
     printf("========================================\n");
 
+    delay(5);
 }
 
 void editClassDetails(int classID){
@@ -705,7 +712,7 @@ void updateStd(){
     printf("[-] Enter Contact Number: ");
     scanf("%s", contnumber);
 
-    printf("[-] Enter Your Email: ");
+    printf("[-] Enter Student Email: ");
     scanf("%s", email);
 
     char data[512];
@@ -765,7 +772,7 @@ void updateTut(){
     printf("[-] Enter Contact Number: ");
     scanf("%s",contact);
 
-    printf("[-] Enter Your Email: ");
+    printf("[-] Enter Tutor Email: ");
     scanf("%s",email);
 
     char data[512];
@@ -811,7 +818,7 @@ void editClass(){
          printf("3. Back to Manage Class Menu\n");
          printf("0. Back to Main Menu\n");
          printf("========================================\n");
-         printf("\n[-] Enter your choice: ");
+         printf("\n[-] Enter Your Choice: ");
          scanf("%d",&choice);
 
          switch (choice){
@@ -823,6 +830,7 @@ void editClass(){
 
             case 2:
                 displayclasslist();
+                delay(5); // this need to be addressed in the future
                 break;
             case 3:
                  manageClass();
@@ -843,8 +851,15 @@ void addClass(){
         int classID,tutorID;
         char className[100],classTime[50],classDays[50];
 
-        printf("[-] Enter Class ID: ");
-        scanf("%d", &classID);
+        const char *query = "SELECT MAX(ClassID) FROM Classes;";;
+        char **result = fetchData(query, TEXT);
+        if (result != NULL) {
+            classID = atoi(result[0]);
+            free(result[0]);
+            free(result);
+        }
+
+        printf("[-] Enter Data for Class ID: %d\n", classID + 1);
         printf("[-] Enter Class Name: ");
         scanf("%s", className);
         printf("[-] Enter Tutor ID: ");
@@ -855,7 +870,7 @@ void addClass(){
         scanf("%s", classDays);
 
         char data[256];
-        sprintf(data,"%d, '%s', %d, '%s', '%s'", classID,className,tutorID,classTime,classDays);
+        sprintf(data,"%d, '%s', %d, '%s', '%s'", classID + 1,className,tutorID,classTime,classDays);
 
         const char* dataArray[1]={data};
         insertData("Classes", dataArray, 1);
@@ -922,7 +937,7 @@ void manageStudents() {
         printf("3. Delete Student\n");
         printf("0. Back to Main Menu\n");
         printf("========================================\n");
-        printf("\n[-] Enter your choice: ");
+        printf("\n[-] Enter Your Choice: ");
         scanf("%d", &studentChoice);
 
         switch (studentChoice) {
@@ -960,7 +975,7 @@ void manageTutors() {
         printf("3. Delete Tutor\n");
         printf("0. Back to Main Menu\n");
         printf("========================================\n");
-        printf("\n[-] Enter your choice: ");
+        printf("\n[-] Enter Your Choice: ");
         scanf("%d", &tutorChoice);
 
         switch (tutorChoice) {
@@ -999,7 +1014,7 @@ void manageClass() {
         printf("3. Delete Class\n");
         printf("0. Back to Main Menu\n");
         printf("========================================\n");
-        printf("\n[-] Enter your choice: ");
+        printf("\n[-] Enter Your Choice: ");
         scanf("%d", &classChoice);
 
         switch (classChoice) {
@@ -1038,7 +1053,7 @@ void manageFee() {
         printf("2. Due Fee\n");
         printf("0. Back to Main Menu\n");
         printf("========================================\n");
-        printf("\n[-] Enter your choice: ");
+        printf("\n[-] Enter Your Choice: ");
         scanf("%d", &feeChoice);
 
         switch (feeChoice) {
@@ -1071,7 +1086,7 @@ void manageAttendance() {
         printf("2. Check Attendance\n");
         printf("0. Back to Main Menu\n");
         printf("========================================\n");
-        printf("\n[-] Enter your choice: ");
+        printf("\n[-] Enter Your Choice: ");
         scanf("%d", &attendanceChoice);
 
         switch (attendanceChoice) {
@@ -1186,6 +1201,8 @@ void dueFee()
     sqlite3_finalize(stmt);
 
     sqlite3_close(db);
+
+    delay(5);
 }
 
 void markAttendance() {
@@ -1255,17 +1272,17 @@ void checkAttendance() {
     if (isPresent == 1)
     {
         printf("[+] Student With Enrollment ID %d was Present on %s.\n", enrollmentID, date);
-        delay(1);
+        delay(3);
     }
     else if (isPresent == 0)
     {
         printf("[+] Student With Enrollment ID %d was Absent on %s.\n", enrollmentID, date);
-        delay(1);
+        delay(3);
     }
     else
     {
         printf("[!] No Attendance Data Found for Student With Enrollment ID %d on %s.\n", enrollmentID, date);
-        delay(1);
+        delay(3);
     }
 }
 
