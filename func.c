@@ -331,9 +331,9 @@ void displayMenu()
 {
     // these are just place holders, TO BE CHANGED!
     printf("\n");
-    printf("======================================\n");
-    printf("=       Tuition Class Management     =\n");
-    printf("======================================\n");
+    printf("========================================\n");
+    printf("=        Tuition Class Management      =\n");
+    printf("========================================\n");
     printf("1. Manage Students\n");
     printf("2. Manage Tutors\n");
     printf("3. Manage Classes\n");
@@ -343,7 +343,7 @@ void displayMenu()
     printf("7. Attendance\n");
     printf("8. Status\n");
     printf("0. Exit\n");
-    printf("=======================================\n");
+    printf("============================ ===========\n");
 }
 
 void stdReg()
@@ -466,13 +466,13 @@ void dynamicMenu(char **items)
     int choice;
     do
     {
-        printf("\n============= Class  List =============\n");
+        printf("============= Class   List =============\n");
         for (int i = 0; items[i] != NULL; i++)
         {
             printf("%d. %s\n", i + 1, items[i]);
         }
         printf("0. Back to Main Menu\n");
-        printf("======================================\n");
+        printf("========================================\n");
         printf("\n[-] Enter your choice: ");
         scanf("%d", &choice);
         printf("\n");
@@ -588,13 +588,13 @@ void status()
     }
 
     printf("\n");
-    printf("=======================================\n");
-    printf("=               Summary               =\n");
-    printf("=======================================\n");
+    printf("========================================\n");
+    printf("=                Summary               =\n");
+    printf("========================================\n");
     printf("[~] Number of Students: %d\n", numStudents);
     printf("[~] Number of Tutors  : %d\n", numTutors);
     printf("[~] Number of Classes : %d\n", numClasses);
-    printf("=======================================\n");
+    printf("========================================\n");
 
 }
 
@@ -780,7 +780,7 @@ void editClass(){
          printf("2. Display Class\n");
          printf("3. Back to Manage Class Menu\n");
          printf("0. Back to Main Menu\n");
-         printf("======================================\n");
+         printf("========================================\n");
          printf("\n[-] Enter your choice: ");
          scanf("%d",&choice);
 
@@ -857,9 +857,9 @@ void displayclasslist(){
     }
 
     printf("\n");
-    printf("=======================================\n");
-    printf("=          Class Details              =\n");
-    printf("=======================================\n");
+    printf("========================================\n");
+    printf("=            Class Details             =\n");
+    printf("=========== ============================\n");
     printf("ID\tClass Name\tTutor ID\tClass Time\tClass Days\n");
 
     while (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -881,12 +881,12 @@ void manageStudents() {
     do {
         clearScreen();
 
-        printf("=========== Manage Student ============\n");
+        printf("=========== Manage  Student ============\n");
         printf("1. Add Student\n");
         printf("2. Update Student\n");
         printf("3. Delete Student\n");
         printf("0. Back to Main Menu\n");
-        printf("======================================\n");
+        printf("========================================\n");
         printf("\n[-] Enter your choice: ");
         scanf("%d", &studentChoice);
 
@@ -917,12 +917,12 @@ void manageTutors() {
     do {
         clearScreen();
 
-        printf("=========== Manage   Tutors ===========\n");
+        printf("============ Manage  Tutors ============\n");
         printf("1. Add Tutor\n");
         printf("2. Update Tutor\n");
         printf("3. Delete Tutor\n");
         printf("0. Back to Main Menu\n");
-        printf("======================================\n");
+        printf("========================================\n");
         printf("\n[-] Enter your choice: ");
         scanf("%d", &tutorChoice);
 
@@ -954,12 +954,12 @@ void manageClass() {
     do {
         clearScreen();
 
-        printf("============ Manage  Class ============\n");
+        printf("============= Manage Class =============\n");
         printf("1. Add Class\n");
         printf("2. Update Class\n");
         printf("3. Delete Class\n");
         printf("0. Back to Main Menu\n");
-        printf("======================================\n");
+        printf("========================================\n");
         printf("\n[-] Enter your choice: ");
         scanf("%d", &classChoice);
 
@@ -992,11 +992,11 @@ void manageFee() {
     do {
         clearScreen();
 
-        printf("============= Manage  Fee =============\n");
+        printf("============== Manage Fee ==============\n");
         printf("1. Collect Fee\n");
         printf("2. Due Fee\n");
         printf("0. Back to Main Menu\n");
-        printf("======================================\n");
+        printf("========================================\n");
         printf("\n[-] Enter your choice: ");
         scanf("%d", &feeChoice);
 
@@ -1023,11 +1023,11 @@ void manageAttendance() {
     do {
         clearScreen();
 
-        printf("========== Manage  Attendance =========\n"); // not centerd
+        printf("=========== Manage Attendance ==========\n"); // not centerd
         printf("1. Mark Attendance\n");
         printf("2. Check Attendance\n");
         printf("0. Back to Main Menu\n");
-        printf("=======================================\n");
+        printf("========================================\n");
         printf("\n[-] Enter your choice: ");
         scanf("%d", &attendanceChoice);
 
@@ -1253,7 +1253,7 @@ void insertEnrollmentData(int stid)
     sprintf(insertSQL, "INSERT INTO Enrollments (EnrollmentID, StudentID, ClassID, EnrollmentDate) VALUES (%d, %d, %d, '%s');", lastEnrollmentID + 1, stid, classID, enrollmentDay);
     if (executeSQL(db, insertSQL) == SQLITE_OK)
     {
-        printf("=======================================\n");
+        printf("========================================\n");
         printf("[+] Enrollment Data Inserted Successfully.\n");
     }
     else
@@ -1309,7 +1309,7 @@ void insertClassData(int tutorid)
     sprintf(insertSQL, "INSERT INTO Classes (ClassID, ClassName, TutorID, ClassTime, ClassDays) VALUES (%d, '%s', %d, '%s', '%s');", lastClassID + 1, className, tutorid, classTime, classDays);
     if (executeSQL(db, insertSQL) == SQLITE_OK)
     {
-        printf("=======================================\n");
+        printf("========================================\n");
         printf("[+] Class Data Inserted Successfully.\n");
     }
     else
