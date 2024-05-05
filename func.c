@@ -50,11 +50,13 @@ int login()
         strcmp(stored_password_hash, entered_password_hash) == 0)
     {
         printf("[+] Login Successful!\n");
+        delay(1);
         return 1;
     }
     else
     {
         printf("[!] Login Failed. Please Check Your Username and Password Correctly... :(\n");
+        delay(1);
         return 0;
     }
 }
@@ -81,6 +83,7 @@ int createTable(const char *tableName, const char *columnDefinitions[], int numC
     if (rc)
     {
         fprintf(stderr, "[!] Can't Open Database: %s\n", sqlite3_errmsg(db));
+        delay(1);
         return 0;
     }
     else
@@ -108,10 +111,12 @@ int createTable(const char *tableName, const char *columnDefinitions[], int numC
     {
         fprintf(stderr, "[!] SQL Error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
+        delay(1);
     }
     else
     {
         fprintf(stdout, "[+] Table Created Successfully\n");
+        delay(1);
     }
     sqlite3_close(db);
     return 1;
@@ -138,6 +143,7 @@ int insertData(const char *tableName, const char *data[], int numData)
     if (rc)
     {
         fprintf(stderr, "[!] Can't Open Database: %s\n", sqlite3_errmsg(db));
+        delay(1);
         return 0;
     }
     else
@@ -165,6 +171,7 @@ int insertData(const char *tableName, const char *data[], int numData)
     {
         fprintf(stderr, "[!] SQL Error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
+        delay(1);
     }
     else
     {
@@ -199,6 +206,7 @@ char **fetchData(const char *query, DataType type)
     if (rc)
     {
         fprintf(stderr, "[!] Can't Open Database: %s\n", sqlite3_errmsg(db));
+        delay(1);
         return NULL;
     }
     else
@@ -211,6 +219,7 @@ char **fetchData(const char *query, DataType type)
     if (rc != SQLITE_OK)
     {
         fprintf(stderr, "[!] SQL Error: %s\n", sqlite3_errmsg(db));
+        delay(1);
         return NULL;
     }
 
@@ -249,6 +258,7 @@ bool updateData(const char *query)
     if (rc)
     {
         fprintf(stderr, "[!] Can't Open Database: %s\n", sqlite3_errmsg(db));
+        delay(1);
         return false;
     }
     else
@@ -262,10 +272,12 @@ bool updateData(const char *query)
     {
         fprintf(stderr, "[!] SQL Error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
+        delay(1);
     }
     else
     {
         fprintf(stdout, "[+] Operation Done Successfully\n");
+        delay(1);
     }
 
     sqlite3_close(db);
@@ -320,9 +332,11 @@ void authSec()
             break;
         case 0:
             printf("Exiting Program.\n");
+            delay(1);
             break;
         default:
-            printf("[*] Invalid Choice. Please Try Again.\n");
+            printf("[!] Invalid Choice. Please Try Again.\n");
+            delay(1);
         }
     } while (choice != 0);
 }
@@ -390,6 +404,7 @@ void stdReg()
         fclose(file); // Close the file
     } else {
         printf("[!] Error: Unable to Open File.\n");
+        delay(1);
         return;
     }
 
@@ -503,10 +518,12 @@ void dynamicMenu(char **items)
         else if (choice == 0)
         {
             printf("[|] Returning to Main Menu.\n");
+            delay(1);
         }
         else
         {
             printf("[!] Invalid Choice. Please Try Again.\n");
+            delay(1);
         }
     } while (choice != 0);
 }
@@ -608,6 +625,7 @@ void editClassDetails(int classID){
     if(rc){
         fprintf(stderr,"[!] Can't Open Database: %s\n",sqlite3_errmsg(db) );
         sqlite3_close(db);
+        delay(1);
         return;
     }
 
@@ -630,6 +648,7 @@ void editClassDetails(int classID){
         sqlite3_free(errMsg);
     } else {
         printf("/n[+] Class Details Updated Successfully!\n");
+        delay(1);
     }
 
     sqlite3_close(db);
@@ -643,6 +662,7 @@ void deleteClass(int classID) {
     if (rc) {
         fprintf(stderr, "[!] Can't Open Database: %s\n", sqlite3_errmsg(db));
         sqlite3_close(db);
+        delay(1);
         return;
     }
 
@@ -653,8 +673,10 @@ void deleteClass(int classID) {
     if (rc != SQLITE_OK) {
         fprintf(stderr, "[!] SQL error: %s\n", errMsg);
         sqlite3_free(errMsg);
+        delay(1);
     } else {
         printf("\n[+] Class Deleted Successfully!\n");
+        delay(1);
     }
 
     sqlite3_close(db);
@@ -694,8 +716,10 @@ void updateStd(){
 
     if (updateData(query)) {
         printf("[+] Student Details Updated Successfully!\n");
+        delay(1);
     } else {
         printf("[!] Failed to Update Student Details.\n");
+        delay(1);
     }
 
 }
@@ -711,8 +735,10 @@ void deleteStd(){
 
     if (updateData(query)) {
         printf("[+] Student Deleted Successfully!\n");
+        delay(1);
     } else {
         printf("[!] Failed to Delete Student.\n");
+        delay(1);
     }
 }
 
@@ -750,8 +776,10 @@ void updateTut(){
 
     if (updateData(query)) {
         printf("[+] Tutor Details Updated Successfully!\n");
+        delay(1);
     } else {
         printf("[!] Failed to Update Tutor Details.\n");
+        delay(1);
     }
 
 }
@@ -767,8 +795,10 @@ void deleteTut(){
 
     if (updateData(query)) {
         printf("[+] Teacher Deleted Successfully!\n");
+        delay(1);
     } else {
         printf("[!] Failed to Delete Teacher.\n");
+        delay(1);
     }
 }
 
@@ -798,11 +828,13 @@ void editClass(){
                  manageClass();
                  break;
             case 0:
-                authSec();
-                // printf("Returning to main menu.\n");
+                // authSec();
+                printf("Returning to main menu.\n");
+                delay(1);
                 break;
             default:
                 printf("[!] Invalid Choice.\n");
+                delay(1);
                 break;
          }
       }
@@ -829,6 +861,7 @@ void addClass(){
         insertData("Classes", dataArray, 1);
 
         printf("\n[+] Class Added Successfully!\n");
+        delay(1);
         
     }
 
@@ -842,6 +875,7 @@ void displayclasslist(){
     if (rc) {
         fprintf(stderr, "[!] Can't Open Database: %s\n", sqlite3_errmsg(db));
         sqlite3_close(db);
+        delay(1);
         return;
     }
 
@@ -853,6 +887,7 @@ void displayclasslist(){
     if (rc != SQLITE_OK) {
         fprintf(stderr, "[!] SQL Error: %s\n", sqlite3_errmsg(db));
         sqlite3_close(db);
+        delay(1);
         return;
     }
 
@@ -905,9 +940,11 @@ void manageStudents() {
                 break;
             case 0:
                 printf("[|] Returning to Main Menu.\n");
+                delay(1);
                 break;
             default:
                 printf("[!] Invalid Choice. Please Try Again.\n");
+                delay(1);
         }
     } while (studentChoice != 0);
 }
@@ -941,9 +978,11 @@ void manageTutors() {
                 break;
             case 0:
                 printf("[|] Returning to Main Menu.\n");
+                delay(1);
                 break;
             default:
                 printf("[!] Invalid Choice. Please Try Again.\n");
+                delay(1);
         }
     } while (tutorChoice != 0);
 }
@@ -980,9 +1019,11 @@ void manageClass() {
                 break;
             case 0:
                 printf("[|] Returning to Main Menu.\n");
+                delay(1);
                 break;
             default:
                 printf("[!] Invalid Choice. Please Try Again.\n");
+                delay(1);
         }
     } while (classChoice != 0);
 }
@@ -1011,9 +1052,11 @@ void manageFee() {
                 break;
             case 0:
                 printf("[|] Returning to Main Menu.\n");
+                delay(1);
                 break;
             default:
                 printf("[!] Invalid Choice. Please Try Again.\n");
+                delay(1);
         }
     } while (feeChoice != 0);
 }
@@ -1042,9 +1085,11 @@ void manageAttendance() {
                 break;
             case 0:
                 printf("[-] Returning to Main Menu.\n");
+                delay(1);
                 break;
             default:
                 printf("[!] Invalid Choice. Please Try Again.\n");
+                delay(1);
         }
     } while (attendanceChoice != 0);
 }
@@ -1070,8 +1115,10 @@ void collectFee() {
 
     if (updateData(query)) {
         printf("\n[+] Fee Collected Successfully!\n");
+        delay(1);
     } else {
         printf("\n[!] Failed to Collect Fee. Please Try Again.\n");
+        delay(1);
     }
 }
 
@@ -1083,6 +1130,7 @@ int executeSQL(sqlite3 *db, const char *sql)
     {
         fprintf(stderr, "[!] SQL Error: %s\n", errMsg);
         sqlite3_free(errMsg);
+        delay(1);
     }
     return rc;
 }
@@ -1094,6 +1142,7 @@ void dueFee()
     if (rc)
     {
         fprintf(stderr, "[!] Can't Open Database: %s\n", sqlite3_errmsg(db));
+        delay(1);
         return;
     }
     else
@@ -1113,6 +1162,7 @@ void dueFee()
     {
         fprintf(stderr, "[!] Failed to Prepare Statement: %s\n", sqlite3_errmsg(db));
         sqlite3_close(db);
+        delay(1);
         return;
     }
 
@@ -1153,6 +1203,7 @@ void markAttendance() {
     if (rc)
     {
         fprintf(stderr, "[!] Can't Open Database: %s\n", sqlite3_errmsg(db));
+        delay(1);
         return;
     }
     else
@@ -1166,10 +1217,12 @@ void markAttendance() {
     if (executeSQL(db, query) == SQLITE_OK)
     {
         printf("\n[+] Attendance Marked Successfully!\n");
+        delay(1);
     }
     else
     {
         printf("\n[!] Failed to Mark Attendance. Please Try Again.\n");
+        delay(1);
     }
 
     sqlite3_close(db);
@@ -1202,14 +1255,17 @@ void checkAttendance() {
     if (isPresent == 1)
     {
         printf("[+] Student With Enrollment ID %d was Present on %s.\n", enrollmentID, date);
+        delay(1);
     }
     else if (isPresent == 0)
     {
         printf("[+] Student With Enrollment ID %d was Absent on %s.\n", enrollmentID, date);
+        delay(1);
     }
     else
     {
         printf("[!] No Attendance Data Found for Student With Enrollment ID %d on %s.\n", enrollmentID, date);
+        delay(1);
     }
 }
 
@@ -1220,6 +1276,7 @@ void insertEnrollmentData(int stid)
     if (rc)
     {
         fprintf(stderr, "[!] Can't Open Database: %s\n", sqlite3_errmsg(db));
+        delay(1);
         return;
     }
 
@@ -1234,6 +1291,7 @@ void insertEnrollmentData(int stid)
     {
         fprintf(stderr, "[!] Failed to Prepare Statement: %s\n", sqlite3_errmsg(db));
         sqlite3_close(db);
+        delay(1);
         return;
     }
 
@@ -1255,10 +1313,12 @@ void insertEnrollmentData(int stid)
     {
         printf("========================================\n");
         printf("[+] Enrollment Data Inserted Successfully.\n");
+        delay(1);
     }
     else
     {
         fprintf(stderr, "[!] Failed to Insert Enrollment Data.\n");
+        delay(1);
     }
 
     sqlite3_close(db);
@@ -1271,6 +1331,7 @@ void insertClassData(int tutorid)
     if (rc)
     {
         fprintf(stderr, "[!] Can't Open Database: %s\n", sqlite3_errmsg(db));
+        delay(1);
         return;
     }
 
@@ -1286,6 +1347,7 @@ void insertClassData(int tutorid)
     {
         fprintf(stderr, "[!] Failed to Prepare Statement: %s\n", sqlite3_errmsg(db));
         sqlite3_close(db);
+        delay(1);
         return;
     }
 
@@ -1311,10 +1373,12 @@ void insertClassData(int tutorid)
     {
         printf("========================================\n");
         printf("[+] Class Data Inserted Successfully.\n");
+        delay(1);
     }
     else
     {
         fprintf(stderr, "[!] Failed to Insert Class Data.\n");
+        delay(1);
     }
 
     sqlite3_close(db);
@@ -1325,5 +1389,13 @@ void clearScreen() {
         system("cls");
     #else
         printf("\033[H\033[J");
+    #endif
+}
+
+void delay(int time) {
+    #ifdef _WIN32
+        Sleep(time * 1000);
+    #else
+        sleep(time);
     #endif
 }
