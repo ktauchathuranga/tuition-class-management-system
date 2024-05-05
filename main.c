@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
         #endif
     }
 
-    printf("\n");
+    clearScreen();
 
     while (loginAtt < 3)
     {
