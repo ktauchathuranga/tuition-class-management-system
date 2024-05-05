@@ -823,6 +823,7 @@ void editClass(){
 
             case 2:
                 displayclasslist();
+                delay(5); // this need to be addressed in the future
                 break;
             case 3:
                  manageClass();
@@ -843,8 +844,15 @@ void addClass(){
         int classID,tutorID;
         char className[100],classTime[50],classDays[50];
 
-        printf("[-] Enter Class ID: ");
-        scanf("%d", &classID);
+        const char *query = "SELECT MAX(ClassID) FROM Classes;";;
+        char **result = fetchData(query, TEXT);
+        if (result != NULL) {
+            classID = atoi(result[0]);
+            free(result[0]);
+            free(result);
+        }
+
+        printf("[-] Enter Data for Class ID: %d\n", classID + 1);
         printf("[-] Enter Class Name: ");
         scanf("%s", className);
         printf("[-] Enter Tutor ID: ");
@@ -855,7 +863,7 @@ void addClass(){
         scanf("%s", classDays);
 
         char data[256];
-        sprintf(data,"%d, '%s', %d, '%s', '%s'", classID,className,tutorID,classTime,classDays);
+        sprintf(data,"%d, '%s', %d, '%s', '%s'", classID + 1,className,tutorID,classTime,classDays);
 
         const char* dataArray[1]={data};
         insertData("Classes", dataArray, 1);
