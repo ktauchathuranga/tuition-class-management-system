@@ -279,7 +279,7 @@ void authSec()
     do
     {
         displayMenu();
-        printf("[-] Enter Your Choice: ");
+        printf("\n[-] Enter Your Choice: ");
         scanf("%d", &choice);
 
         switch (choice)
@@ -470,9 +470,8 @@ void dynamicMenu(char **items)
             printf("%d. %s\n", i + 1, items[i]);
         }
         printf("0. Back to Main Menu\n");
-        printf("=======================================\n");
-
-        printf("[-] Enter Your Choice: ");
+        printf("======================================\n");
+        printf("\n[-] Enter your choice: ");
         scanf("%d", &choice);
         printf("\n");
 
@@ -775,10 +774,10 @@ void editClass(){
         int choice,classID;
 
         //  printf("\n===Edit Class===\n\n");
-         printf("\t1. Edit Class Details\n");
-         printf("\t2. Display Class\n");
-         printf("\t3. Back to Manage Class Menu\n");
-         printf("\t0. Back to Main Menu\n");
+         printf("1. Edit Class Details\n");
+         printf("2. Display Class\n");
+         printf("3. Back to Manage Class Menu\n");
+         printf("0. Back to Main Menu\n");
          printf("======================================\n");
          printf("\n[-] Enter your choice: ");
          scanf("%d",&choice);
@@ -883,7 +882,8 @@ void manageStudents() {
         printf("2. Update Student\n");
         printf("3. Delete Student\n");
         printf("0. Back to Main Menu\n");
-        printf("[-] Enter Your Choice: ");
+        printf("======================================\n");
+        printf("\n[-] Enter your choice: ");
         scanf("%d", &studentChoice);
 
         switch (studentChoice) {
@@ -916,7 +916,8 @@ void manageTutors() {
         printf("2. Update Tutor\n");
         printf("3. Delete Tutor\n");
         printf("0. Back to Main Menu\n");
-        printf("[-] Enter Your Choice: ");
+        printf("======================================\n");
+        printf("\n[-] Enter your choice: ");
         scanf("%d", &tutorChoice);
 
         switch (tutorChoice) {
@@ -950,7 +951,8 @@ void manageClass() {
         printf("2. Update Class\n");
         printf("3. Delete Class\n");
         printf("0. Back to Main Menu\n");
-        printf("[-] Enter Your Choice: ");
+        printf("======================================\n");
+        printf("\n[-] Enter your choice: ");
         scanf("%d", &classChoice);
 
         switch (classChoice) {
@@ -984,7 +986,8 @@ void manageFee() {
         printf("1. Collect Fee\n");
         printf("2. Due Fee\n");
         printf("0. Back to Main Menu\n");
-        printf("[-] Enter Your Choice: ");
+        printf("======================================\n");
+        printf("\n[-] Enter your choice: ");
         scanf("%d", &feeChoice);
 
         switch (feeChoice) {
@@ -1013,7 +1016,8 @@ void manageAttendance() {
         printf("1. Mark Attendance\n");
         printf("2. Check Attendance\n");
         printf("0. Back to Main Menu\n");
-        printf("[-] Enter Your Choice: ");
+        printf("======================================\n");
+        printf("\n[-] Enter your choice: ");
         scanf("%d", &attendanceChoice);
 
         switch (attendanceChoice) {
