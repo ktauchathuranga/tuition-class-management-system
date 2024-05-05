@@ -352,12 +352,12 @@ void displayMenu()
     printf("2. Manage Tutors\n");
     printf("3. Manage Classes\n");
     printf("4. Browse Students (by class)\n");
-    printf("5. Search Studnet (by ID)\n");
+    printf("5. Search Student (by ID)\n");
     printf("6. Fee Manage\n");
     printf("7. Attendance\n");
     printf("8. Status\n");
     printf("0. Exit\n");
-    printf("============================ ===========\n");
+    printf("========================================\n");
 }
 
 void stdReg()
@@ -391,7 +391,7 @@ void stdReg()
     printf("[-] Enter Contact Number: ");
     scanf("%s", contnumber);
 
-    printf("[-] Enter Your Email: ");
+    printf("[-] Enter Student Email: ");
     scanf("%s", email);
 
     char *data;
@@ -455,7 +455,7 @@ void tutReg()
     fgets(contnumber, sizeof(contnumber), stdin);
     contnumber[strcspn(contnumber, "\n")] = '\0';
 
-    printf("[-] Enter Your Email: ");
+    printf("[-] Enter Tutor Email: ");
     fgets(email, sizeof(email), stdin);
     email[strcspn(email, "\n")] = '\0';
 
@@ -488,7 +488,7 @@ void dynamicMenu(char **items)
         }
         printf("0. Back to Main Menu\n");
         printf("========================================\n");
-        printf("\n[-] Enter your choice: ");
+        printf("\n[-] Enter Your Choice: ");
         scanf("%d", &choice);
         printf("\n");
 
@@ -569,6 +569,8 @@ void stdSearch()
             free(result[0]);
         }
         free(result);
+
+        delay(5);
     }
 }
 
@@ -613,6 +615,7 @@ void status()
     printf("[~] Number of Classes : %d\n", numClasses);
     printf("========================================\n");
 
+    delay(5);
 }
 
 void editClassDetails(int classID){
@@ -705,7 +708,7 @@ void updateStd(){
     printf("[-] Enter Contact Number: ");
     scanf("%s", contnumber);
 
-    printf("[-] Enter Your Email: ");
+    printf("[-] Enter Student Email: ");
     scanf("%s", email);
 
     char data[512];
@@ -765,7 +768,7 @@ void updateTut(){
     printf("[-] Enter Contact Number: ");
     scanf("%s",contact);
 
-    printf("[-] Enter Your Email: ");
+    printf("[-] Enter Tutor Email: ");
     scanf("%s",email);
 
     char data[512];
@@ -811,7 +814,7 @@ void editClass(){
          printf("3. Back to Manage Class Menu\n");
          printf("0. Back to Main Menu\n");
          printf("========================================\n");
-         printf("\n[-] Enter your choice: ");
+         printf("\n[-] Enter Your Choice: ");
          scanf("%d",&choice);
 
          switch (choice){
@@ -930,7 +933,7 @@ void manageStudents() {
         printf("3. Delete Student\n");
         printf("0. Back to Main Menu\n");
         printf("========================================\n");
-        printf("\n[-] Enter your choice: ");
+        printf("\n[-] Enter Your Choice: ");
         scanf("%d", &studentChoice);
 
         switch (studentChoice) {
@@ -968,7 +971,7 @@ void manageTutors() {
         printf("3. Delete Tutor\n");
         printf("0. Back to Main Menu\n");
         printf("========================================\n");
-        printf("\n[-] Enter your choice: ");
+        printf("\n[-] Enter Your Choice: ");
         scanf("%d", &tutorChoice);
 
         switch (tutorChoice) {
@@ -1007,7 +1010,7 @@ void manageClass() {
         printf("3. Delete Class\n");
         printf("0. Back to Main Menu\n");
         printf("========================================\n");
-        printf("\n[-] Enter your choice: ");
+        printf("\n[-] Enter Your Choice: ");
         scanf("%d", &classChoice);
 
         switch (classChoice) {
@@ -1046,7 +1049,7 @@ void manageFee() {
         printf("2. Due Fee\n");
         printf("0. Back to Main Menu\n");
         printf("========================================\n");
-        printf("\n[-] Enter your choice: ");
+        printf("\n[-] Enter Your Choice: ");
         scanf("%d", &feeChoice);
 
         switch (feeChoice) {
@@ -1079,7 +1082,7 @@ void manageAttendance() {
         printf("2. Check Attendance\n");
         printf("0. Back to Main Menu\n");
         printf("========================================\n");
-        printf("\n[-] Enter your choice: ");
+        printf("\n[-] Enter Your Choice: ");
         scanf("%d", &attendanceChoice);
 
         switch (attendanceChoice) {
@@ -1194,6 +1197,8 @@ void dueFee()
     sqlite3_finalize(stmt);
 
     sqlite3_close(db);
+
+    delay(5);
 }
 
 void markAttendance() {
@@ -1263,17 +1268,17 @@ void checkAttendance() {
     if (isPresent == 1)
     {
         printf("[+] Student With Enrollment ID %d was Present on %s.\n", enrollmentID, date);
-        delay(1);
+        delay(3);
     }
     else if (isPresent == 0)
     {
         printf("[+] Student With Enrollment ID %d was Absent on %s.\n", enrollmentID, date);
-        delay(1);
+        delay(3);
     }
     else
     {
         printf("[!] No Attendance Data Found for Student With Enrollment ID %d on %s.\n", enrollmentID, date);
-        delay(1);
+        delay(3);
     }
 }
 
