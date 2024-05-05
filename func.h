@@ -44,5 +44,6 @@ void status();
 void insertEnrollmentData(int stid);
 void insertClassData(int tutorid);
 void displayclasslist();
+void void clearScreen();
 
 #endif
