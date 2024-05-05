@@ -3,6 +3,12 @@
 
 #include <stdbool.h>
 
+#ifdef _WIN32
+#include <windows.h> // win
+#else
+#include <unistd.h> // unix
+#endif
+
 // typedef union {
 //     int i;
 //     double d;
@@ -44,5 +50,7 @@ void status();
 void insertEnrollmentData(int stid);
 void insertClassData(int tutorid);
 void displayclasslist();
+void clearScreen();
+void delay(int time);
 
 #endif
