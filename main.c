@@ -2,9 +2,39 @@
 #include <stdlib.h>
 #include <string.h>
 #include "func.h"
+#ifdef _WIN32
+#include <windows.h> // win
+#else
+#include <unistd.h> // unix
+#endif
 
 int main(int argc, char* argv[]) {
     int loginAtt = 0;
+    const char* version = "v1.0.0";
+
+    printf("\n");
+    printf("========================================\n");
+    printf("=       Tution Class Management        =\n");
+    printf("=            Welcome Screen            =\n");
+    printf("=                              %s  =\n", version); // make it center if character count is increased
+    printf("========================================\n");
+    printf("Welcome to the Tution Class Management System!\n");
+
+    printf("Starting in 5...");
+    fflush(stdout);
+
+    for (int i = 5; i > 0; i--) {
+        printf("\rStarting in %d... ", i);
+        fflush(stdout);
+        #ifdef _WIN32
+            Sleep(1000);
+        #else
+            sleep(1);
+        #endif
+    }
+
+    printf("\n");
+
     while (loginAtt < 3)
     {
         if (login())
