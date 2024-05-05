@@ -2,11 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "func.h"
-#ifdef _WIN32
-#include <windows.h> // win
-#else
-#include <unistd.h> // unix
-#endif
 
 int main(int argc, char* argv[]) {
     int loginAtt = 0;
