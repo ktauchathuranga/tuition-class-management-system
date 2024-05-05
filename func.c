@@ -492,6 +492,8 @@ void dynamicMenu(char **items)
         scanf("%d", &choice);
         printf("\n");
 
+        clearScreen();
+
         if (choice > 0 && items[choice - 1] != NULL)
         {
             // printf("You selected: %s\n", items[choice - 1]);
@@ -499,6 +501,8 @@ void dynamicMenu(char **items)
 
             char buffer[256];
             const char *classname = items[choice - 1];
+
+            printf("[-] Students in %s:\n", classname);
 
             sprintf(buffer, "SELECT Students.FirstName, Students.LastName FROM Students JOIN Enrollments ON Students.StudentID = Enrollments.StudentID JOIN Classes ON Enrollments.ClassID = Classes.ClassID WHERE Classes.ClassName = '%s';", classname);
 
@@ -530,6 +534,7 @@ void dynamicMenu(char **items)
 
 void displayStd()
 {
+    clearScreen();
 
     printf("[-] Select The Class: \n");
 
@@ -569,9 +574,8 @@ void stdSearch()
             free(result[0]);
         }
         free(result);
-
-        delay(5);
     }
+    delay(5);
 }
 
 void status()
