@@ -17,7 +17,7 @@ int executeSQL(sqlite3 *db, const char *sql)
 int main()
 {
     sqlite3 *db;
-    int rc = sqlite3_open("../test.db", &db);
+    int rc = sqlite3_open("../tcms.db", &db);
     if (rc)
     {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));

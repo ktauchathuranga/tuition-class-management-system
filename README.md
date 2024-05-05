@@ -23,11 +23,12 @@ Replace `your-code-name.c` with code that you want to compile.
 
 > [!IMPORTANT]  
 > **THE FOLLOWING BINARIES AND SOURCE CODES ARE AVAILABLE IN THE `resources` FOLDER**
-> - Hence, the repo does **NOT** have db included; create db and add sample data by running,
+> - Repo included empty DB, but if you wished to create a DB, You can do that by running,
 > - If you are in linux `./RUNTHIS`
 > - If you are in windows `RUNTHIS.exe`
 > - `MONTHUPDATE` is for update the the `Payments` table for every month.
 > - `DAYUPDATE` is for update the `Attendance` table for every day.
+> - But if you wished to add sample data to work, use `ADDSAMPLEDATA` in root dir to add sample data.
 ### 🏃‍♂️ To run:
 - Windows
 ```

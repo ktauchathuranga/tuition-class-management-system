@@ -78,7 +78,7 @@ int createTable(const char *tableName, const char *columnDefinitions[], int numC
     char *zErrMsg = 0;
     int rc;
 
-    rc = sqlite3_open("test.db", &db);
+    rc = sqlite3_open("tcms.db", &db);
 
     if (rc)
     {
@@ -138,7 +138,7 @@ int insertData(const char *tableName, const char *data[], int numData)
     char *zErrMsg = 0;
     int rc;
 
-    rc = sqlite3_open("test.db", &db);
+    rc = sqlite3_open("tcms.db", &db);
 
     if (rc)
     {
@@ -201,7 +201,7 @@ char **fetchData(const char *query, DataType type)
     char **results = NULL;
     int resultCount = 0;
 
-    rc = sqlite3_open("test.db", &db);
+    rc = sqlite3_open("tcms.db", &db);
 
     if (rc)
     {
@@ -253,7 +253,7 @@ bool updateData(const char *query)
     char *zErrMsg = 0;
     int rc;
 
-    rc = sqlite3_open("test.db", &db);
+    rc = sqlite3_open("tcms.db", &db);
 
     if (rc)
     {
@@ -620,7 +620,7 @@ void editClassDetails(int classID){
     char *errMsg=0;
     int rc;
 
-    rc=sqlite3_open("test.db", &db);
+    rc=sqlite3_open("tcms.db", &db);
     
     if(rc){
         fprintf(stderr,"[!] Can't Open Database: %s\n",sqlite3_errmsg(db) );
@@ -658,7 +658,7 @@ void deleteClass(int classID) {
     char *errMsg = 0;
     int rc;
 
-    rc = sqlite3_open("test.db", &db);
+    rc = sqlite3_open("tcms.db", &db);
     if (rc) {
         fprintf(stderr, "[!] Can't Open Database: %s\n", sqlite3_errmsg(db));
         sqlite3_close(db);
@@ -870,7 +870,7 @@ void displayclasslist(){
     char *zErrMsg = 0;
     int rc;
 
-    rc = sqlite3_open("test.db", &db);
+    rc = sqlite3_open("tcms.db", &db);
 
     if (rc) {
         fprintf(stderr, "[!] Can't Open Database: %s\n", sqlite3_errmsg(db));
@@ -1138,7 +1138,7 @@ int executeSQL(sqlite3 *db, const char *sql)
 void dueFee()
 {
     sqlite3 *db;
-    int rc = sqlite3_open("test.db", &db);
+    int rc = sqlite3_open("tcms.db", &db);
     if (rc)
     {
         fprintf(stderr, "[!] Can't Open Database: %s\n", sqlite3_errmsg(db));
@@ -1199,7 +1199,7 @@ void markAttendance() {
     scanf("%s", date);
 
     sqlite3 *db;
-    int rc = sqlite3_open("test.db", &db);
+    int rc = sqlite3_open("tcms.db", &db);
     if (rc)
     {
         fprintf(stderr, "[!] Can't Open Database: %s\n", sqlite3_errmsg(db));
@@ -1272,7 +1272,7 @@ void checkAttendance() {
 void insertEnrollmentData(int stid)
 {
     sqlite3 *db;
-    int rc = sqlite3_open("test.db", &db);
+    int rc = sqlite3_open("tcms.db", &db);
     if (rc)
     {
         fprintf(stderr, "[!] Can't Open Database: %s\n", sqlite3_errmsg(db));
@@ -1327,7 +1327,7 @@ void insertEnrollmentData(int stid)
 void insertClassData(int tutorid)
 {
     sqlite3 *db;
-    int rc = sqlite3_open("test.db", &db);
+    int rc = sqlite3_open("tcms.db", &db);
     if (rc)
     {
         fprintf(stderr, "[!] Can't Open Database: %s\n", sqlite3_errmsg(db));
