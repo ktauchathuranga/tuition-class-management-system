@@ -868,7 +868,7 @@ void displayclasslist(){
         const unsigned char *classTime = sqlite3_column_text(stmt, 3);
         const unsigned char *classDays = sqlite3_column_text(stmt, 4);
 
-        printf("%d\t%s\t%d\t%s\t%s\n", classID, className, tutorID, classTime, classDays);
+        printf("%d\t%s\t%d\t\t%s\t\t%s\n", classID, className, tutorID, classTime, classDays);
     }
 
     sqlite3_finalize(stmt);
