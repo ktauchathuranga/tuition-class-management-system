@@ -442,22 +442,27 @@ void tutReg()
     printf("[-] Enter First Name: ");
     fgets(firstname, sizeof(firstname), stdin);
     firstname[strcspn(firstname, "\n")] = '\0';
+    getchar();
 
     printf("[-] Enter Last Name: ");
     fgets(lastname, sizeof(lastname), stdin);
     lastname[strcspn(lastname, "\n")] = '\0';
+    getchar();
 
     printf("[-] Enter Subject Specialization: ");
     fgets(subject, sizeof(subject), stdin);
     subject[strcspn(subject, "\n")] = '\0';
+    getchar();
 
     printf("[-] Enter Contact Number: ");
     fgets(contnumber, sizeof(contnumber), stdin);
     contnumber[strcspn(contnumber, "\n")] = '\0';
+    getchar();
 
     printf("[-] Enter Tutor Email: ");
     fgets(email, sizeof(email), stdin);
     email[strcspn(email, "\n")] = '\0';
+    getchar();
 
     char *data;
     asprintf(&data, "%d, '%s', '%s', '%s', '%s', '%s'", tutid + 1, firstname, lastname, subject, contnumber, email);
@@ -816,7 +821,7 @@ void editClass(){
          printf("1. Edit Class Details\n");
          printf("2. Display Class\n");
          printf("3. Back to Manage Class Menu\n");
-         printf("0. Back to Main Menu\n");
+        //  printf("0. Back to Main Menu\n");
          printf("========================================\n");
          printf("\n[-] Enter Your Choice: ");
          scanf("%d",&choice);
@@ -835,11 +840,11 @@ void editClass(){
             case 3:
                  manageClass();
                  break;
-            case 0:
-                // authSec();
-                printf("Returning to main menu.\n");
-                delay(1);
-                break;
+            // case 0:
+            //     // authSec();
+            //     printf("Returning to main menu.\n");
+            //     delay(1);
+            //     break;
             default:
                 printf("[!] Invalid Choice.\n");
                 delay(1);
@@ -1376,13 +1381,19 @@ void insertClassData(int tutorid)
     sqlite3_finalize(stmt);
 
     printf("[-] Enter Class Name: ");
-    scanf("%s", className);
+    fgets(className, sizeof(className), stdin);
+    className[strcspn(className, "\n")] = '\0';
+    getchar();
 
     printf("[-] Enter Class Time (00:00): ");
-    scanf("%s", classTime);
+    fgets(classTime, sizeof(classTime), stdin);
+    classTime[strcspn(classTime, "\n")] = '\0';
+    getchar();
 
     printf("[-] Enter Class Days (day,day,day): ");
-    scanf("%s", classDays);
+    fgets(classDays, sizeof(classDays), stdin);
+    classDays[strcspn(classDays, "\n")] = '\0';
+    getchar();
 
     char insertSQL[300];
     sprintf(insertSQL, "INSERT INTO Classes (ClassID, ClassName, TutorID, ClassTime, ClassDays) VALUES (%d, '%s', %d, '%s', '%s');", lastClassID + 1, className, tutorid, classTime, classDays);
@@ -1399,6 +1410,9 @@ void insertClassData(int tutorid)
     }
 
     sqlite3_close(db);
+
+    clearInputBuffer();
+
 }
 
 void clearScreen() {
@@ -1415,4 +1429,9 @@ void delay(int time) {
     #else
         sleep(time);
     #endif
+}
+
+void clearInputBuffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) { }
 }
