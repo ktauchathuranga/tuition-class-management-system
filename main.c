@@ -7,7 +7,7 @@ int main(int argc, char* argv[]) {
     int loginAtt = 0;
     char* loadingSymbols = "-\\|/";
     int numSymbols = 4;
-    const char* version = "v2.1.1";
+    const char* version = "v2.1.2";
 
     printf("\n");
     printf("========================================\n");
