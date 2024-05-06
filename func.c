@@ -814,14 +814,14 @@ void deleteTut(){
     }
 }
 
-void editClass(){
+editClass(){
         int choice,classID;
 
         //  printf("\n===Edit Class===\n\n");
          printf("1. Edit Class Details\n");
          printf("2. Display Class\n");
          printf("3. Back to Manage Class Menu\n");
-         printf("0. Back to Main Menu\n");
+        //  printf("0. Back to Main Menu\n");
          printf("========================================\n");
          printf("\n[-] Enter Your Choice: ");
          scanf("%d",&choice);
@@ -840,11 +840,11 @@ void editClass(){
             case 3:
                  manageClass();
                  break;
-            case 0:
-                // authSec();
-                printf("Returning to main menu.\n");
-                delay(1);
-                break;
+            // case 0:
+            //     // authSec();
+            //     printf("Returning to main menu.\n");
+            //     delay(1);
+            //     break;
             default:
                 printf("[!] Invalid Choice.\n");
                 delay(1);
