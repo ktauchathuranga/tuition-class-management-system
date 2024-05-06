@@ -5,7 +5,9 @@
 
 int main(int argc, char* argv[]) {
     int loginAtt = 0;
-    const char* version = "v2.1.0";
+    char* loadingSymbols = "-\\|/";
+    int numSymbols = 4;
+    const char* version = "v2.1.1";
 
     printf("\n");
     printf("========================================\n");
@@ -13,18 +15,20 @@ int main(int argc, char* argv[]) {
     printf("=            Welcome Screen            =\n");
     printf("=                              %s  =\n", version); // make it center if character count is increased
     printf("========================================\n");
-    printf("Welcome to the Tution Class Management System!\n");
+    printf("\nWelcome to the Tution Class Management System!\n");
 
-    printf("Starting in 5...");
+    printf("\n========================================\n");
+
+    printf("\nStarting...");
     fflush(stdout);
 
-    for (int i = 5; i > 0; i--) {
-        printf("\rStarting in %d... ", i);
+    for (int i = 0; i < 25; i++) { // 5000 milliseconds / 200 milliseconds = 25 iterations
+        printf("\b%c", loadingSymbols[i % numSymbols]);
         fflush(stdout);
         #ifdef _WIN32
-            Sleep(1000);
+            Sleep(200);
         #else
-            sleep(1);
+            usleep(200000);
         #endif
     }
 
