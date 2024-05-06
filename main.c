@@ -43,6 +43,8 @@ int main(int argc, char* argv[]) {
         } else {
             printf("[!] Login Failed\n");
             loginAtt++;
+
+            clearScreen();
         }
     }
     
