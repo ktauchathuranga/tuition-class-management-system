@@ -814,7 +814,7 @@ void deleteTut(){
     }
 }
 
-editClass(){
+void editClass(){
         int choice,classID;
 
         //  printf("\n===Edit Class===\n\n");
