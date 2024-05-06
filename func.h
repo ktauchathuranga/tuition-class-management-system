@@ -52,5 +52,6 @@ void insertClassData(int tutorid);
 void displayclasslist();
 void clearScreen();
 void delay(int time);
+void clearInputBuffer();
 
 #endif
