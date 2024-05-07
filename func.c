@@ -835,7 +835,7 @@ void editClass(){
 
             case 2:
                 displayclasslist();
-                delay(5); // this need to be addressed in the future
+                delay(6); // this need to be addressed in the future
                 break;
             case 3:
                  manageClass();
@@ -1207,7 +1207,7 @@ void dueFee()
 
     sqlite3_close(db);
 
-    delay(5);
+    delay(6);
 }
 
 void markAttendance() {
@@ -1277,17 +1277,17 @@ void checkAttendance() {
     if (isPresent == 1)
     {
         printf("[+] Student With Enrollment ID %d was Present on %s.\n", enrollmentID, date);
-        delay(3);
+        delay(5);
     }
     else if (isPresent == 0)
     {
         printf("[+] Student With Enrollment ID %d was Absent on %s.\n", enrollmentID, date);
-        delay(3);
+        delay(5);
     }
     else
     {
         printf("[!] No Attendance Data Found for Student With Enrollment ID %d on %s.\n", enrollmentID, date);
-        delay(3);
+        delay(5);
     }
 }
 
